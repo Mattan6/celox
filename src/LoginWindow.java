@@ -75,7 +75,7 @@ public class LoginWindow {
 		buildLoginFrame();	
 		ConnectionDB();
 	}
-	
+	//Connection To DB Method - example!
 	private void ConnectionDB() {
 		 // This will load the MySQL driver, each DB has its own driver
        try {
