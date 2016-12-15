@@ -69,7 +69,7 @@ public class MainWindow {
 		frame = new JFrame();
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frame.getContentPane().setLayout(new BorderLayout(0,0));
 		
 		JPanel pnlHeader = new JPanel();
 		pnlHeader.setBackground(Color.LIGHT_GRAY);
