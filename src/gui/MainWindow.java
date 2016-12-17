@@ -62,10 +62,15 @@ public class MainWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		///////////// building the main frame ////////////////////
 		frame = new JFrame();
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0,0));
+		
+		
+		////////////// building the main frame's menu bar //////////////////////////
 		
 		JMenuBar mainMenuBar = new JMenuBar();
 		frame.setJMenuBar(mainMenuBar);
@@ -92,6 +97,8 @@ public class MainWindow {
 
 		JMenu mnStatistics = new JMenu("Statistics");
 		mainMenuBar.add(mnStatistics);
+		
+		////////////////// main window header panel ////////////////
 
 		JPanel pnlHeader = new JPanel();
 		pnlHeader.setBackground(Color.LIGHT_GRAY);
@@ -99,6 +106,9 @@ public class MainWindow {
 
 		JButton btnNewButton_2 = new JButton("New button");
 		pnlHeader.add(btnNewButton_2);
+		
+		
+		///////////////// main frame footer panel /////////////////////////
 
 		JPanel pnlFooter = new JPanel();
 		pnlFooter.setBackground(Color.LIGHT_GRAY);
@@ -106,6 +116,9 @@ public class MainWindow {
 
 		JButton btnNewButton_3 = new JButton("New button");
 		pnlFooter.add(btnNewButton_3);
+		
+		
+		/////////////////  main frame right panel /////////////////////////
 
 		JPanel pnlRight = new JPanel();
 		pnlRight.setBackground(Color.GREEN);
@@ -114,54 +127,70 @@ public class MainWindow {
 		JButton btnNewButton_1 = new JButton("New button");
 		pnlRight.add(btnNewButton_1);
 
+		
+		///////////////// main frame left panel //////////////////////////
+		
 		JPanel pnlLeft = new JPanel();
 		pnlLeft.setBackground(Color.GREEN);
 		frame.getContentPane().add(pnlLeft, BorderLayout.WEST);
 		
 		JButton btnNewButton = new JButton("New button");
 		pnlLeft.add(btnNewButton);
+		
+		//////////////// main frame center panel //////////////////////////
 
 		JPanel pnlCenter = new JPanel();
 		pnlCenter.setBackground(Color.WHITE);
 		frame.getContentPane().add(pnlCenter, BorderLayout.CENTER);
-		pnlCenter.setLayout(new GridLayout(10, 7, 0, 2));
+		pnlCenter.setLayout(new GridLayout(10, 7, 0, 1));
 
+		/////////////// class types /////////////////////////////
+		
 		JLabel lblInput = new JLabel("Input");
+		lblInput.setForeground(Color.RED);
+		lblInput.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 17));
 		lblInput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInput.setBackground(Color.WHITE);
 		pnlCenter.add(lblInput);
 
 		JLabel lblClassA = new JLabel("Class A");
+		lblClassA.setFont(new Font("Arial", Font.BOLD, 15));
 		lblClassA.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClassA.setBackground(Color.WHITE);
 		pnlCenter.add(lblClassA);
 
 		JLabel lblClassB = new JLabel("Class B");
+		lblClassB.setFont(new Font("Arial", Font.BOLD, 15));
 		lblClassB.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClassB.setBackground(Color.WHITE);
 		pnlCenter.add(lblClassB);
 
 		JLabel lblClassC = new JLabel("Class c");
+		lblClassC.setFont(new Font("Arial", Font.BOLD, 15));
 		lblClassC.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClassC.setBackground(Color.WHITE);
 		pnlCenter.add(lblClassC);
 
 		JLabel lblClassD = new JLabel("Class D");
+		lblClassD.setFont(new Font("Arial", Font.BOLD, 15));
 		lblClassD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClassD.setBackground(Color.WHITE);
 		pnlCenter.add(lblClassD);
 
 		JLabel lblClassE = new JLabel("Class E");
+		lblClassE.setFont(new Font("Arial", Font.BOLD, 15));
 		lblClassE.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClassE.setBackground(Color.WHITE);
 		pnlCenter.add(lblClassE);
 
 		JLabel lblClassF = new JLabel("Class F");
+		lblClassF.setFont(new Font("Arial", Font.BOLD, 15));
 		lblClassF.setHorizontalAlignment(SwingConstants.CENTER);
 		lblClassF.setBackground(Color.WHITE);
 		pnlCenter.add(lblClassF);
 
 		JLabel lblLength = new JLabel("Length");
+		lblLength.setFont(new Font("Arial", Font.BOLD, 15));
 		lblLength.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLength.setBackground(Color.WHITE);
 		pnlCenter.add(lblLength);
@@ -175,7 +204,7 @@ public class MainWindow {
 		lblLengthFromA.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlLengthA.add(lblLengthFromA);
 		lblLengthFromA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblLengthFromA.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthFromA.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnLengthFromA = new JSpinner();
@@ -186,7 +215,7 @@ public class MainWindow {
 
 		JLabel lblLengthToA = new JLabel("To");
 		lblLengthToA.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLengthToA.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthToA.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblLengthToA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlLengthA.add(lblLengthToA);
 
@@ -209,7 +238,7 @@ public class MainWindow {
 		lblLengthFromB.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlLengthB.add(lblLengthFromB);
 		lblLengthFromB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblLengthFromB.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthFromB.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnLengthFromB = new JSpinner();
@@ -220,7 +249,7 @@ public class MainWindow {
 
 		JLabel lblLengthToB = new JLabel("To");
 		lblLengthToB.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLengthToB.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthToB.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblLengthToB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlLengthB.add(lblLengthToB);
 
@@ -242,7 +271,7 @@ public class MainWindow {
 		lblLengthFromC.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlLengthC.add(lblLengthFromC);
 		lblLengthFromC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblLengthFromC.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthFromC.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnLengthFromC = new JSpinner();
@@ -253,7 +282,7 @@ public class MainWindow {
 
 		JLabel lbLengthlToC = new JLabel("To");
 		lbLengthlToC.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLengthlToC.setFont(new Font("Arial", Font.BOLD, 13));
+		lbLengthlToC.setFont(new Font("Arial", Font.PLAIN, 12));
 		lbLengthlToC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlLengthC.add(lbLengthlToC);
 
@@ -276,7 +305,7 @@ public class MainWindow {
 		lblLengthFromD.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlLengthD.add(lblLengthFromD);
 		lblLengthFromD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblLengthFromD.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthFromD.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnLengthFromD = new JSpinner();
@@ -287,7 +316,7 @@ public class MainWindow {
 
 		JLabel lbLengthlToD = new JLabel("To");
 		lbLengthlToD.setHorizontalAlignment(SwingConstants.CENTER);
-		lbLengthlToD.setFont(new Font("Arial", Font.BOLD, 13));
+		lbLengthlToD.setFont(new Font("Arial", Font.PLAIN, 12));
 		lbLengthlToD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlLengthD.add(lbLengthlToD);
 
@@ -308,7 +337,7 @@ public class MainWindow {
 		lblLengthFromE.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlLengthE.add(lblLengthFromE);
 		lblLengthFromE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblLengthFromE.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthFromE.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnLengthFromE = new JSpinner();
@@ -319,7 +348,7 @@ public class MainWindow {
 
 		JLabel lblLengthToE = new JLabel("To");
 		lblLengthToE.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLengthToE.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthToE.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblLengthToE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlLengthE.add(lblLengthToE);
 
@@ -338,7 +367,7 @@ public class MainWindow {
 		lblLengthFromF.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlLengthF.add(lblLengthFromF);
 		lblLengthFromF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblLengthFromF.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthFromF.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnLengthFromF = new JSpinner();
@@ -349,7 +378,7 @@ public class MainWindow {
 
 		JLabel lblLengthToF = new JLabel("To");
 		lblLengthToF.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLengthToF.setFont(new Font("Arial", Font.BOLD, 13));
+		lblLengthToF.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblLengthToF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlLengthF.add(lblLengthToF);
 
@@ -357,30 +386,87 @@ public class MainWindow {
 		spnLengthToF.setPreferredSize(new Dimension(120, 18));
 		spnLengthToF.setModel(new SpinnerNumberModel(0, 0, 999, 1));
 		pnlLengthF.add(spnLengthToF);
-
-		JSeparator separator_10 = new JSeparator();
-		pnlCenter.add(separator_10);
-
+		
+		JPanel pnlSep1 = new JPanel();
+		FlowLayout fl_pnlSep1 = (FlowLayout) pnlSep1.getLayout();
+		fl_pnlSep1.setVgap(33);
+		pnlSep1.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep1);
+		
 		JSeparator separator_6 = new JSeparator();
-		pnlCenter.add(separator_6);
-
-		JSeparator separator_11 = new JSeparator();
-		pnlCenter.add(separator_11);
-
+		separator_6.setPreferredSize(new Dimension(200, 2));
+		separator_6.setForeground(Color.BLACK);
+		pnlSep1.add(separator_6);
+		
+		JPanel pnlSep2 = new JPanel();
+		FlowLayout fl_pnlSep2 = (FlowLayout) pnlSep2.getLayout();
+		fl_pnlSep2.setVgap(33);
+		pnlSep2.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep2);
+		
 		JSeparator separator_7 = new JSeparator();
-		pnlCenter.add(separator_7);
-
-		JSeparator separator_13 = new JSeparator();
-		pnlCenter.add(separator_13);
-
+		separator_7.setPreferredSize(new Dimension(200, 2));
+		separator_7.setForeground(Color.BLACK);
+		pnlSep2.add(separator_7);
+		
+		JPanel pnlSep3 = new JPanel();
+		FlowLayout fl_pnlSep3 = (FlowLayout) pnlSep3.getLayout();
+		fl_pnlSep3.setVgap(33);
+		pnlSep3.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep3);
+		
+		JSeparator separator_10 = new JSeparator();
+		separator_10.setPreferredSize(new Dimension(200, 2));
+		separator_10.setForeground(Color.BLACK);
+		pnlSep3.add(separator_10);
+		
+		JPanel pnlSep4 = new JPanel();
+		FlowLayout fl_pnlSep4 = (FlowLayout) pnlSep4.getLayout();
+		fl_pnlSep4.setVgap(33);
+		pnlSep4.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep4);
+		
+		JSeparator separator_11 = new JSeparator();
+		separator_11.setPreferredSize(new Dimension(200, 2));
+		separator_11.setForeground(Color.BLACK);
+		pnlSep4.add(separator_11);
+		
+		JPanel pnlSep5 = new JPanel();
+		FlowLayout fl_pnlSep5 = (FlowLayout) pnlSep5.getLayout();
+		fl_pnlSep5.setVgap(33);
+		pnlSep5.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep5);
+		
 		JSeparator separator_8 = new JSeparator();
-		pnlCenter.add(separator_8);
-
+		separator_8.setPreferredSize(new Dimension(200, 2));
+		separator_8.setForeground(Color.BLACK);
+		pnlSep5.add(separator_8);
+		
+		JPanel pnlSep6 = new JPanel();
+		FlowLayout fl_pnlSep6 = (FlowLayout) pnlSep6.getLayout();
+		fl_pnlSep6.setVgap(33);
+		pnlSep6.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep6);
+		
 		JSeparator separator_12 = new JSeparator();
-		pnlCenter.add(separator_12);
+		separator_12.setPreferredSize(new Dimension(200, 2));
+		separator_12.setForeground(Color.BLACK);
+		pnlSep6.add(separator_12);
+		
+		JPanel pnlSep7 = new JPanel();
+		FlowLayout fl_pnlSep7 = (FlowLayout) pnlSep7.getLayout();
+		fl_pnlSep7.setVgap(33);
+		pnlSep7.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep7);
+		
+		JSeparator separator_13 = new JSeparator();
+		separator_13.setPreferredSize(new Dimension(200, 2));
+		separator_13.setForeground(Color.BLACK);
+		pnlSep7.add(separator_13);
 
 
 		JLabel lblDiameter = new JLabel("Diameter");
+		lblDiameter.setFont(new Font("Arial", Font.BOLD, 15));
 		lblDiameter.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDiameter.setBackground(Color.WHITE);
 		pnlCenter.add(lblDiameter);
@@ -396,7 +482,7 @@ public class MainWindow {
 		lblDiameterFromA.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlDiameterA.add(lblDiameterFromA);
 		lblDiameterFromA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblDiameterFromA.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterFromA.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnDiameterFromA = new JSpinner();
@@ -407,7 +493,7 @@ public class MainWindow {
 
 		JLabel lblDiameterToA = new JLabel("To");
 		lblDiameterToA.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiameterToA.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterToA.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblDiameterToA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlDiameterA.add(lblDiameterToA);
 
@@ -428,7 +514,7 @@ public class MainWindow {
 		lblDiameterFromB.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlDiameterB.add(lblDiameterFromB);
 		lblDiameterFromB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblDiameterFromB.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterFromB.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnDiameterFromB = new JSpinner();
@@ -439,7 +525,7 @@ public class MainWindow {
 
 		JLabel lblDiameterToB = new JLabel("To");
 		lblDiameterToB.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiameterToB.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterToB.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblDiameterToB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlDiameterB.add(lblDiameterToB);
 
@@ -459,7 +545,7 @@ public class MainWindow {
 		lblDiameterFromC.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlDiameterC.add(lblDiameterFromC);
 		lblDiameterFromC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblDiameterFromC.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterFromC.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnDiameterFromC = new JSpinner();
@@ -470,7 +556,7 @@ public class MainWindow {
 
 		JLabel lblDiameterToC = new JLabel("To");
 		lblDiameterToC.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiameterToC.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterToC.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblDiameterToC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlDiameterC.add(lblDiameterToC);
 
@@ -490,7 +576,7 @@ public class MainWindow {
 		lblDiameterFromD.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlDiameterD.add(lblDiameterFromD);
 		lblDiameterFromD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblDiameterFromD.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterFromD.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnDiameterFromD = new JSpinner();
@@ -501,7 +587,7 @@ public class MainWindow {
 
 		JLabel lblDiameterToD = new JLabel("To");
 		lblDiameterToD.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiameterToD.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterToD.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblDiameterToD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlDiameterD.add(lblDiameterToD);
 
@@ -522,7 +608,7 @@ public class MainWindow {
 		lblDiameterFromE.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlDiameterE.add(lblDiameterFromE);
 		lblDiameterFromE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblDiameterFromE.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterFromE.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnDiameterFromE = new JSpinner();
@@ -533,7 +619,7 @@ public class MainWindow {
 
 		JLabel lblDiameterToE = new JLabel("To");
 		lblDiameterToE.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiameterToE.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterToE.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblDiameterToE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlDiameterE.add(lblDiameterToE);
 
@@ -552,7 +638,7 @@ public class MainWindow {
 		lblDiameterFromF.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlDiameterF.add(lblDiameterFromF);
 		lblDiameterFromF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-		lblDiameterFromF.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterFromF.setFont(new Font("Arial", Font.PLAIN, 12));
 
 
 		JSpinner spnDiameterFromF = new JSpinner();
@@ -563,7 +649,7 @@ public class MainWindow {
 
 		JLabel lblDiameterToF = new JLabel("To");
 		lblDiameterToF.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDiameterToF.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDiameterToF.setFont(new Font("Arial", Font.PLAIN, 12));
 		lblDiameterToF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		pnlDiameterF.add(lblDiameterToF);
 
@@ -571,31 +657,88 @@ public class MainWindow {
 		spnDiameterToF.setPreferredSize(new Dimension(120, 18));
 		spnDiameterToF.setModel(new SpinnerNumberModel(0, 0, 999, 1));
 		pnlDiameterF.add(spnDiameterToF);
-
+		
+		JPanel pnlSep8 = new JPanel();
+		FlowLayout fl_pnlSep8 = (FlowLayout) pnlSep8.getLayout();
+		fl_pnlSep8.setVgap(33);
+		pnlSep8.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep8);
+		
 		JSeparator separator_14 = new JSeparator();
-		pnlCenter.add(separator_14);
-
+		separator_14.setPreferredSize(new Dimension(200, 2));
+		separator_14.setForeground(Color.BLACK);
+		pnlSep8.add(separator_14);
+		
+		JPanel pnlSep9 = new JPanel();
+		FlowLayout fl_pnlSep9 = (FlowLayout) pnlSep9.getLayout();
+		fl_pnlSep9.setVgap(33);
+		pnlSep9.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep9);
+		
 		JSeparator separator_15 = new JSeparator();
-		pnlCenter.add(separator_15);
-
+		separator_15.setPreferredSize(new Dimension(200, 2));
+		separator_15.setForeground(Color.BLACK);
+		pnlSep9.add(separator_15);
+		
+		JPanel pnlSep10 = new JPanel();
+		FlowLayout fl_pnlSep10 = (FlowLayout) pnlSep10.getLayout();
+		fl_pnlSep10.setVgap(33);
+		pnlSep10.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep10);
+		
 		JSeparator separator_16 = new JSeparator();
-		pnlCenter.add(separator_16);
-
+		separator_16.setPreferredSize(new Dimension(200, 2));
+		separator_16.setForeground(Color.BLACK);
+		pnlSep10.add(separator_16);
+		
+		JPanel pnlSep11 = new JPanel();
+		FlowLayout fl_pnlSep11 = (FlowLayout) pnlSep11.getLayout();
+		fl_pnlSep11.setVgap(33);
+		pnlSep11.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep11);
+		
 		JSeparator separator_17 = new JSeparator();
-		pnlCenter.add(separator_17);
-
+		separator_17.setPreferredSize(new Dimension(200, 2));
+		separator_17.setForeground(Color.BLACK);
+		pnlSep11.add(separator_17);
+		
+		JPanel pnlSep12 = new JPanel();
+		FlowLayout fl_pnlSep12 = (FlowLayout) pnlSep12.getLayout();
+		fl_pnlSep12.setVgap(33);
+		pnlSep12.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep12);
+		
 		JSeparator separator_18 = new JSeparator();
-		pnlCenter.add(separator_18);
-
+		separator_18.setPreferredSize(new Dimension(200, 2));
+		separator_18.setForeground(Color.BLACK);
+		pnlSep12.add(separator_18);
+		
+		JPanel pnlSep13 = new JPanel();
+		FlowLayout fl_pnlSep13 = (FlowLayout) pnlSep13.getLayout();
+		fl_pnlSep13.setVgap(33);
+		pnlSep13.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep13);
+		
 		JSeparator separator_19 = new JSeparator();
-		pnlCenter.add(separator_19);
-
+		separator_19.setPreferredSize(new Dimension(200, 2));
+		separator_19.setForeground(Color.BLACK);
+		pnlSep13.add(separator_19);
+		
+		JPanel pnlSep14 = new JPanel();
+		FlowLayout fl_pnlSep14 = (FlowLayout) pnlSep14.getLayout();
+		fl_pnlSep14.setVgap(33);
+		pnlSep14.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep14);
+		
 		JSeparator separator_20 = new JSeparator();
-		pnlCenter.add(separator_20);
+		separator_20.setPreferredSize(new Dimension(200, 2));
+		separator_20.setForeground(Color.BLACK);
+		pnlSep14.add(separator_20);
 
 
 
 		JLabel lblBroken = new JLabel("Broken");
+		lblBroken.setFont(new Font("Arial", Font.BOLD, 15));
 		lblBroken.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBroken.setBackground(Color.WHITE);
 		pnlCenter.add(lblBroken);
@@ -680,33 +823,88 @@ public class MainWindow {
 		spnBrokenF.setPreferredSize(new Dimension(120, 25));
 		spnBrokenF.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		pnlBrokenF.add(spnBrokenF);
-
-
-
+		
+		JPanel pnlSep15 = new JPanel();
+		FlowLayout fl_pnlSep15 = (FlowLayout) pnlSep15.getLayout();
+		fl_pnlSep15.setVgap(33);
+		pnlSep15.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep15);
+		
 		JSeparator separator_1 = new JSeparator();
-		pnlCenter.add(separator_1);
-
+		separator_1.setPreferredSize(new Dimension(200, 2));
+		separator_1.setForeground(Color.BLACK);
+		pnlSep15.add(separator_1);
+		
+		JPanel pnlSep16 = new JPanel();
+		FlowLayout fl_pnlSep16 = (FlowLayout) pnlSep16.getLayout();
+		fl_pnlSep16.setVgap(33);
+		pnlSep16.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep16);
+		
 		JSeparator separator_22 = new JSeparator();
-		pnlCenter.add(separator_22);
-
-		JSeparator separator_23 = new JSeparator();
-		pnlCenter.add(separator_23);
-
-		JSeparator separator_24 = new JSeparator();
-		pnlCenter.add(separator_24);
-
-		JSeparator separator_25 = new JSeparator();
-		pnlCenter.add(separator_25);
-
-		JSeparator separator_26 = new JSeparator();
-		pnlCenter.add(separator_26);
-
+		separator_22.setPreferredSize(new Dimension(200, 2));
+		separator_22.setForeground(Color.BLACK);
+		pnlSep16.add(separator_22);
+		
+		JPanel pnlSep17 = new JPanel();
+		FlowLayout fl_pnlSep17 = (FlowLayout) pnlSep17.getLayout();
+		fl_pnlSep17.setVgap(33);
+		pnlSep17.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep17);
+		
 		JSeparator separator_3 = new JSeparator();
-		pnlCenter.add(separator_3);
+		separator_3.setPreferredSize(new Dimension(200, 2));
+		separator_3.setForeground(Color.BLACK);
+		pnlSep17.add(separator_3);
+		
+		JPanel pnlSep18 = new JPanel();
+		FlowLayout fl_pnlSep18 = (FlowLayout) pnlSep18.getLayout();
+		fl_pnlSep18.setVgap(33);
+		pnlSep18.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep18);
+		
+		JSeparator separator_23 = new JSeparator();
+		separator_23.setPreferredSize(new Dimension(200, 2));
+		separator_23.setForeground(Color.BLACK);
+		pnlSep18.add(separator_23);
+		
+		JPanel pnlSep19 = new JPanel();
+		FlowLayout fl_pnlSep19 = (FlowLayout) pnlSep19.getLayout();
+		fl_pnlSep19.setVgap(33);
+		pnlSep19.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep19);
+		
+		JSeparator separator_24 = new JSeparator();
+		separator_24.setPreferredSize(new Dimension(200, 2));
+		separator_24.setForeground(Color.BLACK);
+		pnlSep19.add(separator_24);
+		
+		JPanel pnlSep20 = new JPanel();
+		FlowLayout fl_pnlSep20 = (FlowLayout) pnlSep20.getLayout();
+		fl_pnlSep20.setVgap(33);
+		pnlSep20.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep20);
+		
+		JSeparator separator_25 = new JSeparator();
+		separator_25.setPreferredSize(new Dimension(200, 2));
+		separator_25.setForeground(Color.BLACK);
+		pnlSep20.add(separator_25);
+		
+		JPanel pnlSep21 = new JPanel();
+		FlowLayout fl_pnlSep21 = (FlowLayout) pnlSep21.getLayout();
+		fl_pnlSep21.setVgap(33);
+		pnlSep21.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep21);
+		
+		JSeparator separator_26 = new JSeparator();
+		separator_26.setPreferredSize(new Dimension(200, 2));
+		separator_26.setForeground(Color.BLACK);
+		pnlSep21.add(separator_26);
 		
 		
 
 		JLabel lblS_Shape = new JLabel("S Shape");
+		lblS_Shape.setFont(new Font("Arial", Font.BOLD, 15));
 		lblS_Shape.setHorizontalAlignment(SwingConstants.CENTER);
 		lblS_Shape.setBackground(Color.WHITE);
 		pnlCenter.add(lblS_Shape);
@@ -790,29 +988,86 @@ public class MainWindow {
 		spnS_ShapeF.setPreferredSize(new Dimension(120, 25));
 		spnS_ShapeF.setModel(new SpinnerNumberModel(0, 0, 100, 1));
 		pnlS_ShapeF.add(spnS_ShapeF);
+		
+		JPanel pnlSep22 = new JPanel();
+		FlowLayout fl_pnlSep22 = (FlowLayout) pnlSep22.getLayout();
+		fl_pnlSep22.setVgap(33);
+		pnlSep22.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep22);
 
 		JSeparator separator_5 = new JSeparator();
-		pnlCenter.add(separator_5);
-
+		separator_5.setForeground(Color.BLACK);
+		separator_5.setPreferredSize(new Dimension(200, 2));
+		pnlSep22.add(separator_5);
+		
+		JPanel pnlSep23 = new JPanel();
+		FlowLayout fl_pnlSep23 = (FlowLayout) pnlSep23.getLayout();
+		fl_pnlSep23.setVgap(33);
+		pnlSep23.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep23);
+		
 		JSeparator separator_9 = new JSeparator();
-		pnlCenter.add(separator_9);
-
+		separator_9.setPreferredSize(new Dimension(200, 2));
+		separator_9.setForeground(Color.BLACK);
+		pnlSep23.add(separator_9);
+		
+		JPanel pnlSep24 = new JPanel();
+		FlowLayout fl_pnlSep24 = (FlowLayout) pnlSep24.getLayout();
+		fl_pnlSep24.setVgap(33);
+		pnlSep24.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep24);
+		
 		JSeparator separator_27 = new JSeparator();
-		pnlCenter.add(separator_27);
-
+		separator_27.setPreferredSize(new Dimension(200, 2));
+		separator_27.setForeground(Color.BLACK);
+		pnlSep24.add(separator_27);
+		
+		JPanel pnlSep25 = new JPanel();
+		FlowLayout fl_pnlSep25 = (FlowLayout) pnlSep25.getLayout();
+		fl_pnlSep25.setVgap(33);
+		pnlSep25.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep25);
+		
 		JSeparator separator = new JSeparator();
-		pnlCenter.add(separator);
-
-		JSeparator separator_4 = new JSeparator();
-		pnlCenter.add(separator_4);
-
+		separator.setPreferredSize(new Dimension(200, 2));
+		separator.setForeground(Color.BLACK);
+		pnlSep25.add(separator);
+		
+		JPanel pnlSep26 = new JPanel();
+		FlowLayout fl_pnlSep26 = (FlowLayout) pnlSep26.getLayout();
+		fl_pnlSep26.setVgap(33);
+		pnlSep26.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep26);
+		
 		JSeparator separator_2 = new JSeparator();
-		pnlCenter.add(separator_2);
-
+		separator_2.setPreferredSize(new Dimension(200, 2));
+		separator_2.setForeground(Color.BLACK);
+		pnlSep26.add(separator_2);
+		
+		JPanel pnlSep27 = new JPanel();
+		FlowLayout fl_pnlSep27 = (FlowLayout) pnlSep27.getLayout();
+		fl_pnlSep27.setVgap(33);
+		pnlSep27.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep27);
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setPreferredSize(new Dimension(200, 2));
+		separator_4.setForeground(Color.BLACK);
+		pnlSep27.add(separator_4);
+		
+		JPanel pnlSep28 = new JPanel();
+		FlowLayout fl_pnlSep28 = (FlowLayout) pnlSep28.getLayout();
+		fl_pnlSep28.setVgap(33);
+		pnlSep28.setBackground(Color.WHITE);
+		pnlCenter.add(pnlSep28);
+		
 		JSeparator separator_21 = new JSeparator();
-		pnlCenter.add(separator_21);
+		separator_21.setPreferredSize(new Dimension(200, 2));
+		separator_21.setForeground(Color.BLACK);
+		pnlSep28.add(separator_21);
 
 		JLabel lblC_Shape = new JLabel("C Shape");
+		lblC_Shape.setFont(new Font("Arial", Font.BOLD, 15));
 		lblC_Shape.setHorizontalAlignment(SwingConstants.CENTER);
 		lblC_Shape.setBackground(Color.WHITE);
 		pnlCenter.add(lblC_Shape);
@@ -821,7 +1076,7 @@ public class MainWindow {
 		pnlCenter.add(pnlC_ShapeA);
 		
 		pnlC_ShapeA.setBackground(Color.WHITE);
-		pnlC_ShapeA.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlC_ShapeA.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 
 		JSpinner spnC_ShapeA = new JSpinner();
 		spnC_ShapeA.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -834,7 +1089,7 @@ public class MainWindow {
 		pnlCenter.add(pnlC_ShapeB);
 		
 		pnlC_ShapeB.setBackground(Color.WHITE);
-		pnlC_ShapeB.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlC_ShapeB.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 
 		JSpinner spnC_ShapeB = new JSpinner();
 		spnC_ShapeB.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -847,7 +1102,7 @@ public class MainWindow {
 		pnlCenter.add(pnlC_ShapeC);
 		
 		pnlC_ShapeC.setBackground(Color.WHITE);
-		pnlC_ShapeC.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlC_ShapeC.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 
 		JSpinner spnC_ShapeC = new JSpinner();
 		spnC_ShapeC.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -861,7 +1116,7 @@ public class MainWindow {
 		pnlCenter.add(pnlC_ShapeD);
 		
 		pnlC_ShapeD.setBackground(Color.WHITE);
-		pnlC_ShapeD.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlC_ShapeD.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 
 		JSpinner spnC_ShapeD = new JSpinner();
 		spnC_ShapeD.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -875,7 +1130,7 @@ public class MainWindow {
 		pnlCenter.add(pnlC_ShapeE);
 		
 		pnlC_ShapeE.setBackground(Color.WHITE);
-		pnlC_ShapeE.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlC_ShapeE.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 
 		JSpinner spnC_ShapeE = new JSpinner();
 		spnC_ShapeE.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -888,7 +1143,7 @@ public class MainWindow {
 		pnlCenter.add(pnlC_ShapeF);
 
 		pnlC_ShapeF.setBackground(Color.WHITE);
-		pnlC_ShapeF.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlC_ShapeF.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 20));
 
 		JSpinner spnC_ShapeF = new JSpinner();
 		spnC_ShapeF.setAlignmentX(Component.RIGHT_ALIGNMENT);
