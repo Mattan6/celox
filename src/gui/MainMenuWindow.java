@@ -100,7 +100,7 @@ public class MainMenuWindow {
 		JPanel pnlMainMenuCenter = new JPanel();
 		pnlMainMenuCenter.setBackground(Color.WHITE);
 		MainMenuFrame.getContentPane().add(pnlMainMenuCenter, BorderLayout.CENTER);
-		pnlMainMenuCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 110));
+		pnlMainMenuCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 110));
 		
 		JButton btnMainMenuStats = new JButton("Statistics");
 		btnMainMenuStats.setBackground(Color.LIGHT_GRAY);
