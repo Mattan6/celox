@@ -21,19 +21,20 @@ import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 
 public class GlobalSearchWindow {
 
-	private JFrame frame;
+	private JFrame frmSearchWindow;
 	private JTextField txtGrowersId;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTable table;
+	private JTextField textStartSort;
+	private JTextField txtAddress;
+	private JTextField txtPhoneNumber;
+	private JTextField txtPlotId;
+	private JTextField txtName;
+	private JTextField txtEndSort;
+	private JTextField txtPlotName;
+	private JTable tblResults;
 
 	/**
 	 * Launch the application.
@@ -43,7 +44,7 @@ public class GlobalSearchWindow {
 			public void run() {
 				try {
 					GlobalSearchWindow window = new GlobalSearchWindow();
-					window.frame.setVisible(true);
+					window.frmSearchWindow.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -62,132 +63,148 @@ public class GlobalSearchWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmSearchWindow = new JFrame();
+		frmSearchWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmSearchWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSearchWindow.getContentPane().setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setVgap(35);
-		frame.getContentPane().add(panel, BorderLayout.NORTH);
+		JPanel pnlSearchWindowHeader = new JPanel();
+		pnlSearchWindowHeader.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pnlSearchWindowHeader.setBackground(Color.WHITE);
+		FlowLayout fl_pnlSearchWindowHeader = (FlowLayout) pnlSearchWindowHeader.getLayout();
+		fl_pnlSearchWindowHeader.setVgap(35);
+		frmSearchWindow.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("Search");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
-		panel.add(lblNewLabel);
+		JLabel lblSearchWindow = new JLabel("Search");
+		lblSearchWindow.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
+		pnlSearchWindowHeader.add(lblSearchWindow);
 		
-		JPanel panel_2 = new JPanel();
-		frame.getContentPane().add(panel_2, BorderLayout.CENTER);
-		panel_2.setLayout(new BorderLayout(0, 0));
+		JPanel pnlSearchWindowBody = new JPanel();
+		frmSearchWindow.getContentPane().add(pnlSearchWindowBody, BorderLayout.CENTER);
+		pnlSearchWindowBody.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setPreferredSize(new Dimension(250, 50));
-		panel_2.add(panel_3, BorderLayout.WEST);
-		panel_3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 30));
+		JPanel pnlSearchBy = new JPanel();
+		pnlSearchBy.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pnlSearchBy.setBackground(Color.WHITE);
+		pnlSearchBy.setPreferredSize(new Dimension(250, 50));
+		pnlSearchWindowBody.add(pnlSearchBy, BorderLayout.WEST);
+		pnlSearchBy.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 30));
 		
-		JLabel label = new JLabel("Search by: ");
-		label.setFont(new Font("Arial", Font.PLAIN, 15));
-		panel_3.add(label);
+		JLabel lblSearchBy = new JLabel("Search by: ");
+		lblSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearchBy.add(lblSearchBy);
 		
 		
 		String[] searchList = {"Grower","Plot","Date","Other"};
-		JComboBox comboBox = new JComboBox(searchList);
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 15));
-		comboBox.setPreferredSize(new Dimension(150, 20));
-		panel_3.add(comboBox);
+		JComboBox cmbSelection = new JComboBox(searchList);
+		cmbSelection.setFont(new Font("Arial", Font.PLAIN, 15));
+		cmbSelection.setPreferredSize(new Dimension(150, 20));
+		pnlSearchBy.add(cmbSelection);
 		
-		JButton btnNewButton = new JButton("Search");
-		btnNewButton.setFont(new Font("Arial", Font.BOLD, 19));
-		btnNewButton.setPreferredSize(new Dimension(150, 50));
-		panel_3.add(btnNewButton);
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setFont(new Font("Arial", Font.BOLD, 19));
+		btnSearch.setPreferredSize(new Dimension(150, 50));
+		pnlSearchBy.add(btnSearch);
 		
-		JPanel panel_4 = new JPanel();
-		panel_2.add(panel_4, BorderLayout.CENTER);
-		panel_4.setLayout(new BorderLayout(15, 500));
+		JPanel pnlSearchDetails = new JPanel();
+		pnlSearchDetails.setBackground(Color.WHITE);
+		pnlSearchWindowBody.add(pnlSearchDetails, BorderLayout.CENTER);
+		pnlSearchDetails.setLayout(new BorderLayout(15, 500));
 		
-		JPanel panel_5 = new JPanel();
-		panel_5.setPreferredSize(new Dimension(0, 135));
-		panel_4.add(panel_5, BorderLayout.NORTH);
-		panel_5.setLayout(new GridLayout(5, 0, 6, 1));
+		JPanel pnlEnterDetails = new JPanel();
+		pnlEnterDetails.setBackground(Color.WHITE);
+		pnlEnterDetails.setPreferredSize(new Dimension(0, 135));
+		pnlSearchDetails.add(pnlEnterDetails, BorderLayout.NORTH);
+		pnlEnterDetails.setLayout(new GridLayout(5, 0, 6, 1));
 		
 		JLabel lblGrowersId = new JLabel("Grower's ID:");
+		lblGrowersId.setBackground(Color.WHITE);
 		lblGrowersId.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblGrowersId);
+		pnlEnterDetails.add(lblGrowersId);
 		
 		txtGrowersId = new JTextField();
-		panel_5.add(txtGrowersId);
+		pnlEnterDetails.add(txtGrowersId);
 		txtGrowersId.setColumns(10);
 		
 		JLabel lblPlotId = new JLabel("Plot ID:");
+		lblPlotId.setBackground(Color.WHITE);
 		lblPlotId.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblPlotId);
+		pnlEnterDetails.add(lblPlotId);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		panel_5.add(textField_4);
+		txtPlotId = new JTextField();
+		txtPlotId.setColumns(10);
+		pnlEnterDetails.add(txtPlotId);
 		
 		JLabel lblGrowersPhoneNumber = new JLabel("Grower's Phone Number:");
+		lblGrowersPhoneNumber.setBackground(Color.WHITE);
 		lblGrowersPhoneNumber.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblGrowersPhoneNumber);
+		pnlEnterDetails.add(lblGrowersPhoneNumber);
 		
-		textField_2 = new JTextField();
-		panel_5.add(textField_2);
-		textField_2.setColumns(10);
+		txtPhoneNumber = new JTextField();
+		pnlEnterDetails.add(txtPhoneNumber);
+		txtPhoneNumber.setColumns(10);
 		
 		JLabel lblPlotName = new JLabel("Plot Name:");
+		lblPlotName.setBackground(Color.WHITE);
 		lblPlotName.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblPlotName);
+		pnlEnterDetails.add(lblPlotName);
 		
-		textField_7 = new JTextField();
-		panel_5.add(textField_7);
-		textField_7.setColumns(10);
+		txtPlotName = new JTextField();
+		pnlEnterDetails.add(txtPlotName);
+		txtPlotName.setColumns(10);
 		
 		JLabel lblGrowersAddress = new JLabel("Grower's Address:");
+		lblGrowersAddress.setBackground(Color.WHITE);
 		lblGrowersAddress.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblGrowersAddress);
+		pnlEnterDetails.add(lblGrowersAddress);
 		
-		textField_1 = new JTextField();
-		panel_5.add(textField_1);
-		textField_1.setColumns(10);
+		txtAddress = new JTextField();
+		pnlEnterDetails.add(txtAddress);
+		txtAddress.setColumns(10);
 		
 		JLabel lblDateOfSorting = new JLabel("Start Sorting Date:");
+		lblDateOfSorting.setBackground(Color.WHITE);
 		lblDateOfSorting.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblDateOfSorting);
+		pnlEnterDetails.add(lblDateOfSorting);
 		
-		textField = new JTextField();
-		textField.setText("");
-		panel_5.add(textField);
-		textField.setColumns(10);
+		textStartSort = new JTextField();
+		textStartSort.setText("");
+		pnlEnterDetails.add(textStartSort);
+		textStartSort.setColumns(10);
 		
 		JLabel lblGrowersName = new JLabel("Grower's Name:");
+		lblGrowersName.setBackground(Color.WHITE);
 		lblGrowersName.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblGrowersName);
+		pnlEnterDetails.add(lblGrowersName);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		panel_5.add(textField_5);
+		txtName = new JTextField();
+		txtName.setColumns(10);
+		pnlEnterDetails.add(txtName);
 		
 		JLabel lblEndSortingDate = new JLabel("End Sorting Date:");
+		lblEndSortingDate.setBackground(Color.WHITE);
 		lblEndSortingDate.setHorizontalAlignment(SwingConstants.TRAILING);
-		panel_5.add(lblEndSortingDate);
+		pnlEnterDetails.add(lblEndSortingDate);
 		
-		textField_6 = new JTextField();
-		panel_5.add(textField_6);
-		textField_6.setColumns(10);
+		txtEndSort = new JTextField();
+		pnlEnterDetails.add(txtEndSort);
+		txtEndSort.setColumns(10);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setPreferredSize(new Dimension(10, 500));
-		panel_4.add(panel_1, BorderLayout.SOUTH);
-		panel_1.setLayout(new BorderLayout(0, 0));
+		JPanel pnlSearchResults = new JPanel();
+		pnlSearchResults.setBorder(new LineBorder(new Color(0, 0, 0)));
+		pnlSearchResults.setPreferredSize(new Dimension(10, 500));
+		pnlSearchDetails.add(pnlSearchResults, BorderLayout.SOUTH);
+		pnlSearchResults.setLayout(new BorderLayout(0, 0));
 		
-		JPanel panel_6 = new JPanel();
-		FlowLayout flowLayout_1 = (FlowLayout) panel_6.getLayout();
-		flowLayout_1.setAlignment(FlowLayout.LEFT);
-		panel_1.add(panel_6, BorderLayout.NORTH);
+		JPanel pnlResultHeader = new JPanel();
+		pnlResultHeader.setBackground(Color.WHITE);
+		FlowLayout fl_pnlResultHeader = (FlowLayout) pnlResultHeader.getLayout();
+		fl_pnlResultHeader.setAlignment(FlowLayout.LEFT);
+		pnlSearchResults.add(pnlResultHeader, BorderLayout.NORTH);
 		
-		JLabel label_1 = new JLabel("Search Results:");
-		label_1.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
-		panel_6.add(label_1);
+		JLabel lblResults = new JLabel("Search Results:");
+		lblResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
+		pnlResultHeader.add(lblResults);
 		
 		
 		//////column names //////----->>>>> need to change 
@@ -197,12 +214,12 @@ public class GlobalSearchWindow {
 		////// data do be abstracted from the DB of last Sorts - from the Sort TABLE in the DB //////////////////////
 		Object[][] data = {{"ID","Start Date","End Date","Plot-Size", "Species"," % In Plot","Comments","A,B,C,D,E,F,W"}};
 		
-		JScrollPane scrollPane = new JScrollPane();
-		panel_1.add(scrollPane, BorderLayout.CENTER);
+		JScrollPane scpResult = new JScrollPane();
+		pnlSearchResults.add(scpResult, BorderLayout.CENTER);
 		
-		table = new JTable(data,columns);
-		scrollPane.setViewportView(table);
-		table.setFillsViewportHeight(true);
+		tblResults = new JTable(data,columns);
+		scpResult.setViewportView(tblResults);
+		tblResults.setFillsViewportHeight(true);
 	}
 
 }

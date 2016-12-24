@@ -35,8 +35,7 @@ public class LoginWindow {
 	private JFrame loginFrame;
 	private JTextField txtUserName;
 	private JLabel lblPassword;
-	private JPasswordField passwordField;
-	private JLabel lblNewLabel_2;
+	private JPasswordField txtpasswordField;
 	private JLabel lblImgLogo;
 	private JButton btnClear;
 	
@@ -144,10 +143,10 @@ public class LoginWindow {
 		btnLogin.setBounds(211, 51, 95, 20);
 		pnlContent.add(btnLogin);
 		
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 12));
-		passwordField.setBounds(75, 51, 105, 20);
-		pnlContent.add(passwordField);
+		txtpasswordField = new JPasswordField();
+		txtpasswordField.setFont(new Font("Arial", Font.PLAIN, 12));
+		txtpasswordField.setBounds(75, 51, 105, 20);
+		pnlContent.add(txtpasswordField);
 		
 		btnClear = new JButton("Clear");
 		btnClear.setBackground(Color.LIGHT_GRAY);
