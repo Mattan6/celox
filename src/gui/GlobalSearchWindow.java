@@ -25,7 +25,7 @@ import javax.swing.border.LineBorder;
 
 public class GlobalSearchWindow {
 
-	private JFrame frmSearchWindow;
+	private JFrame frmSearch;
 	private JTextField txtGrowersId;
 	private JTextField textStartSort;
 	private JTextField txtAddress;
@@ -44,7 +44,7 @@ public class GlobalSearchWindow {
 			public void run() {
 				try {
 					GlobalSearchWindow window = new GlobalSearchWindow();
-					window.frmSearchWindow.setVisible(true);
+					window.frmSearch.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,24 +63,24 @@ public class GlobalSearchWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmSearchWindow = new JFrame();
-		frmSearchWindow.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frmSearchWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmSearchWindow.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmSearch = new JFrame();
+		frmSearch.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmSearch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSearch.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnlSearchWindowHeader = new JPanel();
 		pnlSearchWindowHeader.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pnlSearchWindowHeader.setBackground(Color.WHITE);
 		FlowLayout fl_pnlSearchWindowHeader = (FlowLayout) pnlSearchWindowHeader.getLayout();
 		fl_pnlSearchWindowHeader.setVgap(35);
-		frmSearchWindow.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
+		frmSearch.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
 		
 		JLabel lblSearchWindow = new JLabel("Search");
 		lblSearchWindow.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
 		pnlSearchWindowHeader.add(lblSearchWindow);
 		
 		JPanel pnlSearchWindowBody = new JPanel();
-		frmSearchWindow.getContentPane().add(pnlSearchWindowBody, BorderLayout.CENTER);
+		frmSearch.getContentPane().add(pnlSearchWindowBody, BorderLayout.CENTER);
 		pnlSearchWindowBody.setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnlSearchBy = new JPanel();

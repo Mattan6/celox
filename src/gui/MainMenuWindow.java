@@ -21,7 +21,7 @@ import javax.swing.JTable;
 
 public class MainMenuWindow {
 
-	private JFrame MainMenuFrame;
+	private JFrame frmMainMenu;
 	private JTable LastSortTable;
 
 	/**
@@ -32,7 +32,7 @@ public class MainMenuWindow {
 			public void run() {
 				try {
 					MainMenuWindow window = new MainMenuWindow();
-					window.MainMenuFrame.setVisible(true);
+					window.frmMainMenu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -51,13 +51,13 @@ public class MainMenuWindow {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		MainMenuFrame = new JFrame();
-		MainMenuFrame.getContentPane().setPreferredSize(new Dimension(10, 0));
+		frmMainMenu = new JFrame();
+		frmMainMenu.getContentPane().setPreferredSize(new Dimension(10, 0));
 		
 		JPanel pnlMainMenuHeader = new JPanel();
 		pnlMainMenuHeader.setBackground(Color.WHITE);
 		pnlMainMenuHeader.setPreferredSize(new Dimension(10, 150));
-		MainMenuFrame.getContentPane().add(pnlMainMenuHeader, BorderLayout.NORTH);
+		frmMainMenu.getContentPane().add(pnlMainMenuHeader, BorderLayout.NORTH);
 		pnlMainMenuHeader.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 45));
 		
 		JLabel lblMainMenuHeader = new JLabel("Cellox Statistics Software");
@@ -66,7 +66,7 @@ public class MainMenuWindow {
 		
 		JPanel pnlMainMenuFooter = new JPanel();
 		pnlMainMenuFooter.setPreferredSize(new Dimension(10, 450));
-		MainMenuFrame.getContentPane().add(pnlMainMenuFooter, BorderLayout.SOUTH);
+		frmMainMenu.getContentPane().add(pnlMainMenuFooter, BorderLayout.SOUTH);
 		pnlMainMenuFooter.setLayout(new BorderLayout(10, 5));
 		
 		//////column names //////
@@ -99,7 +99,7 @@ public class MainMenuWindow {
 		lblLastSorts.setFont(new Font("Arial", Font.PLAIN, 25));
 		JPanel pnlMainMenuCenter = new JPanel();
 		pnlMainMenuCenter.setBackground(Color.WHITE);
-		MainMenuFrame.getContentPane().add(pnlMainMenuCenter, BorderLayout.CENTER);
+		frmMainMenu.getContentPane().add(pnlMainMenuCenter, BorderLayout.CENTER);
 		pnlMainMenuCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 110));
 		
 		JButton btnMainMenuStats = new JButton("Statistics");
@@ -125,8 +125,8 @@ public class MainMenuWindow {
 		btnNewSort.setPreferredSize(new Dimension(250, 50));
 		btnNewSort.setFont(new Font("Arial", Font.PLAIN, 18));
 		pnlMainMenuCenter.add(btnNewSort);
-		MainMenuFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		MainMenuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMainMenu.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmMainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 }

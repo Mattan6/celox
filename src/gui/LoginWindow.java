@@ -32,7 +32,7 @@ import java.util.Date;
 
 public class LoginWindow {
 	/**Form variables**/
-	private JFrame loginFrame;
+	private JFrame frmLogin;
 	private JTextField txtUserName;
 	private JLabel lblPassword;
 	private JPasswordField txtpasswordField;
@@ -53,7 +53,7 @@ public class LoginWindow {
 			public void run() {
 				try {
 					LoginWindow window = new LoginWindow();
-					window.loginFrame.setVisible(true);
+					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -95,18 +95,18 @@ public class LoginWindow {
 	
 	private void buildLoginFrame()
 	{
-		loginFrame = new JFrame();
-		loginFrame.getContentPane().setBackground(Color.WHITE);
-		loginFrame.setBounds(100, 100, 354, 300);
-		loginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		loginFrame.getContentPane().setLayout(null);
+		frmLogin = new JFrame();
+		frmLogin.getContentPane().setBackground(Color.WHITE);
+		frmLogin.setBounds(100, 100, 354, 300);
+		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmLogin.getContentPane().setLayout(null);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		loginFrame.setLocation(dim.width/2-loginFrame.getSize().width/2, dim.height/2-loginFrame.getSize().height/2);
+		frmLogin.setLocation(dim.width/2-frmLogin.getSize().width/2, dim.height/2-frmLogin.getSize().height/2);
 		
 		JPanel pnlHeader = new JPanel();
 		pnlHeader.setBackground(Color.WHITE);
 		pnlHeader.setBounds(10, 11, 318, 140);
-		loginFrame.getContentPane().add(pnlHeader);
+		frmLogin.getContentPane().add(pnlHeader);
 		pnlHeader.setLayout(null);
 		
 		lblImgLogo = new JLabel("");
@@ -118,7 +118,7 @@ public class LoginWindow {
 		JPanel pnlContent = new JPanel();
 		pnlContent.setBackground(Color.WHITE);
 		pnlContent.setBounds(10, 162, 318, 88);
-		loginFrame.getContentPane().add(pnlContent);
+		frmLogin.getContentPane().add(pnlContent);
 		pnlContent.setLayout(null);
 		
 		txtUserName = new JTextField();

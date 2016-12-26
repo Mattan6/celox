@@ -17,10 +17,11 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import java.awt.Color;
 import java.awt.SystemColor;
+import java.awt.FlowLayout;
 
 public class NewCustomer {
 
-	private JFrame frame;
+	private JFrame frmNewDetails;
 	private JTextField txtGower;
 	private JTextField txtPlot;
 	private JTextField txtGrowerName;
@@ -40,7 +41,7 @@ public class NewCustomer {
 			public void run() {
 				try {
 					NewCustomer window = new NewCustomer();
-					window.frame.setVisible(true);
+					window.frmNewDetails.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,37 +60,39 @@ public class NewCustomer {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmNewDetails = new JFrame();
+		frmNewDetails.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmNewDetails.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmNewDetails.getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		JPanel pnlHeader = new JPanel();
-		frame.getContentPane().add(pnlHeader, BorderLayout.NORTH);
+		FlowLayout flowLayout = (FlowLayout) pnlHeader.getLayout();
+		flowLayout.setVgap(75);
+		frmNewDetails.getContentPane().add(pnlHeader, BorderLayout.NORTH);
 		
 		JLabel lblNewCustomer = new JLabel("New Customer");
 		lblNewCustomer.setForeground(new Color(255, 69, 0));
 		lblNewCustomer.setFont(new Font("Arial", Font.BOLD, 20));
 		pnlHeader.add(lblNewCustomer);
 		
-		frame.getContentPane().add(pnlEast, BorderLayout.EAST);
+		frmNewDetails.getContentPane().add(pnlEast, BorderLayout.EAST);
 		pnlEast.setLayout(new GridLayout(1,1));	
 		JLabel lblSpaces = new JLabel("----------------------------------------------------------------------");
 		pnlEast.add(lblSpaces);
 		
-		frame.getContentPane().add(pnlWest, BorderLayout.WEST);
+		frmNewDetails.getContentPane().add(pnlWest, BorderLayout.WEST);
 		pnlWest.setLayout(new GridLayout(1,1));	
 		JLabel lblSpacesW = new JLabel("----------------------------------------------------------------------");
 		pnlWest.add(lblSpacesW);
 		
-		frame.getContentPane().add(pnlfooter, BorderLayout.SOUTH);
+		frmNewDetails.getContentPane().add(pnlfooter, BorderLayout.SOUTH);
 		pnlfooter.setLayout(new GridLayout(6,2));		
 		FieldsFormPlots();
 		
 		//frame.getContentPane().add(pnlfooter, BorderLayout.SOUTH);
 		//pnlfooter.setLayout(new GridLayout(0, 1, 0, 0));		
 		
-		frame.getContentPane().add(pnlNewCustomer, BorderLayout.CENTER);
+		frmNewDetails.getContentPane().add(pnlNewCustomer, BorderLayout.CENTER);
 		pnlNewCustomer.setLayout(new GridLayout(6,2));		
 		FieldsFormNewCustomer();
 	}
