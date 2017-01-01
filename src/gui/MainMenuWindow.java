@@ -58,7 +58,7 @@ public class MainMenuWindow {
 		pnlMainMenuHeader.setBackground(Color.WHITE);
 		pnlMainMenuHeader.setPreferredSize(new Dimension(10, 150));
 		frmMainMenu.getContentPane().add(pnlMainMenuHeader, BorderLayout.NORTH);
-		pnlMainMenuHeader.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 45));
+		pnlMainMenuHeader.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 50));
 		
 		JLabel lblMainMenuHeader = new JLabel("Cellox Statistics Software");
 		lblMainMenuHeader.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 50));

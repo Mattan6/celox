@@ -101,11 +101,10 @@ public class MainWindow {
 		////////////////// main window header panel ////////////////
 
 		JPanel pnlHeader = new JPanel();
+		pnlHeader.setPreferredSize(new Dimension(10, 100));
 		pnlHeader.setBackground(Color.LIGHT_GRAY);
 		frame.getContentPane().add(pnlHeader, BorderLayout.NORTH);
-
-		JButton btnNewButton_2 = new JButton("New button");
-		pnlHeader.add(btnNewButton_2);
+		pnlHeader.setLayout(new BorderLayout(0, 0));
 		
 		
 		///////////////// main frame footer panel /////////////////////////

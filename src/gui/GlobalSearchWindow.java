@@ -72,7 +72,7 @@ public class GlobalSearchWindow {
 		pnlSearchWindowHeader.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pnlSearchWindowHeader.setBackground(Color.WHITE);
 		FlowLayout fl_pnlSearchWindowHeader = (FlowLayout) pnlSearchWindowHeader.getLayout();
-		fl_pnlSearchWindowHeader.setVgap(35);
+		fl_pnlSearchWindowHeader.setVgap(50);
 		frmSearch.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
 		
 		JLabel lblSearchWindow = new JLabel("Search");
