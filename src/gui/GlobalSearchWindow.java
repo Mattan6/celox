@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GlobalSearchWindow {
 
@@ -88,23 +90,83 @@ public class GlobalSearchWindow {
 		pnlSearchBy.setBackground(Color.WHITE);
 		pnlSearchBy.setPreferredSize(new Dimension(250, 50));
 		pnlSearchWindowBody.add(pnlSearchBy, BorderLayout.WEST);
-		pnlSearchBy.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 30));
+		pnlSearchBy.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.UNRELATED_GAP_COLSPEC,
+				ColumnSpec.decode("74px"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
+				ColumnSpec.decode("150px"),},
+			new RowSpec[] {
+				RowSpec.decode("31px"),
+				RowSpec.decode("20px"),
+				RowSpec.decode("30px"),
+				RowSpec.decode("50px"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel lblSearchBy = new JLabel("Search by: ");
 		lblSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
-		pnlSearchBy.add(lblSearchBy);
+		pnlSearchBy.add(lblSearchBy, "2, 2, left, center");
 		
 		
 		String[] searchList = {"Grower","Plot","Date","Other"};
 		JComboBox cmbSelection = new JComboBox(searchList);
 		cmbSelection.setFont(new Font("Arial", Font.PLAIN, 15));
 		cmbSelection.setPreferredSize(new Dimension(150, 20));
-		pnlSearchBy.add(cmbSelection);
+		pnlSearchBy.add(cmbSelection, "4, 2, 4, 1, left, top");
 		
 		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnSearch.setFont(new Font("Arial", Font.BOLD, 19));
 		btnSearch.setPreferredSize(new Dimension(150, 50));
-		pnlSearchBy.add(btnSearch);
+		pnlSearchBy.add(btnSearch, "2, 4, 5, 1, default, center");
+		
+		JButton btnBack = new JButton("Back");
+		pnlSearchBy.add(btnBack, "2, 42, 3, 3");
 		
 		JPanel pnlSearchDetails = new JPanel();
 		pnlSearchDetails.setBackground(Color.WHITE);

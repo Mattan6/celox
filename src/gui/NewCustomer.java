@@ -448,6 +448,16 @@ public class NewCustomer {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel lblAddNewGrower = new JLabel("Add A New Grower");
@@ -549,6 +559,10 @@ public class NewCustomer {
 		
 		JButton btnUpdateGrower = new JButton("Update");
 		pnlLeftBody.add(btnUpdateGrower, "4, 38, 3, 1");
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setForeground(Color.BLACK);
+		pnlLeftBody.add(btnBack, "4, 46, 2, 3");
 		FieldsFormPlots();
 		FieldsFormNewCustomer();
 	}

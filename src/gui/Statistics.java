@@ -180,6 +180,16 @@ public class Statistics {
 				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
 				FormSpecs.DEFAULT_ROWSPEC,}));
 		
 		JLabel lblChooseWhatTo = new JLabel("Choose What To Export:");
@@ -221,6 +231,9 @@ public class Statistics {
 		JButton btnExport = new JButton("Export");
 		btnExport.setPreferredSize(new Dimension(65, 25));
 		pnlExportDetails.add(btnExport, "8, 32, 1, 3");
+		
+		JButton btnBack = new JButton("Back");
+		pnlExportDetails.add(btnBack, "2, 44, 1, 3");
 
 		
 		JPanel pnlRight = new JPanel();
