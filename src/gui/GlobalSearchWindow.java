@@ -23,20 +23,20 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class GlobalSearchWindow {
 
 	private JFrame frmSearch;
-	private JTextField txtGrowersId;
-	private JTextField textStartSort;
-	private JTextField txtAddress;
-	private JTextField txtPhoneNumber;
-	private JTextField txtPlotId;
-	private JTextField txtName;
-	private JTextField txtEndSort;
-	private JTextField txtPlotName;
 	private JTable tblResults;
+	private JTextField txtGrowerId;
+	private JTextField txtGrowerName;
+	private JTextField txtGrowerPhone;
+	private JTextField txtEndDate;
+	private JTextField txtStartDate;
 
 	/**
 	 * Launch the application.
@@ -59,6 +59,7 @@ public class GlobalSearchWindow {
 	 */
 	public GlobalSearchWindow() {
 		initialize();
+		setEnabled("Grower");
 	}
 
 	/**
@@ -69,219 +70,207 @@ public class GlobalSearchWindow {
 		frmSearch.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmSearch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSearch.getContentPane().setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel pnlSearchWindowHeader = new JPanel();
 		pnlSearchWindowHeader.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pnlSearchWindowHeader.setBackground(Color.WHITE);
 		FlowLayout fl_pnlSearchWindowHeader = (FlowLayout) pnlSearchWindowHeader.getLayout();
 		fl_pnlSearchWindowHeader.setVgap(50);
 		frmSearch.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
-		
+
 		JLabel lblSearchWindow = new JLabel("Search");
 		lblSearchWindow.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
 		pnlSearchWindowHeader.add(lblSearchWindow);
-		
+
 		JPanel pnlSearchWindowBody = new JPanel();
 		frmSearch.getContentPane().add(pnlSearchWindowBody, BorderLayout.CENTER);
 		pnlSearchWindowBody.setLayout(new BorderLayout(0, 0));
-		
-		JPanel pnlSearchBy = new JPanel();
-		pnlSearchBy.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnlSearchBy.setBackground(Color.WHITE);
-		pnlSearchBy.setPreferredSize(new Dimension(250, 50));
-		pnlSearchWindowBody.add(pnlSearchBy, BorderLayout.WEST);
-		pnlSearchBy.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.UNRELATED_GAP_COLSPEC,
-				ColumnSpec.decode("74px"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.RELATED_GAP_COLSPEC,
-				FormSpecs.DEFAULT_COLSPEC,
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				ColumnSpec.decode("150px"),},
-			new RowSpec[] {
-				RowSpec.decode("31px"),
-				RowSpec.decode("20px"),
-				RowSpec.decode("30px"),
-				RowSpec.decode("50px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
-		
-		JLabel lblSearchBy = new JLabel("Search by: ");
-		lblSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
-		pnlSearchBy.add(lblSearchBy, "2, 2, left, center");
-		
-		
-		String[] searchList = {"Grower","Plot","Date","Other"};
-		JComboBox cmbSelection = new JComboBox(searchList);
-		cmbSelection.setFont(new Font("Arial", Font.PLAIN, 15));
-		cmbSelection.setPreferredSize(new Dimension(150, 20));
-		pnlSearchBy.add(cmbSelection, "4, 2, 4, 1, left, top");
-		
-		JButton btnSearch = new JButton("Search");
-		btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnSearch.setFont(new Font("Arial", Font.BOLD, 19));
-		btnSearch.setPreferredSize(new Dimension(150, 50));
-		pnlSearchBy.add(btnSearch, "2, 4, 5, 1, default, center");
-		
-		JButton btnBack = new JButton("Back");
-		pnlSearchBy.add(btnBack, "2, 42, 3, 3");
-		
+
 		JPanel pnlSearchDetails = new JPanel();
 		pnlSearchDetails.setBackground(Color.WHITE);
 		pnlSearchWindowBody.add(pnlSearchDetails, BorderLayout.CENTER);
-		pnlSearchDetails.setLayout(new BorderLayout(15, 500));
+		pnlSearchDetails.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("1347px:grow"),},
+				new RowSpec[] {
+						RowSpec.decode("181px:grow"),
+						RowSpec.decode("500px"),}));
+
+		JPanel pnlSearch = new JPanel();
+		pnlSearchDetails.add(pnlSearch, "1, 1, fill, fill");
+		pnlSearch.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				FormSpecs.DEFAULT_COLSPEC,
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),},
+				new RowSpec[] {
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC,
+						FormSpecs.RELATED_GAP_ROWSPEC,
+						FormSpecs.DEFAULT_ROWSPEC,}));
+
+		JLabel lblSearchBy = new JLabel("Search By:");
+		lblSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblSearchBy, "6, 4, right, default");
+
+		JComboBox cmbSearchBy = new JComboBox();
+		cmbSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
+		cmbSearchBy.setModel(new DefaultComboBoxModel(new String[] {"Grower", "Date"}));
+		pnlSearch.add(cmbSearchBy, "8, 4, fill, default");
+
+		cmbSearchBy.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {	
+				setEnabled((String)cmbSearchBy.getSelectedItem());
+
+			}
+
+		});
+
+		JLabel lblGrowerId = new JLabel("Grower Id");
+		lblGrowerId.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblGrowerId, "12, 4, right, default");
+
+		txtGrowerId = new JTextField();
+		txtGrowerId.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnlSearch.add(txtGrowerId, "14, 4, fill, default");
+		txtGrowerId.setColumns(10);
 		
-		JPanel pnlEnterDetails = new JPanel();
-		pnlEnterDetails.setBackground(Color.WHITE);
-		pnlEnterDetails.setPreferredSize(new Dimension(0, 135));
-		pnlSearchDetails.add(pnlEnterDetails, BorderLayout.NORTH);
-		pnlEnterDetails.setLayout(new GridLayout(5, 0, 6, 1));
+		JLabel lblGrowerName = new JLabel("Grower Name");
+		lblGrowerName.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblGrowerName, "12, 6, right, default");
 		
-		JLabel lblGrowersId = new JLabel("Grower's ID:");
-		lblGrowersId.setBackground(Color.WHITE);
-		lblGrowersId.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblGrowersId);
+		txtGrowerName = new JTextField();
+		txtGrowerName.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnlSearch.add(txtGrowerName, "14, 6, fill, top");
+		txtGrowerName.setColumns(10);
 		
-		txtGrowersId = new JTextField();
-		pnlEnterDetails.add(txtGrowersId);
-		txtGrowersId.setColumns(10);
-		
-		JLabel lblPlotId = new JLabel("Plot ID:");
-		lblPlotId.setBackground(Color.WHITE);
-		lblPlotId.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblPlotId);
-		
-		txtPlotId = new JTextField();
-		txtPlotId.setColumns(10);
-		pnlEnterDetails.add(txtPlotId);
-		
-		JLabel lblGrowersPhoneNumber = new JLabel("Grower's Phone Number:");
-		lblGrowersPhoneNumber.setBackground(Color.WHITE);
-		lblGrowersPhoneNumber.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblGrowersPhoneNumber);
-		
-		txtPhoneNumber = new JTextField();
-		pnlEnterDetails.add(txtPhoneNumber);
-		txtPhoneNumber.setColumns(10);
-		
-		JLabel lblPlotName = new JLabel("Plot Name:");
-		lblPlotName.setBackground(Color.WHITE);
-		lblPlotName.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblPlotName);
-		
-		txtPlotName = new JTextField();
-		pnlEnterDetails.add(txtPlotName);
-		txtPlotName.setColumns(10);
-		
-		JLabel lblGrowersAddress = new JLabel("Grower's Address:");
-		lblGrowersAddress.setBackground(Color.WHITE);
-		lblGrowersAddress.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblGrowersAddress);
-		
-		txtAddress = new JTextField();
-		pnlEnterDetails.add(txtAddress);
-		txtAddress.setColumns(10);
-		
-		JLabel lblDateOfSorting = new JLabel("Start Sorting Date:");
-		lblDateOfSorting.setBackground(Color.WHITE);
-		lblDateOfSorting.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblDateOfSorting);
-		
-		textStartSort = new JTextField();
-		textStartSort.setText("");
-		pnlEnterDetails.add(textStartSort);
-		textStartSort.setColumns(10);
-		
-		JLabel lblGrowersName = new JLabel("Grower's Name:");
-		lblGrowersName.setBackground(Color.WHITE);
-		lblGrowersName.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblGrowersName);
-		
-		txtName = new JTextField();
-		txtName.setColumns(10);
-		pnlEnterDetails.add(txtName);
-		
-		JLabel lblEndSortingDate = new JLabel("End Sorting Date:");
-		lblEndSortingDate.setBackground(Color.WHITE);
-		lblEndSortingDate.setHorizontalAlignment(SwingConstants.TRAILING);
-		pnlEnterDetails.add(lblEndSortingDate);
-		
-		txtEndSort = new JTextField();
-		pnlEnterDetails.add(txtEndSort);
-		txtEndSort.setColumns(10);
-		
+		JLabel lblGrowerPhoneNumber = new JLabel("Grower Phone Number");
+		lblGrowerPhoneNumber.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblGrowerPhoneNumber, "12, 8, right, default");
+
+		txtGrowerPhone = new JTextField();
+		txtGrowerPhone.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnlSearch.add(txtGrowerPhone, "14, 8, fill, default");
+		txtGrowerPhone.setColumns(10);
+
+		JLabel lblStartDate = new JLabel("Date Of Sort - Start");
+		lblStartDate.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblStartDate, "18, 4, right, default");
+
+		txtStartDate = new JTextField();
+		txtStartDate.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnlSearch.add(txtStartDate, "20, 4, fill, default");
+		txtStartDate.setColumns(10);
+
+
+		JLabel lblEndDate = new JLabel("Date Of Sort - End");
+		lblEndDate.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblEndDate, "18, 6, right, default");
+
+		txtEndDate = new JTextField();
+		txtEndDate.setFont(new Font("Arial", Font.PLAIN, 13));
+		pnlSearch.add(txtEndDate, "20, 6, fill, default");
+		txtEndDate.setColumns(10);
+
+
+
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(btnBack, "12, 12");
+
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(btnSearch, "14, 12");
+
 		JPanel pnlSearchResults = new JPanel();
 		pnlSearchResults.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pnlSearchResults.setPreferredSize(new Dimension(10, 500));
-		pnlSearchDetails.add(pnlSearchResults, BorderLayout.SOUTH);
+		pnlSearchDetails.add(pnlSearchResults, "1, 2, fill, top");
 		pnlSearchResults.setLayout(new BorderLayout(0, 0));
-		
+
 		JPanel pnlResultHeader = new JPanel();
 		pnlResultHeader.setBackground(Color.WHITE);
 		FlowLayout fl_pnlResultHeader = (FlowLayout) pnlResultHeader.getLayout();
 		fl_pnlResultHeader.setAlignment(FlowLayout.LEFT);
 		pnlSearchResults.add(pnlResultHeader, BorderLayout.NORTH);
-		
+
 		JLabel lblResults = new JLabel("Search Results:");
 		lblResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		pnlResultHeader.add(lblResults);
-		
-		
+
+
 		//////column names //////----->>>>> need to change 
-		
+
 		String[] columns = {"Plot's ID","Sort Start Date","Sort End Date","Size Of Plot", "Species","Percentage In Plot","Comments","Departments Breakdown"};
-		
+
 		////// data do be abstracted from the DB of last Sorts - from the Sort TABLE in the DB //////////////////////
 		Object[][] data = {{"ID","Start Date","End Date","Plot-Size", "Species"," % In Plot","Comments","A,B,C,D,E,F,W"}};
-		
+
 		JScrollPane scpResult = new JScrollPane();
 		pnlSearchResults.add(scpResult, BorderLayout.CENTER);
-		
+
 		tblResults = new JTable(data,columns);
 		scpResult.setViewportView(tblResults);
 		tblResults.setFillsViewportHeight(true);
+	}
+	
+	private void setEnabled(String selectedItem) {
+		switch(selectedItem){
+		case "Grower":
+			txtStartDate.setEnabled(false);
+			txtStartDate.setBackground(Color.LIGHT_GRAY);
+			txtEndDate.setEnabled(false);
+			txtEndDate.setBackground(Color.LIGHT_GRAY);
+			txtGrowerId.setEnabled(true);
+			txtGrowerId.setBackground(Color.WHITE);
+			txtGrowerName.setEnabled(true);
+			txtGrowerName.setBackground(Color.WHITE);
+			txtGrowerPhone.setEnabled(true);
+			txtGrowerPhone.setBackground(Color.WHITE);
+			break;
+		case "Date":
+			txtGrowerId.setEnabled(false);
+			txtGrowerId.setBackground(Color.LIGHT_GRAY);
+			txtGrowerName.setEnabled(false);
+			txtGrowerName.setBackground(Color.LIGHT_GRAY);
+			txtGrowerPhone.setEnabled(false);
+			txtGrowerPhone.setBackground(Color.LIGHT_GRAY);
+			txtStartDate.setEnabled(true);
+			txtStartDate.setBackground(Color.WHITE);
+			txtEndDate.setEnabled(true);
+			txtEndDate.setBackground(Color.WHITE);
+			break;
+		default : 
+
+		}
+		
 	}
 
 }

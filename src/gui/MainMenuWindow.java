@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import java.awt.FlowLayout;
 import javax.swing.SwingConstants;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.ComponentOrientation;
 import java.awt.Color;
 import javax.swing.JSeparator;
@@ -45,6 +47,7 @@ public class MainMenuWindow {
 	 */
 	public MainMenuWindow() {
 		initialize();
+		frmMainMenu.setVisible(true);
 	}
 
 	/**
@@ -67,14 +70,14 @@ public class MainMenuWindow {
 		JPanel pnlMainMenuFooter = new JPanel();
 		pnlMainMenuFooter.setPreferredSize(new Dimension(10, 450));
 		frmMainMenu.getContentPane().add(pnlMainMenuFooter, BorderLayout.SOUTH);
-		pnlMainMenuFooter.setLayout(new BorderLayout(10, 5));
+		pnlMainMenuFooter.setLayout(new BorderLayout(16, 5));
 		
 		//////column names //////
 		
-		String[] columns = {"Plot's ID","Sort Start Date","Sort End Date","Size Of Plot", "Species","Percentage In Plot","Comments","Departments Breakdown"};
+		String[] columns = {"Plot's Name","Sort Start Date","Sort End Date","Size Of Plot", "Species","Percentage In Plot","Comments","Departments Breakdown"};
 		
 		////// data do be abstracted from the DB of last Sorts - from the Sort TABLE in the DB //////////////////////
-		Object[][] data = {{"ID","Start Date","End Date","Plot-Size", "Species"," % In Plot","Comments","A,B,C,D,E,F,W"}};
+		Object[][] data = {{"Plot Name","Start Date","End Date","Plot-Size", "Species"," % In Plot","Comments","A,B,C,D,E,F,W"}};
 		
 			
 		LastSortTable = new JTable(data,columns);
@@ -102,29 +105,69 @@ public class MainMenuWindow {
 		frmMainMenu.getContentPane().add(pnlMainMenuCenter, BorderLayout.CENTER);
 		pnlMainMenuCenter.setLayout(new FlowLayout(FlowLayout.CENTER, 60, 110));
 		
-		JButton btnMainMenuStats = new JButton("Statistics");
-		btnMainMenuStats.setBackground(Color.LIGHT_GRAY);
-		btnMainMenuStats.setPreferredSize(new Dimension(250, 50));
-		btnMainMenuStats.setFont(new Font("Arial", Font.PLAIN, 18));
-		pnlMainMenuCenter.add(btnMainMenuStats);
+		JButton btnStats = new JButton("Statistics");
+		btnStats.setBackground(Color.LIGHT_GRAY);
+		btnStats.setPreferredSize(new Dimension(250, 50));
+		btnStats.setFont(new Font("Arial", Font.PLAIN, 18));
+		pnlMainMenuCenter.add(btnStats);
+		btnStats.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Statistics();
+				frmMainMenu.dispose();
+				
+			}
+		});
 		
-		JButton btnMainMenuUpdate = new JButton("Update Data");
-		btnMainMenuUpdate.setBackground(Color.LIGHT_GRAY);
-		btnMainMenuUpdate.setPreferredSize(new Dimension(250, 50));
-		btnMainMenuUpdate.setFont(new Font("Arial", Font.PLAIN, 18));
-		pnlMainMenuCenter.add(btnMainMenuUpdate);
 		
-		JButton btnMainMenuSearch = new JButton("Search");
-		btnMainMenuSearch.setBackground(Color.LIGHT_GRAY);
-		btnMainMenuSearch.setPreferredSize(new Dimension(250, 50));
-		btnMainMenuSearch.setFont(new Font("Arial", Font.PLAIN, 18));
-		pnlMainMenuCenter.add(btnMainMenuSearch);
+		JButton btnCustomers = new JButton("Customer Update");
+		btnCustomers.setBackground(Color.LIGHT_GRAY);
+		btnCustomers.setPreferredSize(new Dimension(250, 50));
+		btnCustomers.setFont(new Font("Arial", Font.PLAIN, 18));
+		pnlMainMenuCenter.add(btnCustomers);
+		btnCustomers.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewCustomer();
+				frmMainMenu.dispose();
+				
+			}
+		});
+		
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setBackground(Color.LIGHT_GRAY);
+		btnSearch.setPreferredSize(new Dimension(250, 50));
+		btnSearch.setFont(new Font("Arial", Font.PLAIN, 18));
+		pnlMainMenuCenter.add(btnSearch);
+		btnSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GlobalSearchWindow();
+				frmMainMenu.dispose();
+				
+			}
+		});
+		
 		
 		JButton btnNewSort = new JButton("New Sort");
 		btnNewSort.setBackground(Color.LIGHT_GRAY);
 		btnNewSort.setPreferredSize(new Dimension(250, 50));
 		btnNewSort.setFont(new Font("Arial", Font.PLAIN, 18));
 		pnlMainMenuCenter.add(btnNewSort);
+		btnNewSort.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewSort();
+				frmMainMenu.dispose();
+			}
+		});
+		
+		
 		frmMainMenu.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmMainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
