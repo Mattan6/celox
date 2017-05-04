@@ -224,6 +224,33 @@ public class SendServer {
 		return toReturn;
 	}
 
+
+	public List<Sorts> getSorts() {
+		List<String> sorts = new ArrayList();
+		List<Sorts> toReturn = new ArrayList<>();
+		Gson gson = new Gson();
+		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo' }";
+		try{
+
+			out = new DataOutputStream(socket.getOutputStream());
+			out.writeUTF(query);
+			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+			sorts = (List<String>) in.readObject();
+			for (String j: sorts){
+				toReturn.add( gson.fromJson(j, Sorts.class));
+			}
+			out.close();
+			in.close();
+			return toReturn;
+		}catch(IOException e){
+			System.out.println("couldent write to socket");
+		}catch (ClassNotFoundException e) {
+			System.out.println("reciving from server come up with a problem! ");
+			e.printStackTrace();
+		}
+		return toReturn;
+	}
+
 }
 
 

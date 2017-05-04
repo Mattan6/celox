@@ -78,7 +78,7 @@ public class GlobalSearchWindow {
 		fl_pnlSearchWindowHeader.setVgap(50);
 		frmSearch.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
 
-		JLabel lblSearchWindow = new JLabel("Search");
+		JLabel lblSearchWindow = new JLabel("Sort Search");
 		lblSearchWindow.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
 		pnlSearchWindowHeader.add(lblSearchWindow);
 
