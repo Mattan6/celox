@@ -713,6 +713,7 @@ public class NewCustomer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean isChanged = false;
+				Growers nGrower = null;
 				String id = txtIdGrowerChosen.getText().trim();
 				String name = txtGrowerNameChosen.getText().trim();
 				String addr = txtGrowerAddressChosen.getText().trim();
@@ -723,16 +724,20 @@ public class NewCustomer {
 						if (!growers.get(i).getgName().equals(name) ||  !growers.get(i).getgAddress().equals(addr) || 
 								!growers.get(i).getgPhone().equals(phone)){
 							isChanged =true;
+							nGrower = new Growers(growers.get(i));
 							break;
 						}	
 					}
 				}
 				if (isChanged){
-					Growers grower = new Growers(id,name,addr,phone);
+					nGrower.setgAddress(addr);
+					nGrower.setgName(name);
+					nGrower.setgPhone(phone);
+					//Growers grower = new Growers(id,name,addr,phone);
 					try
 					{
 						SendServer get = new SendServer();
-						get.updateGrower(grower);
+						get.updateGrower(nGrower);
 						getDataFromDB();
 						PopUpInfo(true, "Grower Updated");
 					}

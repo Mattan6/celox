@@ -29,6 +29,7 @@ public class SendServer {
 			socket = new Socket(serverIP, serverPort);
 		}catch(IOException e){
 			System.out.println("couldent open connection");
+			e.printStackTrace();
 		}
 	}
 
@@ -57,7 +58,8 @@ public class SendServer {
 			out.close();
 			return true;
 		}catch(IOException e){
-			System.out.println("couldent write to socket");
+			System.out.println("couldent write to socket -- insert" + e.getStackTrace() );
+			e.printStackTrace();
 		}
 
 		return false;
@@ -89,7 +91,8 @@ public class SendServer {
 			out.close();
 			return true;
 		}catch(IOException e){
-			System.out.println("couldent write to socket");
+			System.out.println("couldent write to socket -- sort" + e.getStackTrace());
+			e.printStackTrace();
 		}
 
 		return false;
@@ -115,7 +118,8 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket");
+			System.out.println("couldent write to socket -- getGrowers" + e.getStackTrace());
+			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
 			System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
@@ -125,10 +129,17 @@ public class SendServer {
 
 
 	public void updateGrower (Growers grower){
-
-		String query = "{ 'machine_id' : 'Software' , 'action' : 'update' , 'collection' : 'growers' , 'what' : 'grower' , 'gID' :" +"'" + grower.getgID() +"'" + 
-				", 'gName' : " +"'"+ grower.getgName()+"'" + ", 'gAddress' : " +"'" + grower.getgAddress()+"'" + ", 'gPhone' : " +"'"+ grower.getgPhone()+"'" 
-				+", 'plots' : " + "[" +""+ "]" + "}";
+		Gson gson = new Gson();
+		String data = gson.toJson(grower);
+		
+		JsonParser parser = new JsonParser();
+		JsonObject json = (JsonObject)parser.parse(data);
+		json.addProperty("action", "update");
+		json.addProperty("collection", "growers");
+		json.addProperty("machine_id", "Software");
+		json.addProperty("what", "grower");
+		String query = json.toString();
+		
 		System.out.println(query);
 		try{
 
@@ -144,7 +155,8 @@ public class SendServer {
 			out.close();
 
 		}catch(IOException e){
-			System.out.println("couldnt write to socket");
+			System.out.println("couldnt write to socket -- updateGrower");
+			e.printStackTrace();
 		}
 	}
 
@@ -168,7 +180,8 @@ public class SendServer {
 			out.close();
 
 		}catch(IOException e){
-			System.out.println("couldnt write to socket");
+			System.out.println("couldnt write to socket -- updatePlot");
+			e.printStackTrace();
 		}
 	}
 
@@ -191,7 +204,8 @@ public class SendServer {
 			out.close();
 
 		}catch(IOException e){
-			System.out.println("couldnt write to socket");
+			System.out.println("couldnt write to socket -- addPlotToGrower");
+			e.printStackTrace();
 			return false;
 		}
 		return true;
@@ -216,7 +230,8 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket");
+			System.out.println("couldent write to socket  --- getUsers" + e.getStackTrace());
+			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
 			System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
@@ -226,7 +241,7 @@ public class SendServer {
 
 
 	public List<Sorts> getSorts() {
-		List<String> sorts = new ArrayList();
+		List<String> sorts = new ArrayList<String>();
 		List<Sorts> toReturn = new ArrayList<>();
 		Gson gson = new Gson();
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo' }";
@@ -243,7 +258,67 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket");
+			System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			System.out.println("reciving from server come up with a problem! ");
+			e.printStackTrace();
+		}
+		return toReturn;
+	}
+
+
+	public List<ProductList> getPackets(String startDate, String endDate) {
+		List<String> packets = new ArrayList<String>();
+		List<ProductList> toReturn = new ArrayList<>();
+		Gson gson = new Gson();
+		String query = "{ 'machine_id' : 'Software' , 'action' : 'query', 'what':'packet' , 'collection' : 'sortsTry', 'startTime': ' "
+		+ startDate + "', 'endTime' : '" + endDate +"'"+"}";
+		System.out.println(query);
+		try{
+
+			out = new DataOutputStream(socket.getOutputStream());
+			out.writeUTF(query);
+			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+			packets = (List<String>) in.readObject();
+			for (String j: packets){
+				toReturn.add( gson.fromJson(j, ProductList.class));
+			}
+			out.close();
+			in.close();
+			return toReturn;
+		}catch(IOException e){
+			System.out.println("couldent write to socket -- getPackets");
+			e.printStackTrace();
+		}catch (ClassNotFoundException e) {
+			System.out.println("reciving from server come up with a problem! ");
+			e.printStackTrace();
+		}
+		return toReturn;
+	}
+
+
+	public List<ProgramPacket> getProg( String startDate, String endDate) {
+		List<String> program = new ArrayList<String>();
+		List<ProgramPacket> toReturn = new ArrayList<>();
+		Gson gson = new Gson();
+		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'what':'program' , 'collection' : 'sortsTry', 'startTime': ' "
+		+ startDate+ "', 'endTime' : '" + endDate +"'"+"}";
+		try{
+
+			out = new DataOutputStream(socket.getOutputStream());
+			out.writeUTF(query);
+			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+			program = (List<String>) in.readObject();
+			for (String j: program){
+				toReturn.add( gson.fromJson(j, ProgramPacket.class));
+			}
+			out.close();
+			in.close();
+			return toReturn;
+		}catch(IOException e){
+			System.out.println("couldent write to socket -- getProg ");
+			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
 			System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();

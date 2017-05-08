@@ -75,20 +75,13 @@ public class ValidationFunctions {
 		
 	}
 	
-	
-	/**
-	 * this function receive a String and check if he starts with a space or ends with one 
-	 * takes it off and return it without 
-	 * @param str
-	 * @return
-	 */
-	public String fixSpaces(String str){
-		while(str.valueOf(0).equals(" ")){
-			str = str.substring(1, str.length());
-		}
-		while(str.valueOf(str.length()-1).equals(" ")){
-			str = str.substring(0, str.length()-1);
-		}
-		return str;
+	public boolean checkString(String str){
+		if (str.length()<150)
+			if (str.matches("[a-zA-Z0-9 ]+"))
+				return true;
+		return false;
+		
 	}
+	
+
 }

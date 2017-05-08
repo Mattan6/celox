@@ -99,6 +99,25 @@ public class NewSort {
 	private JButton btnResert;
 	private JButton btnBack;
 	private Sorts sort;
+	private int[] classASens = new int[4];
+	private int[] classBSens = new int[4];
+	private int[] classCSens = new int[4];
+	private int[] classDSens = new int[4];
+	private int[] classESens = new int[4];
+	private int[] classFSens = new int[4];
+	private SensitivityDetails sensA = null;
+	private SensitivityDetails sensB = null;
+	private SensitivityDetails sensC = null;
+	private SensitivityDetails sensD = null;
+	private SensitivityDetails sensE = null;
+	private SensitivityDetails sensF = null;
+	private JButton btnClassA;
+	private JButton btnClassB;
+	private JButton btnClassC;
+	private JButton btnClassD;
+	private JButton btnClassE;
+	private JButton btnClassF;
+	
 
 	/**
 	 * Launch the application.
@@ -336,6 +355,7 @@ public class NewSort {
 				if (sort!= null){
 					sort.setEndDate(new Date());
 					if (send.insert(sort)){
+						sort=null;
 						JOptionPane.showMessageDialog(null, "Sort Saved!", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 						setFieldsEnable(true);
 						txtCommets.setText("");
@@ -366,10 +386,22 @@ public class NewSort {
 					JOptionPane.showMessageDialog(null, "    To Start a New Sort\nAll Fields Must Not Be -1 ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 				}
 				else{
+					if (sensA==null)
+						sensA = new SensitivityDetails(false);
+					if (sensB==null)
+						sensB = new SensitivityDetails(false);
+					if (sensC==null)
+						sensC = new SensitivityDetails(false);
+					if (sensD==null)
+						sensD = new SensitivityDetails(false);
+					if (sensE==null)
+						sensE = new SensitivityDetails(false);
+					if (sensF==null)
+						sensF = new SensitivityDetails(false);
 					buildSort();
 					setFieldsEnable(false);
 
-				}
+					}
 
 
 			}
@@ -419,7 +451,7 @@ public class NewSort {
 
 
 		////////////////////////////////////////////////////////////////
-		pnlSortData.setLayout(new GridLayout(7, 7, 3, 0));
+		pnlSortData.setLayout(new GridLayout(7, 7, 3, 3));
 
 		/////////////// class types /////////////////////////////
 
@@ -429,42 +461,102 @@ public class NewSort {
 		lblInput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInput.setBackground(new Color(0, 51, 102));
 		pnlSortData.add(lblInput);
-
-		JLabel lblClassA = new JLabel("Class A");
-		lblClassA.setFont(new Font("Arial", Font.BOLD, 15));
-		lblClassA.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClassA.setBackground(new Color(0, 51, 102));
-		pnlSortData.add(lblClassA);
-
-		JLabel lblClassB = new JLabel("Class B");
-		lblClassB.setFont(new Font("Arial", Font.BOLD, 15));
-		lblClassB.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClassB.setBackground(Color.WHITE);
-		pnlSortData.add(lblClassB);
-
-		JLabel lblClassC = new JLabel("Class c");
-		lblClassC.setFont(new Font("Arial", Font.BOLD, 15));
-		lblClassC.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClassC.setBackground(Color.WHITE);
-		pnlSortData.add(lblClassC);
-
-		JLabel lblClassD = new JLabel("Class D");
-		lblClassD.setFont(new Font("Arial", Font.BOLD, 15));
-		lblClassD.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClassD.setBackground(Color.WHITE);
-		pnlSortData.add(lblClassD);
-
-		JLabel lblClassE = new JLabel("Class E");
-		lblClassE.setFont(new Font("Arial", Font.BOLD, 15));
-		lblClassE.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClassE.setBackground(Color.WHITE);
-		pnlSortData.add(lblClassE);
-
-		JLabel lblClassF = new JLabel("Class F");
-		lblClassF.setFont(new Font("Arial", Font.BOLD, 15));
-		lblClassF.setHorizontalAlignment(SwingConstants.CENTER);
-		lblClassF.setBackground(Color.WHITE);
-		pnlSortData.add(lblClassF);
+		
+		btnClassA = new JButton("Class A");
+		btnClassA.setFont(new Font("Arial", Font.BOLD, 15));
+		pnlSortData.add(btnClassA);
+		
+		btnClassA.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sensA==null)
+					sensA = new SensitivityDetails();
+				else
+					sensA.setVisible(true);
+				
+			}
+		});
+		
+		btnClassB = new JButton("Class B");
+		btnClassB.setFont(new Font("Arial", Font.BOLD, 15));
+		pnlSortData.add(btnClassB);
+		
+		btnClassB.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sensB == null)
+					sensB = new SensitivityDetails();
+				else
+					sensB.setVisible(true);
+				
+			}
+		});
+		
+		btnClassC = new JButton("Class C");
+		btnClassC.setFont(new Font("Arial", Font.BOLD, 15));
+		pnlSortData.add(btnClassC);
+		
+		btnClassC.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sensC == null)
+					sensC = new SensitivityDetails();
+				else
+					sensC.setVisible(true);
+				
+			}
+		});
+		
+		btnClassD = new JButton("Class D");
+		btnClassD.setFont(new Font("Arial", Font.BOLD, 15));
+		pnlSortData.add(btnClassD);
+		
+		btnClassD.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sensD == null)
+					sensD = new SensitivityDetails();
+				else
+					sensD.setVisible(true);
+				
+			}
+		});
+		
+		btnClassE = new JButton("Class E");
+		btnClassE.setFont(new Font("Arial", Font.BOLD, 15));
+		pnlSortData.add(btnClassE);
+		
+		btnClassE.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sensE == null)
+					sensE = new SensitivityDetails();
+				else
+					sensE.setVisible(true);
+				
+			}
+		});
+		
+		btnClassF = new JButton("Class F");
+		btnClassF.setFont(new Font("Arial", Font.BOLD, 15));
+		pnlSortData.add(btnClassF);
+		
+		btnClassF.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sensF == null)
+					sensF = new SensitivityDetails();
+				else
+					sensF.setVisible(true);
+				
+			}
+		});
 
 		JLabel lblLength = new JLabel("Length");
 		lblLength.setFont(new Font("Arial", Font.BOLD, 15));
@@ -1336,8 +1428,8 @@ public class NewSort {
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
 				if (JOptionPane.showConfirmDialog(frame, "Are you sure to close this window?", "Really Closing?", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-					SendServer send = new SendServer();
 					if (sort!= null){
+						SendServer send = new SendServer();
 						sort.setEndDate(new Date());
 						if (send.insert(sort)){
 							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
@@ -1538,7 +1630,7 @@ public class NewSort {
 
 		sort.setComments(txtCommets.getText().trim());
 		classes = orangeClasses();
-		sort.setClasses(classes);
+		sort.setUserClassDetails(classes);
 
 		System.out.println(sort.toString());
 
@@ -1551,27 +1643,27 @@ public class NewSort {
 
 		classes.add(new ClassDetails((Integer)spnLengthFromA.getValue(), (Integer)spnLengthToA.getValue(),
 				(Integer)spnDiameterFromA.getValue(), (Integer)spnDiameterToA.getValue(), (Integer)spnBrokenA.getValue(),
-				(Integer)spnC_ShapeA.getValue(), (Integer)spnS_ShapeA.getValue(), "A"));
+				(Integer)spnC_ShapeA.getValue(), (Integer)spnS_ShapeA.getValue(), "A",sensA.getArr()));
 
 		classes.add(new ClassDetails((Integer)spnLengthFromB.getValue(), (Integer)spnLengthToB.getValue(),
 				(Integer)spnDiameterFromB.getValue(), (Integer)spnDiameterToB.getValue(), (Integer)spnBrokenB.getValue(),
-				(Integer)spnC_ShapeB.getValue(), (Integer)spnS_ShapeB.getValue(), "B"));
+				(Integer)spnC_ShapeB.getValue(), (Integer)spnS_ShapeB.getValue(), "B",sensB.getArr()));
 
 		classes.add(new ClassDetails((Integer)spnLengthFromC.getValue(), (Integer)spnLengthToC.getValue(),
 				(Integer)spnDiameterFromC.getValue(), (Integer)spnDiameterToC.getValue(), (Integer)spnBrokenC.getValue(),
-				(Integer)spnC_ShapeC.getValue(), (Integer)spnS_ShapeC.getValue(), "C"));
+				(Integer)spnC_ShapeC.getValue(), (Integer)spnS_ShapeC.getValue(), "C",sensC.getArr()));
 
 		classes.add(new ClassDetails((Integer)spnLengthFromD.getValue(), (Integer)spnLengthToD.getValue(),
 				(Integer)spnDiameterFromD.getValue(), (Integer)spnDiameterToD.getValue(), (Integer)spnBrokenD.getValue(),
-				(Integer)spnC_ShapeD.getValue(), (Integer)spnS_ShapeD.getValue(), "D"));
+				(Integer)spnC_ShapeD.getValue(), (Integer)spnS_ShapeD.getValue(), "D",sensD.getArr()));
 
 		classes.add(new ClassDetails((Integer)spnLengthFromE.getValue(), (Integer)spnLengthToE.getValue(),
 				(Integer)spnDiameterFromE.getValue(), (Integer)spnDiameterToE.getValue(), (Integer)spnBrokenE.getValue(),
-				(Integer)spnC_ShapeE.getValue(), (Integer)spnS_ShapeE.getValue(), "E"));
+				(Integer)spnC_ShapeE.getValue(), (Integer)spnS_ShapeE.getValue(), "E",sensE.getArr()));
 
 		classes.add(new ClassDetails((Integer)spnLengthFromF.getValue(), (Integer)spnLengthToF.getValue(),
 				(Integer)spnDiameterFromF.getValue(), (Integer)spnDiameterToF.getValue(), (Integer)spnBrokenF.getValue(),
-				(Integer)spnC_ShapeF.getValue(), (Integer)spnS_ShapeF.getValue(), "F"));
+				(Integer)spnC_ShapeF.getValue(), (Integer)spnS_ShapeF.getValue(), "F",sensF.getArr()));
 
 		return classes;
 
@@ -1626,6 +1718,13 @@ public class NewSort {
 		txtCommets.setEnabled(enable);
 		cmbChoosePlot.setEnabled(enable);
 		cmbGrowers.setEnabled(enable);	
+		btnClassA.setEnabled(enable);
+		btnClassB.setEnabled(enable);
+		btnClassC.setEnabled(enable);
+		btnClassD.setEnabled(enable);
+		btnClassE.setEnabled(enable);
+		btnClassF.setEnabled(enable);
+		
 
 	}
 

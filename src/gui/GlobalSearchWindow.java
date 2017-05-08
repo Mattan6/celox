@@ -14,6 +14,12 @@ import java.awt.Dimension;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import Classes.Growers;
+import Classes.Plots;
+import Classes.Sorts;
+import Handlers.SendServer;
+
 import com.jgoodies.forms.layout.FormSpecs;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
@@ -25,6 +31,8 @@ import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 
@@ -33,10 +41,16 @@ public class GlobalSearchWindow {
 	private JFrame frmSearch;
 	private JTable tblResults;
 	private JTextField txtGrowerId;
-	private JTextField txtGrowerName;
-	private JTextField txtGrowerPhone;
 	private JTextField txtEndDate;
 	private JTextField txtStartDate;
+	private JComboBox cmbGrowerName;
+	private List<Sorts> sorts = new ArrayList<>();
+	private List<Growers> growers = new ArrayList<>();
+	private JComboBox cmbPlotName;
+	private JPanel pnlSearchResults;
+	private String[] columns = {"Grower Name","Plot Name","Sort Start Date","Sort End Date","Size Of Plot", "Species","Comments"};
+	private Object[][] data;
+	private JScrollPane scpResult;
 
 	/**
 	 * Launch the application.
@@ -58,10 +72,13 @@ public class GlobalSearchWindow {
 	 * Create the application.
 	 */
 	public GlobalSearchWindow() {
+		getDataFromDB();
+		getSortsFromDB();
+
 		initialize();
+		txtGrowerId.setEnabled(false);
 		setEnabled("Grower");
 	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -140,7 +157,7 @@ public class GlobalSearchWindow {
 
 		JComboBox cmbSearchBy = new JComboBox();
 		cmbSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
-		cmbSearchBy.setModel(new DefaultComboBoxModel(new String[] {"Grower", "Date"}));
+		cmbSearchBy.setModel(new DefaultComboBoxModel(new String[] {"Plot", "Date"}));
 		pnlSearch.add(cmbSearchBy, "8, 4, fill, default");
 
 		cmbSearchBy.addItemListener(new ItemListener() {
@@ -153,32 +170,44 @@ public class GlobalSearchWindow {
 
 		});
 
+		JLabel lblGrowerName = new JLabel("Grower Name");
+		lblGrowerName.setFont(new Font("Arial", Font.PLAIN, 15));
+		pnlSearch.add(lblGrowerName, "12, 4, right, default");
+
+		//cmbGrowerName = new JComboBox();
+		pnlSearch.add(cmbGrowerName, "14, 4, fill, default");
+		cmbGrowerName.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < growers.size(); i++)
+				{
+					if (cmbGrowerName.getSelectedItem().toString() == growers.get(i).getgName())
+					{
+						txtGrowerId.setText(growers.get(i).getgID());
+						cmbPlotName.removeAllItems();
+						for (Plots p : growers.get(i).getPlots())
+						{
+							cmbPlotName.addItem(p.getpName());
+						}
+					}
+				}
+
+			}
+		});
+
 		JLabel lblGrowerId = new JLabel("Grower Id");
 		lblGrowerId.setFont(new Font("Arial", Font.PLAIN, 15));
-		pnlSearch.add(lblGrowerId, "12, 4, right, default");
+		pnlSearch.add(lblGrowerId, "12, 6, right, default");
 
 		txtGrowerId = new JTextField();
 		txtGrowerId.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnlSearch.add(txtGrowerId, "14, 4, fill, default");
+		pnlSearch.add(txtGrowerId, "14, 6, fill, default");
 		txtGrowerId.setColumns(10);
-		
-		JLabel lblGrowerName = new JLabel("Grower Name");
-		lblGrowerName.setFont(new Font("Arial", Font.PLAIN, 15));
-		pnlSearch.add(lblGrowerName, "12, 6, right, default");
-		
-		txtGrowerName = new JTextField();
-		txtGrowerName.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnlSearch.add(txtGrowerName, "14, 6, fill, top");
-		txtGrowerName.setColumns(10);
-		
-		JLabel lblGrowerPhoneNumber = new JLabel("Grower Phone Number");
+
+		JLabel lblGrowerPhoneNumber = new JLabel("Plot");
 		lblGrowerPhoneNumber.setFont(new Font("Arial", Font.PLAIN, 15));
 		pnlSearch.add(lblGrowerPhoneNumber, "12, 8, right, default");
-
-		txtGrowerPhone = new JTextField();
-		txtGrowerPhone.setFont(new Font("Arial", Font.PLAIN, 13));
-		pnlSearch.add(txtGrowerPhone, "14, 8, fill, default");
-		txtGrowerPhone.setColumns(10);
 
 		JLabel lblStartDate = new JLabel("Date Of Sort - Start");
 		lblStartDate.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -199,6 +228,9 @@ public class GlobalSearchWindow {
 		pnlSearch.add(txtEndDate, "20, 6, fill, default");
 		txtEndDate.setColumns(10);
 
+		cmbPlotName = new JComboBox();
+		pnlSearch.add(cmbPlotName, "14, 8, fill, default");
+
 
 
 		JButton btnBack = new JButton("Back");
@@ -209,7 +241,53 @@ public class GlobalSearchWindow {
 		btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
 		pnlSearch.add(btnSearch, "14, 12");
 
-		JPanel pnlSearchResults = new JPanel();
+
+
+		btnSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				data = new Object[sorts.size()][7];
+				if (cmbSearchBy.getSelectedItem().toString() == "Plot")
+				{
+					System.out.println("start from plot search");
+					//data  = new Object[sorts.size()][7];
+					int j=0;
+					int m = 0;
+					for (int i=0;i<sorts.size();++i){
+						if ((sorts.get(i).getGrower().getgName().trim().equals(cmbGrowerName.getSelectedItem().toString().trim()))
+								&& (sorts.get(i).getGrower().getgID().trim().equals(txtGrowerId.getText().trim())))
+						{ 
+							for (int k = 0; k < sorts.get(i).getGrower().getPlots().size(); k++)
+							{
+								if (sorts.get(i).getGrower().getPlots().get(k).getpName().trim().equals(cmbPlotName.getSelectedItem().toString().trim()))
+								{	
+									data[m][j++] = new String(sorts.get(i).getGrower().getgName());
+									data[m][j++] = new String(sorts.get(i).getPlot().getpName());
+									data[m][j++] = new String(sorts.get(i).getStartData().toString());
+									data[m][j++] = new String(sorts.get(i).getEndDate().toString());
+									data[m][j++] = new Integer(sorts.get(i).getPlot().getpSize());
+									data[m][j++] = new String(sorts.get(i).getPlot().getpSpec());
+									data[m][j++] = new String(sorts.get(i).getComments());
+									m++;
+									j=0;
+								}								
+							}
+						}
+					}
+
+				}
+				else
+				{
+					System.out.println("Date");
+				}
+				tblResults = new JTable(data,columns);
+				scpResult.setViewportView(tblResults);
+				tblResults.setFillsViewportHeight(true);
+			}
+		});
+
+		pnlSearchResults = new JPanel();
 		pnlSearchResults.setBorder(new LineBorder(new Color(0, 0, 0)));
 		pnlSearchResults.setPreferredSize(new Dimension(10, 500));
 		pnlSearchDetails.add(pnlSearchResults, "1, 2, fill, top");
@@ -225,43 +303,38 @@ public class GlobalSearchWindow {
 		lblResults.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 20));
 		pnlResultHeader.add(lblResults);
 
+		scpResult = new JScrollPane();
+		pnlSearchResults.add(scpResult, BorderLayout.CENTER);	
 
-		//////column names //////----->>>>> need to change 
 
-		String[] columns = {"Plot's ID","Sort Start Date","Sort End Date","Size Of Plot", "Species","Percentage In Plot","Comments","Departments Breakdown"};
 
-		////// data do be abstracted from the DB of last Sorts - from the Sort TABLE in the DB //////////////////////
-		Object[][] data = {{"ID","Start Date","End Date","Plot-Size", "Species"," % In Plot","Comments","A,B,C,D,E,F,W"}};
 
-		JScrollPane scpResult = new JScrollPane();
-		pnlSearchResults.add(scpResult, BorderLayout.CENTER);
 
-		tblResults = new JTable(data,columns);
-		scpResult.setViewportView(tblResults);
-		tblResults.setFillsViewportHeight(true);
 	}
-	
+
+
+
 	private void setEnabled(String selectedItem) {
 		switch(selectedItem){
-		case "Grower":
+		case "Plot":
 			txtStartDate.setEnabled(false);
 			txtStartDate.setBackground(Color.LIGHT_GRAY);
 			txtEndDate.setEnabled(false);
 			txtEndDate.setBackground(Color.LIGHT_GRAY);
-			txtGrowerId.setEnabled(true);
+			txtGrowerId.setEnabled(false);
 			txtGrowerId.setBackground(Color.WHITE);
-			txtGrowerName.setEnabled(true);
-			txtGrowerName.setBackground(Color.WHITE);
-			txtGrowerPhone.setEnabled(true);
-			txtGrowerPhone.setBackground(Color.WHITE);
+			cmbGrowerName.setEnabled(true);
+			cmbGrowerName.setBackground(Color.WHITE);
+			cmbPlotName.setEnabled(true);
+			cmbPlotName.setBackground(Color.WHITE);			
 			break;
 		case "Date":
 			txtGrowerId.setEnabled(false);
 			txtGrowerId.setBackground(Color.LIGHT_GRAY);
-			txtGrowerName.setEnabled(false);
-			txtGrowerName.setBackground(Color.LIGHT_GRAY);
-			txtGrowerPhone.setEnabled(false);
-			txtGrowerPhone.setBackground(Color.LIGHT_GRAY);
+			cmbGrowerName.setEnabled(false);
+			cmbGrowerName.setBackground(Color.LIGHT_GRAY);
+			cmbPlotName.setEnabled(false);
+			cmbPlotName.setBackground(Color.LIGHT_GRAY);
 			txtStartDate.setEnabled(true);
 			txtStartDate.setBackground(Color.WHITE);
 			txtEndDate.setEnabled(true);
@@ -270,7 +343,31 @@ public class GlobalSearchWindow {
 		default : 
 
 		}
-		
+
+	}
+
+	private void getDataFromDB()
+	{
+
+		SendServer get = new SendServer();
+		//sorts = get.getSorts();
+		growers = get.getGrowers();
+
+		DefaultComboBoxModel model = new DefaultComboBoxModel(new String[]{});
+		cmbGrowerName = new JComboBox(model);
+		cmbGrowerName.removeAllItems();
+		for (int i=0; i < growers.size(); i++)
+		{	
+			if(model.getIndexOf(growers.get(i).getgName()) == -1) {
+				model.addElement(growers.get(i).getgName());
+			}
+		}
+	}
+
+	private void getSortsFromDB()
+	{
+		SendServer get = new SendServer();
+		sorts = get.getSorts();
 	}
 
 }
