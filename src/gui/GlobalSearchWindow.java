@@ -78,6 +78,7 @@ public class GlobalSearchWindow {
 		initialize();
 		txtGrowerId.setEnabled(false);
 		setEnabled("Grower");
+		frmSearch.setVisible(true);
 	}
 	/**
 	 * Initialize the contents of the frame.

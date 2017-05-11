@@ -43,6 +43,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import Classes.ClassDetails;
 import Classes.CulcResults;
 import Classes.MachineOutput;
+import Classes.Plots;
 import Classes.Sorts;
 import Handlers.ExportToExcel;
 import Handlers.SendServer;
@@ -289,7 +290,7 @@ public class Statistics {
 		cmbLastExportRes = new JComboBox();
 		pnlExportDetails.add(cmbLastExportRes, "8, 8, 25, 1, fill, fill");
 
-		cmbLastExportRes.addActionListener(new ActionListener() { /////////////////////////////////////////////////////////////////////////////////////////////////////////
+		cmbLastExportRes.addActionListener(new ActionListener() { 
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -322,12 +323,52 @@ public class Statistics {
 		btnResort.setFont(new Font("Arial", Font.PLAIN, 12));
 		pnlExportDetails.add(btnResort, "14, 18, 1, 3");
 
+		//------------------------------------------------------------------------------------------------------------------------------------------//
 		btnResort.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-
+				
+				//set date to check 
+				Calendar sd = Calendar.getInstance();
+				sd.set(2017, Calendar.APRIL, 30, 21, 00);
+				Date start = sd.getTime();
+				Calendar ed = Calendar.getInstance();
+				ed.set(2017, Calendar.APRIL, 30, 22, 59);
+				Date end = ed.getTime();
+				
+				
+				Sorts tempSort;
+				MachineOutput mac = null;
+				CulcResults culc = null;
+				
+				
+				if (getCurrentSort().getCarrots().size()==0){
+					//culc = new CulcResults(new MachineOutput(getCurrentSort().getStartData(), getCurrentSort().getEndDate()), getCurrentSort());
+					mac = new MachineOutput(start, end);
+					mac.fillDetailsDB();
+					culc = new CulcResults(mac, getCurrentSort());
+					culc.fillDate();
+					tempSort = buildSort();
+					
+				}
+				else{
+					
+					tempSort = buildSort();
+				}
+				
+				System.out.println("temp sort -" + tempSort.getUserClassDetails().toString());
+				if (mac==null || culc ==null){
+					mac = new MachineOutput(start, end);
+					mac.fillDetailsDB();
+					culc = new CulcResults(mac, tempSort);
+					culc.fillDate();	
+				}
+				System.out.println(Arrays.toString(tempSort.getClassesOutcome()));
+				System.out.println(Arrays.toString(tempSort.getClassOutcomeWeight()));
+				//tempSort = culc.reSort(tempSort);
+				//System.out.println("sort -" + getCurrentSort().getUserClassDetails().toString());
+				/// continue re-order carrots
 			}
 		});
 
@@ -338,7 +379,7 @@ public class Statistics {
 		JButton btnForecast = new JButton("Forecasting Data");
 		btnForecast.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnForecast.setPreferredSize(new Dimension(65, 25));
-		pnlExportDetails.add(btnForecast, "14, 24, 1, 3");
+		pnlExportDetails.add(btnForecast, "14, 24, 9, 3, fill, fill");
 
 		JLabel lblOptimizeSort = new JLabel("Optimize Sort:");
 		lblOptimizeSort.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -355,7 +396,7 @@ public class Statistics {
 			public void actionPerformed(ActionEvent e) {
 				ValidationFunctions val = new ValidationFunctions();
 				Sorts sort = getCurrentSort();
-				
+
 				if (sort!=null){
 					JTextArea textArea = new JTextArea();
 					textArea.setEditable(true);
@@ -366,7 +407,7 @@ public class Statistics {
 					JFrame frame = new JFrame("InputDialog Example #1");
 					frame.setTitle("Export");
 					String name = JOptionPane.showInputDialog(frame, "Enter File Name: ");
-					
+
 					if (name != null){
 						if (!val.checkString(name)){
 							JOptionPane.showMessageDialog(frmStatistics, "Wrong Name - only letters and numbers!");
@@ -567,6 +608,7 @@ public class Statistics {
 		pnlLengthA.add(lblLengthFromA, gbc_lblLengthFromA);
 
 		spnLengthFromA = new JSpinner();
+		spnLengthFromA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthFromA.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthFromA = new GridBagConstraints();
 		gbc_spnLengthFromA.fill = GridBagConstraints.HORIZONTAL;
@@ -585,6 +627,7 @@ public class Statistics {
 		pnlLengthA.add(lblLengthToA, gbc_lblLengthToA);
 
 		spnLengthToA = new JSpinner();
+		spnLengthToA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthToA.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthToA = new GridBagConstraints();
 		gbc_spnLengthToA.fill = GridBagConstraints.HORIZONTAL;
@@ -613,6 +656,7 @@ public class Statistics {
 		pnlLengthB.add(lblLengthFromB, gbc_lblLengthFromB);
 
 		spnLengthFromB = new JSpinner();
+		spnLengthFromB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthFromB.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthFromB = new GridBagConstraints();
 		gbc_spnLengthFromB.fill = GridBagConstraints.HORIZONTAL;
@@ -631,6 +675,7 @@ public class Statistics {
 		pnlLengthB.add(lblLengthToB, gbc_lblLengthToB);
 
 		spnLengthToB = new JSpinner();
+		spnLengthToB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthToB.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthToB = new GridBagConstraints();
 		gbc_spnLengthToB.fill = GridBagConstraints.HORIZONTAL;
@@ -659,6 +704,7 @@ public class Statistics {
 		pnlLengthC.add(lblLengthFromC, gbc_lblLengthFromC);
 
 		spnLengthFromC = new JSpinner();
+		spnLengthFromC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthFromC.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthFromC = new GridBagConstraints();
 		gbc_spnLengthFromC.fill = GridBagConstraints.HORIZONTAL;
@@ -677,6 +723,7 @@ public class Statistics {
 		pnlLengthC.add(lblLengthToC, gbc_lblLengthToC);
 
 		spnLengthToC = new JSpinner();
+		spnLengthToC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthToC.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthToC = new GridBagConstraints();
 		gbc_spnLengthToC.fill = GridBagConstraints.HORIZONTAL;
@@ -705,6 +752,7 @@ public class Statistics {
 		pnlLengthD.add(lblLengthFromD, gbc_lblLengthFromD);
 
 		spnLengthFromD = new JSpinner();
+		spnLengthFromD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthFromD.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthFromD = new GridBagConstraints();
 		gbc_spnLengthFromD.fill = GridBagConstraints.HORIZONTAL;
@@ -723,6 +771,7 @@ public class Statistics {
 		pnlLengthD.add(lblLengthToD, gbc_lblLengthToD);
 
 		spnLengthToD = new JSpinner();
+		spnLengthToD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthToD.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthToD = new GridBagConstraints();
 		gbc_spnLengthToD.fill = GridBagConstraints.HORIZONTAL;
@@ -751,6 +800,7 @@ public class Statistics {
 		pnlLengthE.add(lblLengthFromE, gbc_lblLengthFromE);
 
 		spnLengthFromE = new JSpinner();
+		spnLengthFromE.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthFromE.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthFromE = new GridBagConstraints();
 		gbc_spnLengthFromE.fill = GridBagConstraints.HORIZONTAL;
@@ -769,6 +819,7 @@ public class Statistics {
 		pnlLengthE.add(lblLengthToE, gbc_lblLengthToE);
 
 		spnLengthToE = new JSpinner();
+		spnLengthToE.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthToE.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthToE = new GridBagConstraints();
 		gbc_spnLengthToE.fill = GridBagConstraints.HORIZONTAL;
@@ -797,6 +848,7 @@ public class Statistics {
 		pnlLengthF.add(lblLengthFromF, gbc_lblLengthFromF);
 
 		spnLengthFromF = new JSpinner();
+		spnLengthFromF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthFromF.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthFromF = new GridBagConstraints();
 		gbc_spnLengthFromF.fill = GridBagConstraints.HORIZONTAL;
@@ -815,6 +867,7 @@ public class Statistics {
 		pnlLengthF.add(lblLengthToF, gbc_lblLengthToF);
 
 		spnLengthToF = new JSpinner();
+		spnLengthToF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnLengthToF.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnLengthToF = new GridBagConstraints();
 		gbc_spnLengthToF.fill = GridBagConstraints.HORIZONTAL;
@@ -850,6 +903,7 @@ public class Statistics {
 		pnlDiameterA.add(lblDiameterFromA, gbc_lblDiameterFromA);
 
 		spnDiameterFromA = new JSpinner();
+		spnDiameterFromA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterFromA.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterFromA = new GridBagConstraints();
 		gbc_spnDiameterFromA.fill = GridBagConstraints.HORIZONTAL;
@@ -868,6 +922,7 @@ public class Statistics {
 		pnlDiameterA.add(lblDiameterToA, gbc_lblDiameterToA);
 
 		spnDiameterToA = new JSpinner();
+		spnDiameterToA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterToA.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterToA = new GridBagConstraints();
 		gbc_spnDiameterToA.fill = GridBagConstraints.HORIZONTAL;
@@ -896,6 +951,7 @@ public class Statistics {
 		pnlDiameterB.add(lblDiameterFromB, gbc_lblDiameterFromB);
 
 		spnDiameterFromB = new JSpinner();
+		spnDiameterFromB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterFromB.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterFromB = new GridBagConstraints();
 		gbc_spnDiameterFromB.fill = GridBagConstraints.HORIZONTAL;
@@ -914,6 +970,7 @@ public class Statistics {
 		pnlDiameterB.add(lblDiameterToB, gbc_lblDiameterToB);
 
 		spnDiameterToB = new JSpinner();
+		spnDiameterToB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		GridBagConstraints gbc_spnDiameterToB = new GridBagConstraints();
 		gbc_spnDiameterToB.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spnDiameterToB.gridwidth = 2;
@@ -941,6 +998,7 @@ public class Statistics {
 		pnlDiameterC.add(lblDiameterFromC, gbc_lblDiameterFromC);
 
 		spnDiameterFromC = new JSpinner();
+		spnDiameterFromC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterFromC.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterFromC = new GridBagConstraints();
 		gbc_spnDiameterFromC.fill = GridBagConstraints.HORIZONTAL;
@@ -959,6 +1017,7 @@ public class Statistics {
 		pnlDiameterC.add(lblDiameterToC, gbc_lblDiameterToC);
 
 		spnDiameterToC = new JSpinner();
+		spnDiameterToC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterToC.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterToC = new GridBagConstraints();
 		gbc_spnDiameterToC.fill = GridBagConstraints.HORIZONTAL;
@@ -987,6 +1046,7 @@ public class Statistics {
 		pnlDiameterD.add(lblDiameterFromD, gbc_lblDiameterFromD);
 
 		spnDiameterFromD = new JSpinner();
+		spnDiameterFromD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterFromD.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterFromD = new GridBagConstraints();
 		gbc_spnDiameterFromD.fill = GridBagConstraints.HORIZONTAL;
@@ -1005,6 +1065,7 @@ public class Statistics {
 		pnlDiameterD.add(lblDiameterToD, gbc_lblDiameterToD);
 
 		spnDiameterToD = new JSpinner();
+		spnDiameterToD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterToD.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterToD = new GridBagConstraints();
 		gbc_spnDiameterToD.fill = GridBagConstraints.HORIZONTAL;
@@ -1033,6 +1094,7 @@ public class Statistics {
 		pnlDiameterE.add(lblDiameterFromE, gbc_lblDiameterFromE);
 
 		spnDiameterFromE = new JSpinner();
+		spnDiameterFromE.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterFromE.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterFromE = new GridBagConstraints();
 		gbc_spnDiameterFromE.fill = GridBagConstraints.HORIZONTAL;
@@ -1079,6 +1141,7 @@ public class Statistics {
 		pnlDiameterF.add(lblDiameterFromF, gbc_lblDiameterFromF);
 
 		spnDiameterFromF = new JSpinner();
+		spnDiameterFromF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterFromF.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterFromF = new GridBagConstraints();
 		gbc_spnDiameterFromF.fill = GridBagConstraints.HORIZONTAL;
@@ -1097,6 +1160,7 @@ public class Statistics {
 		pnlDiameterF.add(lblDiameterToF, gbc_lblDiameterToF);
 
 		spnDiameterToF = new JSpinner();
+		spnDiameterToF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		spnDiameterToF.setFont(new Font("Arial", Font.BOLD, 12));
 		GridBagConstraints gbc_spnDiameterToF = new GridBagConstraints();
 		gbc_spnDiameterToF.fill = GridBagConstraints.HORIZONTAL;
@@ -1125,7 +1189,7 @@ public class Statistics {
 		spnBrokenA.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnBrokenA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnBrokenA.setPreferredSize(new Dimension(80, 20));
-		spnBrokenA.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnBrokenA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlBrokenA.add(spnBrokenA);
 
 
@@ -1142,7 +1206,7 @@ public class Statistics {
 		spnBrokenB.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnBrokenB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnBrokenB.setPreferredSize(new Dimension(80, 20));
-		spnBrokenB.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnBrokenB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlBrokenB.add(spnBrokenB);
 
 		JPanel pnlBrokenC = new JPanel();
@@ -1157,7 +1221,7 @@ public class Statistics {
 		spnBrokenC.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnBrokenC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnBrokenC.setPreferredSize(new Dimension(80, 20));
-		spnBrokenC.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnBrokenC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlBrokenC.add(spnBrokenC);
 
 		JPanel pnlBrokenD = new JPanel();
@@ -1172,7 +1236,7 @@ public class Statistics {
 		spnBrokenD.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnBrokenD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnBrokenD.setPreferredSize(new Dimension(80, 20));
-		spnBrokenD.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnBrokenD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlBrokenD.add(spnBrokenD);
 
 
@@ -1188,7 +1252,7 @@ public class Statistics {
 		spnBrokenE.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnBrokenE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnBrokenE.setPreferredSize(new Dimension(80, 20));
-		spnBrokenE.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnBrokenE.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlBrokenE.add(spnBrokenE);
 
 		JPanel pnlBrokenF = new JPanel();
@@ -1203,7 +1267,7 @@ public class Statistics {
 		spnBrokenF.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnBrokenF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnBrokenF.setPreferredSize(new Dimension(80, 20));
-		spnBrokenF.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnBrokenF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlBrokenF.add(spnBrokenF);
 
 
@@ -1226,7 +1290,7 @@ public class Statistics {
 		spnS_ShapeA.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnS_ShapeA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnS_ShapeA.setPreferredSize(new Dimension(80, 20));
-		spnS_ShapeA.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnS_ShapeA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlS_ShapeA.add(spnS_ShapeA);
 
 		JPanel pnlS_ShapeB = new JPanel();
@@ -1241,7 +1305,7 @@ public class Statistics {
 		spnS_ShapeB.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnS_ShapeB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnS_ShapeB.setPreferredSize(new Dimension(80, 20));
-		spnS_ShapeB.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnS_ShapeB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlS_ShapeB.add(spnS_ShapeB);
 
 		JPanel pnlS_ShapeC = new JPanel();
@@ -1256,7 +1320,7 @@ public class Statistics {
 		spnS_ShapeC.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnS_ShapeC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnS_ShapeC.setPreferredSize(new Dimension(80, 20));
-		spnS_ShapeC.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnS_ShapeC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlS_ShapeC.add(spnS_ShapeC);
 
 		JPanel pnlS_ShapeD = new JPanel();
@@ -1271,7 +1335,7 @@ public class Statistics {
 		spnS_ShapeD.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnS_ShapeD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnS_ShapeD.setPreferredSize(new Dimension(80, 20));
-		spnS_ShapeD.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnS_ShapeD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlS_ShapeD.add(spnS_ShapeD);
 
 		JPanel pnlS_ShapeE = new JPanel();
@@ -1286,7 +1350,7 @@ public class Statistics {
 		spnS_ShapeE.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnS_ShapeE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnS_ShapeE.setPreferredSize(new Dimension(80, 20));
-		spnS_ShapeE.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnS_ShapeE.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlS_ShapeE.add(spnS_ShapeE);
 
 
@@ -1302,7 +1366,7 @@ public class Statistics {
 		spnS_ShapeF.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnS_ShapeF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnS_ShapeF.setPreferredSize(new Dimension(80, 20));
-		spnS_ShapeF.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnS_ShapeF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlS_ShapeF.add(spnS_ShapeF);
 
 		JLabel lblC_Shape = new JLabel("C Shape");
@@ -1322,7 +1386,7 @@ public class Statistics {
 		spnC_ShapeA.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnC_ShapeA.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnC_ShapeA.setPreferredSize(new Dimension(80, 20));
-		spnC_ShapeA.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnC_ShapeA.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlC_ShapeA.add(spnC_ShapeA);
 
 		JPanel pnlC_ShapeB = new JPanel();
@@ -1336,7 +1400,7 @@ public class Statistics {
 		spnC_ShapeB.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnC_ShapeB.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnC_ShapeB.setPreferredSize(new Dimension(80, 20));
-		spnC_ShapeB.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnC_ShapeB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlC_ShapeB.add(spnC_ShapeB);
 
 		JPanel pnlC_ShapeC = new JPanel();
@@ -1350,7 +1414,7 @@ public class Statistics {
 		spnC_ShapeC.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnC_ShapeC.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnC_ShapeC.setPreferredSize(new Dimension(80, 20));
-		spnC_ShapeC.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnC_ShapeC.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlC_ShapeC.add(spnC_ShapeC);
 
 
@@ -1365,7 +1429,7 @@ public class Statistics {
 		spnC_ShapeD.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnC_ShapeD.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnC_ShapeD.setPreferredSize(new Dimension(80, 20));
-		spnC_ShapeD.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnC_ShapeD.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlC_ShapeD.add(spnC_ShapeD);
 
 
@@ -1380,7 +1444,7 @@ public class Statistics {
 		spnC_ShapeE.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnC_ShapeE.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnC_ShapeE.setPreferredSize(new Dimension(80, 20));
-		spnC_ShapeE.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnC_ShapeE.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlC_ShapeE.add(spnC_ShapeE);
 
 		JPanel pnlC_ShapeF = new JPanel();
@@ -1394,7 +1458,7 @@ public class Statistics {
 		spnC_ShapeF.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		spnC_ShapeF.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		spnC_ShapeF.setPreferredSize(new Dimension(80, 20));
-		spnC_ShapeF.setModel(new SpinnerNumberModel(0, 0, 100, 1));
+		spnC_ShapeF.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		pnlC_ShapeF.add(spnC_ShapeF);
 
 		JPanel pnlbottomEmpty1 = new JPanel();
@@ -1436,9 +1500,11 @@ public class Statistics {
 							//output = new MachineOutput(sorts.get(i).getStartData(),sorts.get(i).getEndDate());
 							output = new MachineOutput(start, end);
 							output.fillDetailsDB();
-							//System.out.println(output.toString());
 							res = new CulcResults(output, sorts.get(i));
-							sorts.get(i).setCarrots(res.fillDate());
+							res.fillDate();
+							System.out.println("statistics -- the Division is: " + Arrays.toString( sorts.get(i).getClassesOutcome()));
+							System.out.println("statistics -- the Division weight (kg) is: " + Arrays.toString( sorts.get(i).getClassOutcomeWeight()));
+							JOptionPane.showMessageDialog(null, buildResult(getCurrentSort()), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 						}
 					}
 				}
@@ -1468,11 +1534,7 @@ public class Statistics {
 							updateFields(sorts.get(i));
 						}
 					}
-
 				}
-
-
-
 			}
 		});
 
@@ -1602,5 +1664,70 @@ public class Statistics {
 			}
 		}
 		return null;
+	}
+
+	private Sorts buildSort() {
+		Sorts sort = new Sorts(getCurrentSort());
+		List<ClassDetails> classes = new ArrayList<>();
+		classes = orangeClasses();
+		sort.setUserClassDetails(classes);
+
+		//System.out.println(sort.toString());
+
+		return sort;
+
+	}
+
+	private List<ClassDetails> orangeClasses(){
+		List<ClassDetails> classes = new ArrayList<>();
+
+		classes.add(new ClassDetails((Integer)spnLengthFromA.getValue(), (Integer)spnLengthToA.getValue(),
+				(Integer)spnDiameterFromA.getValue(), (Integer)spnDiameterToA.getValue(), (Integer)spnBrokenA.getValue(),
+				(Integer)spnC_ShapeA.getValue(), (Integer)spnS_ShapeA.getValue(), "A",sensA.getArr()));
+
+		classes.add(new ClassDetails((Integer)spnLengthFromB.getValue(), (Integer)spnLengthToB.getValue(),
+				(Integer)spnDiameterFromB.getValue(), (Integer)spnDiameterToB.getValue(), (Integer)spnBrokenB.getValue(),
+				(Integer)spnC_ShapeB.getValue(), (Integer)spnS_ShapeB.getValue(), "B",sensB.getArr()));
+
+		classes.add(new ClassDetails((Integer)spnLengthFromC.getValue(), (Integer)spnLengthToC.getValue(),
+				(Integer)spnDiameterFromC.getValue(), (Integer)spnDiameterToC.getValue(), (Integer)spnBrokenC.getValue(),
+				(Integer)spnC_ShapeC.getValue(), (Integer)spnS_ShapeC.getValue(), "C",sensC.getArr()));
+
+		classes.add(new ClassDetails((Integer)spnLengthFromD.getValue(), (Integer)spnLengthToD.getValue(),
+				(Integer)spnDiameterFromD.getValue(), (Integer)spnDiameterToD.getValue(), (Integer)spnBrokenD.getValue(),
+				(Integer)spnC_ShapeD.getValue(), (Integer)spnS_ShapeD.getValue(), "D",sensD.getArr()));
+
+		classes.add(new ClassDetails((Integer)spnLengthFromE.getValue(), (Integer)spnLengthToE.getValue(),
+				(Integer)spnDiameterFromE.getValue(), (Integer)spnDiameterToE.getValue(), (Integer)spnBrokenE.getValue(),
+				(Integer)spnC_ShapeE.getValue(), (Integer)spnS_ShapeE.getValue(), "E",sensE.getArr()));
+
+		classes.add(new ClassDetails((Integer)spnLengthFromF.getValue(), (Integer)spnLengthToF.getValue(),
+				(Integer)spnDiameterFromF.getValue(), (Integer)spnDiameterToF.getValue(), (Integer)spnBrokenF.getValue(),
+				(Integer)spnC_ShapeF.getValue(), (Integer)spnS_ShapeF.getValue(), "F",sensF.getArr()));
+
+		return classes;
+
+	}
+
+	private String buildResult(Sorts sort){
+
+		String ans = "";
+		ans+= String.format(" %25s ", "W"); 
+		ans+= String.format(" %25s ", "A");
+		ans+= String.format(" %25s ", "B");
+		ans+= String.format(" %25s ", "C");
+		ans+= String.format(" %25s ", "D");
+		ans+= String.format(" %25s ", "E");
+		ans+= String.format(" %25s ", "F\n");
+		for (int i=0;i<sort.getClassesOutcome().length;++i){
+			ans+=String.format(" %25d ", sort.getClassesOutcome()[i]);
+		}
+		ans+="\n";
+		for (int i=0;i<sort.getClassOutcomeWeight().length;++i){
+			ans+=String.format(" %25.2f ", sort.getClassOutcomeWeight()[i]);
+		}
+
+
+		return ans;
 	}
 }

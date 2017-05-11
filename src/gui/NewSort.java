@@ -1632,7 +1632,7 @@ public class NewSort {
 		classes = orangeClasses();
 		sort.setUserClassDetails(classes);
 
-		System.out.println(sort.toString());
+		//System.out.println(sort.toString());
 
 
 

@@ -28,15 +28,25 @@ public class CulcResults {
 						pl.getFilter4().get(i), pl.getFilter5().get(i), pl.getFilter6().get(i), pl.getFilter7().get(i),
 						pl.getBrokenends().get(i), pl.getDivision().get(i) ));
 				sort.getClassesOutcome()[pl.getDivision().get(i)]++;
-				System.out.println(sort.getCarrots().get(i).toString());
+				sort.getClassOutcomeWeight()[pl.getDivision().get(i)]+= pl.getVolume().get(i)*0.001;
+				//System.out.println(sort.getCarrots().get(i).toString());
 			}
 		}
+		this.sort.setTotalProd(totalProd);
 		System.out.println("total prod is: " + totalProd);
-		System.out.println("the Division is: " + Arrays.toString(sort.getClassesOutcome()));
 		return sort.getCarrots();
 	}
 
-
+	
+	public Sorts reSort(Sorts sort){
+		for (Carrots car : sort.getCarrots()){
+			
+		}
+			
+		
+		
+		return null;
+	}
 
 
 }
