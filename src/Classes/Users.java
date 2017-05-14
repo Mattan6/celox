@@ -20,7 +20,9 @@ public class Users {
 		return password;
 	}
 
-	
+	public int getPermission() {
+		return permission;
+	}
 	
 
 }

@@ -1,9 +1,9 @@
 
 package gui;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -11,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -24,12 +23,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
-
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-
 import Classes.*;
 import Handlers.*;
 import Validation.ValidationFunctions;
@@ -37,12 +34,6 @@ import Validation.ValidationFunctions;
 public class NewCustomer {
 
 	private JFrame frmNewDetails;
-	private JTextField txtGrower;
-	private JTextField txtPlot;
-	private JTextField txtGrowerName;
-	private JTextField txtGrowerID;
-	private JTextField txtGrowerAddr;
-	private JTextField txtGrowerPhone;
 	private JTextField txtNewGrowerId;
 	private JTextField txtNewGrowerName;
 	private JTextField txtNewGrowerAddress;
@@ -58,31 +49,15 @@ public class NewCustomer {
 	private JTextField txtPlotSpec;
 	private JTextField txtPlotSizeChosen;
 	private JTextField txtPlotSpeciesChosen;
-	private List<String> strGrowers;
 	private List<Growers> growers = new ArrayList<>();
-	private JComboBox cmbChooseGrower, cmbChooseGrower2, cmbChooseGrower1;
+	private JComboBox<String> cmbChooseGrower, cmbChooseGrower2, cmbChooseGrower1;
 	private ButtonGroup btnGroup;
 	private ValidationFunctions validate = new ValidationFunctions(); 
 	private String growID;
 	private Growers choosenGrower = null;
 	private Plots originPlot = null;
-	private JComboBox cmbChoosePlot;
+	private JComboBox<String> cmbChoosePlot;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewCustomer window = new NewCustomer();
-					window.frmNewDetails.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -90,6 +65,7 @@ public class NewCustomer {
 	public NewCustomer() {
 		initialize();
 		getDataFromDB();
+		frmNewDetails.setVisible(true);
 	}
 
 	/**
@@ -224,7 +200,7 @@ public class NewCustomer {
 		JLabel lblSelectGrowerPlot = new JLabel("Select A Grower");
 		pnlPlotBody.add(lblSelectGrowerPlot, "4, 4");
 
-		cmbChooseGrower1 = new JComboBox();
+		cmbChooseGrower1 = new JComboBox<String>();
 		pnlPlotBody.add(cmbChooseGrower1, "6, 4, 21, 1, fill, default");
 		cmbChooseGrower1.addActionListener(new ActionListener() {
 
@@ -316,7 +292,7 @@ public class NewCustomer {
 		JLabel lblSelectGrowerPlot2 = new JLabel("Select A Grower");
 		pnlPlotBody.add(lblSelectGrowerPlot2, "4, 18");
 
-		cmbChooseGrower2 = new JComboBox();
+		cmbChooseGrower2 = new JComboBox<String>();
 		pnlPlotBody.add(cmbChooseGrower2, "6, 18, 14, 1, fill, default");
 		cmbChooseGrower2.addActionListener(new ActionListener() {
 
@@ -343,7 +319,7 @@ public class NewCustomer {
 		JLabel lblSelectPlot = new JLabel("Select A Plot:");
 		pnlPlotBody.add(lblSelectPlot, "4, 20");
 
-		cmbChoosePlot = new JComboBox();
+		cmbChoosePlot = new JComboBox<String>();
 		pnlPlotBody.add(cmbChoosePlot, "6, 20, 14, 1, fill, default");
 		cmbChoosePlot.addActionListener(new ActionListener() {
 
@@ -597,7 +573,7 @@ public class NewCustomer {
 
 
 
-		cmbChooseGrower = new JComboBox();
+		cmbChooseGrower = new JComboBox<String>();
 		pnlLeftBody.add(cmbChooseGrower, "6, 18, 7, 1, fill, default");
 		cmbChooseGrower.addActionListener(new ActionListener() {
 
@@ -808,7 +784,6 @@ private void updatePlotFields(Plots p){
 private void getDataFromDB(){
 
 	SendServer get = new SendServer();
-	//strGrowers = get.getGrowers();
 	if (growers.size()!=0)
 		growers.clear();
 	growers = get.getGrowers();

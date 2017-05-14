@@ -1,40 +1,38 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.FlowLayout;
-import javax.swing.JComboBox;
 import java.awt.Color;
 import java.awt.Dimension;
-import com.jgoodies.forms.layout.FormLayout;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-
 import Classes.Growers;
 import Classes.Plots;
 import Classes.Sorts;
 import Handlers.SendServer;
-
-import com.jgoodies.forms.layout.FormSpecs;
-import java.awt.GridLayout;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.border.LineBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.awt.event.ActionEvent;
-import javax.swing.DefaultComboBoxModel;
 
 public class GlobalSearchWindow {
 
@@ -43,10 +41,11 @@ public class GlobalSearchWindow {
 	private JTextField txtGrowerId;
 	private JTextField txtEndDate;
 	private JTextField txtStartDate;
-	private JComboBox cmbGrowerName;
+	private JLabel lblDateFormat;
+	private JComboBox<String> cmbGrowerName;
 	private List<Sorts> sorts = new ArrayList<>();
 	private List<Growers> growers = new ArrayList<>();
-	private JComboBox cmbPlotName;
+	private JComboBox<String> cmbPlotName;
 	private JPanel pnlSearchResults;
 	private String[] columns = {"Grower Name","Plot Name","Sort Start Date","Sort End Date","Size Of Plot", "Species","Comments"};
 	private Object[][] data;
@@ -73,11 +72,10 @@ public class GlobalSearchWindow {
 	 */
 	public GlobalSearchWindow() {
 		getDataFromDB();
-		getSortsFromDB();
 
 		initialize();
 		txtGrowerId.setEnabled(false);
-		setEnabled("Grower");
+		setEnabled("Plot");
 		frmSearch.setVisible(true);
 	}
 	/**
@@ -220,6 +218,7 @@ public class GlobalSearchWindow {
 		txtStartDate.setColumns(10);
 
 
+
 		JLabel lblEndDate = new JLabel("Date Of Sort - End");
 		lblEndDate.setFont(new Font("Arial", Font.PLAIN, 15));
 		pnlSearch.add(lblEndDate, "18, 6, right, default");
@@ -229,14 +228,29 @@ public class GlobalSearchWindow {
 		pnlSearch.add(txtEndDate, "20, 6, fill, default");
 		txtEndDate.setColumns(10);
 
-		cmbPlotName = new JComboBox();
+		cmbPlotName = new JComboBox<String>();
 		pnlSearch.add(cmbPlotName, "14, 8, fill, default");
+
+		lblDateFormat = new JLabel("Format ---- dd/MM/yyyy  ");
+		lblDateFormat.setFont(new Font("Arial", Font.BOLD, 13));
+		lblDateFormat.setEnabled(false);
+		lblDateFormat.setHorizontalAlignment(SwingConstants.CENTER);
+		pnlSearch.add(lblDateFormat, "20, 8");
 
 
 
 		JButton btnBack = new JButton("Back");
 		btnBack.setFont(new Font("Arial", Font.PLAIN, 15));
 		pnlSearch.add(btnBack, "12, 12");
+		btnBack.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MainMenuWindow();
+				frmSearch.dispose();
+				
+			}
+		});
 
 		JButton btnSearch = new JButton("Search");
 		btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
@@ -246,46 +260,99 @@ public class GlobalSearchWindow {
 
 		btnSearch.addActionListener(new ActionListener() {
 
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				data = new Object[sorts.size()][7];
-				if (cmbSearchBy.getSelectedItem().toString() == "Plot")
-				{
-					System.out.println("start from plot search");
-					//data  = new Object[sorts.size()][7];
+				SendServer get = new SendServer();
+
+				if (cmbSearchBy.getSelectedItem().toString() == "Plot"){
+
+					sorts = get.getSearchSorts(txtGrowerId.getText(), cmbPlotName.getSelectedItem().toString(), "Grower");
+					//System.out.println("start from plot search");
+					data = new Object[sorts.size()][7];
 					int j=0;
 					int m = 0;
 					for (int i=0;i<sorts.size();++i){
-						if ((sorts.get(i).getGrower().getgName().trim().equals(cmbGrowerName.getSelectedItem().toString().trim()))
-								&& (sorts.get(i).getGrower().getgID().trim().equals(txtGrowerId.getText().trim())))
-						{ 
-							for (int k = 0; k < sorts.get(i).getGrower().getPlots().size(); k++)
-							{
-								if (sorts.get(i).getGrower().getPlots().get(k).getpName().trim().equals(cmbPlotName.getSelectedItem().toString().trim()))
-								{	
-									data[m][j++] = new String(sorts.get(i).getGrower().getgName());
-									data[m][j++] = new String(sorts.get(i).getPlot().getpName());
-									data[m][j++] = new String(sorts.get(i).getStartData().toString());
-									data[m][j++] = new String(sorts.get(i).getEndDate().toString());
-									data[m][j++] = new Integer(sorts.get(i).getPlot().getpSize());
-									data[m][j++] = new String(sorts.get(i).getPlot().getpSpec());
-									data[m][j++] = new String(sorts.get(i).getComments());
-									m++;
-									j=0;
-								}								
-							}
-						}
-					}
+						data[m][j++] = new String(sorts.get(i).getGrower().getgName());
+						data[m][j++] = new String(sorts.get(i).getPlot().getpName());
+						data[m][j++] = new String(sorts.get(i).getStartData().toString());
+						data[m][j++] = new String(sorts.get(i).getEndDate().toString());
+						data[m][j++] = new Integer(sorts.get(i).getPlot().getpSize());
+						data[m][j++] = new String(sorts.get(i).getPlot().getpSpec());
+						data[m][j++] = new String(sorts.get(i).getComments());
+						m++;
+						j=0;
+					}								
+
 
 				}
 				else
 				{
-					System.out.println("Date");
+					if (!checkDate(txtStartDate.getText())){
+						System.out.println("Start Date wasn't enterd right!");
+					}
+					else if (!checkDate(txtEndDate.getText())){
+						System.out.println("End Date wasn't enterd right!");
+					}
+					else{
+						String start = handleDate(txtStartDate.getText());
+						String end  = handleDate(txtEndDate.getText());
+						sorts = get.getSearchSorts(start,end, "Date");
+						data = new Object[sorts.size()][7];
+						for (Sorts srt : sorts)
+						{
+							System.out.println(srt.toString());
+						}
+
+						//System.out.println("start from plot search");
+						int j=0;
+						int m = 0;
+						for (int i=0;i<sorts.size();++i){
+							data[m][j++] = new String(sorts.get(i).getGrower().getgName());
+							data[m][j++] = new String(sorts.get(i).getPlot().getpName());
+							data[m][j++] = new String(sorts.get(i).getStartData().toString());
+							data[m][j++] = new String(sorts.get(i).getEndDate().toString());
+							data[m][j++] = new Integer(sorts.get(i).getPlot().getpSize());
+							data[m][j++] = new String(sorts.get(i).getPlot().getpSpec());
+							data[m][j++] = new String(sorts.get(i).getComments());
+							m++;
+							j=0;
+						}								
+					}
 				}
-				tblResults = new JTable(data,columns);
-				scpResult.setViewportView(tblResults);
-				tblResults.setFillsViewportHeight(true);
+				if (data!=null){
+					tblResults = new JTable(data,columns){
+						private static final long serialVersionUID = 1L;
+
+						public boolean isCellEditable(int row, int column) {                
+							return false;               
+						};
+					};
+					scpResult.setViewportView(tblResults);
+					tblResults.setFillsViewportHeight(true);
+
+					tblResults.addMouseListener(new MouseAdapter() {
+						public void mouseClicked(MouseEvent e) {
+							if (e.getClickCount() == 2) //Double Click
+							{
+								JTable target = (JTable)e.getSource();
+								int row = target.getSelectedRow();
+
+								for (Sorts srt : sorts)
+								{
+									if (srt.getStartData().toString().equals(target.getValueAt(row, 2))
+											&& srt.getEndDate().toString().equals(target.getValueAt(row, 3)))
+									{
+										new Statistics(srt); 
+										frmSearch.dispose();
+									}
+								}
+							}
+						}
+					});
+				}
 			}
+
 		});
 
 		pnlSearchResults = new JPanel();
@@ -307,10 +374,6 @@ public class GlobalSearchWindow {
 		scpResult = new JScrollPane();
 		pnlSearchResults.add(scpResult, BorderLayout.CENTER);	
 
-
-
-
-
 	}
 
 
@@ -327,7 +390,8 @@ public class GlobalSearchWindow {
 			cmbGrowerName.setEnabled(true);
 			cmbGrowerName.setBackground(Color.WHITE);
 			cmbPlotName.setEnabled(true);
-			cmbPlotName.setBackground(Color.WHITE);			
+			cmbPlotName.setBackground(Color.WHITE);	
+			lblDateFormat.setVisible(false);
 			break;
 		case "Date":
 			txtGrowerId.setEnabled(false);
@@ -340,6 +404,7 @@ public class GlobalSearchWindow {
 			txtStartDate.setBackground(Color.WHITE);
 			txtEndDate.setEnabled(true);
 			txtEndDate.setBackground(Color.WHITE);
+			lblDateFormat.setVisible(true);
 			break;
 		default : 
 
@@ -349,13 +414,11 @@ public class GlobalSearchWindow {
 
 	private void getDataFromDB()
 	{
-
 		SendServer get = new SendServer();
-		//sorts = get.getSorts();
 		growers = get.getGrowers();
 
-		DefaultComboBoxModel model = new DefaultComboBoxModel(new String[]{});
-		cmbGrowerName = new JComboBox(model);
+		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(new String[]{});
+		cmbGrowerName = new JComboBox<String>(model);
 		cmbGrowerName.removeAllItems();
 		for (int i=0; i < growers.size(); i++)
 		{	
@@ -365,10 +428,72 @@ public class GlobalSearchWindow {
 		}
 	}
 
-	private void getSortsFromDB()
-	{
-		SendServer get = new SendServer();
-		sorts = get.getSorts();
+	private boolean checkDate(String date) {
+		if (date.matches("[0-9][0-9]/[0-1][0-9]/2[0-9][0-9][0-9]")){
+			return true;
+		}
+		return false;
+	}
+
+
+	private String handleDate(String text) {
+		String day = text.substring(0, 2);
+		String mon = text.substring(3, 5);
+		String year = text.substring(6,text.trim().length());
+		String toReturn="";
+		switch(mon){
+			case "01": toReturn+= "Jan ";
+				break;
+			case "02": toReturn+= "Feb ";
+				break;
+			case "03": toReturn+= "Mar ";
+				break;
+			case "04": toReturn+= "Apr ";
+				break;
+			case "05": toReturn+= "May ";
+				break;
+			case "06": toReturn+= "Jun ";
+				break;
+			case "07": toReturn+= "Jul ";
+				break;
+			case "08": toReturn+= "Aug ";
+				break;
+			case "09": toReturn+= "Sep ";
+				break;
+			case "10": toReturn+= "Oct ";
+				break;
+			case "11": toReturn+= "Nov ";
+				break;
+			case "12": toReturn+= "Dec ";
+				break;	
+		}
+		switch(day){
+			case "01": day = "1";
+				break;
+			case "02": day = "2";
+				break;
+			case "03": day = "3";
+				break;
+			case "04": day = "4";
+				break;
+			case "05": day = "5";
+				break;
+			case "06": day = "6";
+				break;
+			case "07": day = "7";
+				break;
+			case "08": day = "8";
+				break;
+			case "09": day = "9";
+				break;		
+		}
+		toReturn+=day + ", ";
+		toReturn+=year + " ";
+
+
+		System.out.println(toReturn);
+		return toReturn;
 	}
 
 }
+

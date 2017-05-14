@@ -1,7 +1,5 @@
 package Classes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CulcResults {
@@ -14,6 +12,10 @@ public class CulcResults {
 
 	public CulcResults(MachineOutput mac, Sorts sort){
 		this.mac=mac;
+		this.sort=sort;
+	}
+	
+	public CulcResults(Sorts sort){
 		this.sort=sort;
 	}
 
@@ -39,14 +41,38 @@ public class CulcResults {
 
 	
 	public Sorts reSort(Sorts sort){
+		int num=0;
 		for (Carrots car : sort.getCarrots()){
-			
+			num = whatClass(car, sort.getUserClassDetails());
+			sort.getClassesOutcome()[num]++;
+			sort.getClassOutcomeWeight()[num]+= car.getVolume()*0.001;
+			car.setWhatClass(num);
 		}
-			
+		//System.out.println(Arrays.toString(sort.getClassesOutcome()));
+		//System.out.println(Arrays.toString(sort.getClassOutcomeWeight()));
 		
 		
-		return null;
+		return sort;
 	}
+
+
+	private int whatClass(Carrots car, List<ClassDetails> userClassDetails) {
+		for ( int i=0;i<userClassDetails.size();++i){
+			if (car.getLength()>=userClassDetails.get(i).getLengthFrom() && car.getLength()<=userClassDetails.get(i).getLengthTo()){
+				if (car.getDiameter()>=userClassDetails.get(i).getDiameterFrom() && car.getDiameter()<=userClassDetails.get(i).getDiameterTo()){
+					if (car.getcShape()<=userClassDetails.get(i).getcShape()){
+						if (car.getsShape()<=userClassDetails.get(i).getsShape()){
+							if (car.getBrokenends()<userClassDetails.get(i).getBroken()){
+								return i+1;
+							}
+						}
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
 
 
 }

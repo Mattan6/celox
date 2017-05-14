@@ -1,6 +1,5 @@
 package Classes;
 
-import java.util.Date;
 
 public class Carrots {
 	
@@ -37,6 +36,10 @@ public class Carrots {
 		this.filter7=fil7;
 		this.brokenends=broken;
 		this.whatClass=what;		
+	}
+	
+	public void setWhatClass(int whatClass) {
+		this.whatClass = whatClass;
 	}
 
 	public int getLength() {

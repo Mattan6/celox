@@ -1,7 +1,5 @@
 package Classes;
 
-import javax.print.attribute.SetOfIntegerSyntax;
-
 public class ClassDetails {
 	
 	private int lengthFrom;

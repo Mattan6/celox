@@ -1,4 +1,5 @@
 
+
 package Handlers;
 
 import java.io.DataInputStream;
@@ -37,7 +38,7 @@ public class SendServer {
 	public boolean insert(Growers grower){
 		Gson gson = new Gson();
 		String data = gson.toJson(grower);
-		
+
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject)parser.parse(data);
 		json.addProperty("action", "insert");
@@ -64,20 +65,20 @@ public class SendServer {
 
 		return false;
 	}
-	
+
 	public boolean insert(Sorts sort){
 		Gson gson = new Gson();
 		String data = gson.toJson(sort);
-		
+
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject)parser.parse(data);
 		json.addProperty("action", "insert");
 		json.addProperty("collection", "userSortInfo");
 		json.addProperty("machine_id", "Software");
 		String newData = json.toString();
-		
+
 		System.out.println(newData);
-		
+
 		try{
 			out = new DataOutputStream(socket.getOutputStream());
 			out.writeUTF(newData);
@@ -100,8 +101,9 @@ public class SendServer {
 
 
 
+	@SuppressWarnings("unchecked")
 	public List<Growers> getGrowers(){
-		List<String> growers = new ArrayList();
+		List<String> growers = new ArrayList<String>();
 		List<Growers> toReturn = new ArrayList<>();
 		Gson gson = new Gson();
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'growers' }";
@@ -131,7 +133,7 @@ public class SendServer {
 	public void updateGrower (Growers grower){
 		Gson gson = new Gson();
 		String data = gson.toJson(grower);
-		
+
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject)parser.parse(data);
 		json.addProperty("action", "update");
@@ -139,7 +141,7 @@ public class SendServer {
 		json.addProperty("machine_id", "Software");
 		json.addProperty("what", "grower");
 		String query = json.toString();
-		
+
 		System.out.println(query);
 		try{
 
@@ -212,8 +214,9 @@ public class SendServer {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public List<Users> getUsers() {
-		List<String> users = new ArrayList();
+		List<String> users = new ArrayList<String>();
 		List<Users> toReturn = new ArrayList<>();
 		Gson gson = new Gson();
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'users' }";
@@ -240,11 +243,12 @@ public class SendServer {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public List<Sorts> getSorts() {
 		List<String> sorts = new ArrayList<String>();
 		List<Sorts> toReturn = new ArrayList<>();
 		Gson gson = new Gson();
-		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo' }";
+		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo' , 'By' : 'tenLast' }";
 		try{
 
 			out = new DataOutputStream(socket.getOutputStream());
@@ -267,13 +271,103 @@ public class SendServer {
 		return toReturn;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Sorts> getSearchSorts(String first, String second, String byWhat) {
+		List<String> sorts = new ArrayList<String>();
+		List<Sorts> toReturn = new ArrayList<>();
+		Gson gson = new Gson();
+		switch(byWhat){
+		case "Grower":
+			String Gquery = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo' , 'gID' : '" + first + "', 'Plot' : '" + second +"' , 'By' : 'Grower' }";
+			try{
 
+				out = new DataOutputStream(socket.getOutputStream());
+				out.writeUTF(Gquery);
+				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+				sorts = (List<String>) in.readObject();
+				for (String j: sorts){
+					toReturn.add( gson.fromJson(j, Sorts.class));
+				}
+				for (Sorts srt : toReturn)
+				{
+					System.out.println(srt.toString());
+				}
+				out.close();
+				in.close();
+				return toReturn;
+			}catch(IOException e){
+				System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+				e.printStackTrace();
+			}catch (ClassNotFoundException e) {
+				System.out.println("reciving from server come up with a problem! ");
+				e.printStackTrace();
+			}
+			break;
+		case "Date":
+			String dQuery = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo' , 'startDate' : '" + first + "', 'endDate' : '" + second +"' , 'By' : 'Date' }";
+			try{
+
+				out = new DataOutputStream(socket.getOutputStream());
+				out.writeUTF(dQuery);
+				ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+				sorts = (List<String>) in.readObject();
+				for (String j: sorts){
+					toReturn.add( gson.fromJson(j, Sorts.class));
+				}
+				for (Sorts srt : toReturn)
+				{
+					System.out.println(srt.toString());
+				}
+				out.close();
+				in.close();
+				return toReturn;
+			}catch(IOException e){
+				System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+				e.printStackTrace();
+			}catch (ClassNotFoundException e) {
+				System.out.println("reciving from server come up with a problem! ");
+				e.printStackTrace();
+			}
+			break;
+			default:
+				String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'collection' : 'userSortInfo'}";
+				try{
+
+					out = new DataOutputStream(socket.getOutputStream());
+					out.writeUTF(query);
+					ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+					sorts = (List<String>) in.readObject();
+					for (String j: sorts){
+						toReturn.add( gson.fromJson(j, Sorts.class));
+					}
+					for (Sorts srt : toReturn)
+					{
+						System.out.println(srt.toString());
+					}
+					out.close();
+					in.close();
+					return toReturn;
+				}catch(IOException e){
+					System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+					e.printStackTrace();
+				}catch (ClassNotFoundException e) {
+					System.out.println("reciving from server come up with a problem! ");
+					e.printStackTrace();
+				}
+				break;
+		}
+		return toReturn;
+
+	}
+
+
+	@SuppressWarnings("unchecked")
 	public List<ProductList> getPackets(String startDate, String endDate) {
 		List<String> packets = new ArrayList<String>();
 		List<ProductList> toReturn = new ArrayList<>();
 		Gson gson = new Gson();
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'query', 'what':'packet' , 'collection' : 'sortsTry', 'startTime': ' "
-		+ startDate + "', 'endTime' : '" + endDate +"'"+"}";
+				+ startDate + "', 'endTime' : '" + endDate +"'"+"}";
 		System.out.println(query);
 		try{
 
@@ -298,12 +392,13 @@ public class SendServer {
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public List<ProgramPacket> getProg( String startDate, String endDate) {
 		List<String> program = new ArrayList<String>();
 		List<ProgramPacket> toReturn = new ArrayList<>();
 		Gson gson = new Gson();
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'query' , 'what':'program' , 'collection' : 'sortsTry', 'startTime': ' "
-		+ startDate+ "', 'endTime' : '" + endDate +"'"+"}";
+				+ startDate+ "', 'endTime' : '" + endDate +"'"+"}";
 		try{
 
 			out = new DataOutputStream(socket.getOutputStream());
@@ -327,5 +422,6 @@ public class SendServer {
 	}
 
 }
+
 
 

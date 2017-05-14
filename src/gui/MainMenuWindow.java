@@ -3,22 +3,18 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import Classes.Sorts;
 import Handlers.SendServer;
 
@@ -29,28 +25,11 @@ public class MainMenuWindow {
 	private List<Sorts> sorts = new ArrayList<>();
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainMenuWindow window = new MainMenuWindow();
-					window.frmMainMenu.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public MainMenuWindow() {
 		getDataFromDB();
 		initialize();
-
 		frmMainMenu.setVisible(true);
 	}
 

@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.formula.functions.Value;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -23,6 +21,7 @@ public class ExportToExcel {
 	private String tabGrowerDet = "Grower_and_plot";
 	private Sorts value;
 	private String tabClassesOutcome = "exported-" + (new Date()).toString().replace(":", "-");
+	private Workbook wb;
 
 
 	public ExportToExcel(Sorts toOutput , String fileName){
@@ -36,7 +35,7 @@ public class ExportToExcel {
 	public void exportData() throws FileNotFoundException, IOException
 	{
 		//Create new workbook and tab
-		Workbook wb = new HSSFWorkbook();
+		wb = new HSSFWorkbook();
 		FileOutputStream fileOut = new FileOutputStream(fileName);
 		Sheet growerPlotSheet = wb.createSheet(tabGrowerDet); // grower + plot details + start date + end date + comments
 		fillGrowerSheet(growerPlotSheet);

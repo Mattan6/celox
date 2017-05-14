@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -22,7 +21,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -34,17 +32,11 @@ import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-
-import Classes.ClassDetails;
-import Classes.CulcResults;
-import Classes.MachineOutput;
-import Classes.Plots;
-import Classes.Sorts;
+import Classes.*;
 import Handlers.ExportToExcel;
 import Handlers.SendServer;
 import Validation.ValidationFunctions;
@@ -109,23 +101,6 @@ public class Statistics {
 	private int[] classFSens = new int[4];
 	private List<Sorts> sorts = new ArrayList<>();
 	private JComboBox<String> cmbLastExportRes;
-	private SimpleDateFormat customDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss+00:00");
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Statistics window = new Statistics();
-					window.frmStatistics.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
@@ -133,12 +108,14 @@ public class Statistics {
 	public Statistics() {
 		initialize();
 		getDataFromDB();
+		frmStatistics.setVisible(true);
 	}
 
 	public Statistics(Sorts sort) {
 		initialize();
 		getDataFromDB();
 		updateFields(sort);
+		frmStatistics.setVisible(true);
 	}
 
 	/**
@@ -287,7 +264,7 @@ public class Statistics {
 		lblLastSorts.setFont(new Font("Arial", Font.PLAIN, 12));
 		pnlExportDetails.add(lblLastSorts, "2, 8, right, default");
 
-		cmbLastExportRes = new JComboBox();
+		cmbLastExportRes = new JComboBox<String>();
 		pnlExportDetails.add(cmbLastExportRes, "8, 8, 25, 1, fill, fill");
 
 		cmbLastExportRes.addActionListener(new ActionListener() { 
@@ -350,25 +327,24 @@ public class Statistics {
 					culc = new CulcResults(mac, getCurrentSort());
 					culc.fillDate();
 					tempSort = buildSort();
+					tempSort = culc.reSort(tempSort);
 					
 				}
 				else{
-					
 					tempSort = buildSort();
+					tempSort.setClassesOutcome(new int[7]);
+					tempSort.setClassOutcomeWeight(new float[7]);
+					culc = new CulcResults(tempSort);
+					//System.out.println("before resort" + Arrays.toString(tempSort.getClassesOutcome()));
+					//System.out.println("before resort" + Arrays.toString(tempSort.getClassOutcomeWeight()));
+					tempSort = culc.reSort(tempSort);
 				}
 				
-				System.out.println("temp sort -" + tempSort.getUserClassDetails().toString());
-				if (mac==null || culc ==null){
-					mac = new MachineOutput(start, end);
-					mac.fillDetailsDB();
-					culc = new CulcResults(mac, tempSort);
-					culc.fillDate();	
-				}
-				System.out.println(Arrays.toString(tempSort.getClassesOutcome()));
-				System.out.println(Arrays.toString(tempSort.getClassOutcomeWeight()));
-				//tempSort = culc.reSort(tempSort);
-				//System.out.println("sort -" + getCurrentSort().getUserClassDetails().toString());
-				/// continue re-order carrots
+				
+				//System.out.println(Arrays.toString(tempSort.getClassesOutcome()));
+				//System.out.println(Arrays.toString(tempSort.getClassOutcomeWeight()));
+				JOptionPane.showMessageDialog(null, buildResult(tempSort), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+
 			}
 		});
 
@@ -380,6 +356,15 @@ public class Statistics {
 		btnForecast.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnForecast.setPreferredSize(new Dimension(65, 25));
 		pnlExportDetails.add(btnForecast, "14, 24, 9, 3, fill, fill");
+		
+		btnForecast.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
 
 		JLabel lblOptimizeSort = new JLabel("Optimize Sort:");
 		lblOptimizeSort.setFont(new Font("Arial", Font.PLAIN, 12));
@@ -970,6 +955,7 @@ public class Statistics {
 		pnlDiameterB.add(lblDiameterToB, gbc_lblDiameterToB);
 
 		spnDiameterToB = new JSpinner();
+		spnDiameterToB.setFont(new Font("Arial", Font.BOLD, 12));
 		spnDiameterToB.setModel(new SpinnerNumberModel(new Integer(0), new Integer(-1), null, new Integer(1)));
 		GridBagConstraints gbc_spnDiameterToB = new GridBagConstraints();
 		gbc_spnDiameterToB.fill = GridBagConstraints.HORIZONTAL;

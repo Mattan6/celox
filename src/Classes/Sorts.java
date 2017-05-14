@@ -1,16 +1,11 @@
 package Classes;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.naming.ldap.StartTlsRequest;
-import javax.swing.JOptionPane;
 
 
 public class Sorts {
@@ -29,7 +24,10 @@ public class Sorts {
 
 
 	public Sorts(){
+		
 	}
+
+
 
 	public Sorts(Sorts sort){
 		this.carrots=sort.carrots;
@@ -41,6 +39,10 @@ public class Sorts {
 		this.classes = sort.classes;
 		this.comments=sort.comments;
 		//this.classOutcomeWeight = sort.classOutcomeWeight;
+	}
+
+	public void setClassOutcomeWeight(float[] classOutcomeWeight) {
+		this.classOutcomeWeight = classOutcomeWeight;
 	}
 	
 	public Long getTotalProd() {

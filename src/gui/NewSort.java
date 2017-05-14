@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -14,12 +13,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -31,12 +27,10 @@ import javax.swing.JTextArea;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
-
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-
 import Classes.ClassDetails;
 import Classes.Growers;
 import Classes.Plots;
@@ -44,13 +38,11 @@ import Classes.Sorts;
 import Handlers.SendServer;
 
 public class NewSort {
-	private final int classNumbers = 7;
-
-	private JFrame frame;
-	private List<String> strGrowers;
+	
+	private JFrame frmNewSort;
 	private List<Growers> growers = new ArrayList<>();
-	private JComboBox cmbGrowers;
-	private JComboBox cmbChoosePlot;
+	private JComboBox<String> cmbGrowers;
+	private JComboBox<String> cmbChoosePlot;
 	private JSpinner spnLengthFromA;
 	private JSpinner spnLengthFromB;
 	private JSpinner spnLengthFromC;
@@ -120,44 +112,29 @@ public class NewSort {
 	
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NewSort window = new NewSort();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public NewSort() {
 		initialize();
 		getDataFromDB();
+		frmNewSort.setVisible(true);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame("New Sort");
-		frame.setBounds(100, 100, 1617, 876);
-		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.getContentPane().setLayout(new BorderLayout(0, 0));
+		frmNewSort = new JFrame("New Sort");
+		frmNewSort.setBounds(100, 100, 1617, 876);
+		frmNewSort.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		frmNewSort.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frmNewSort.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlHeaderWindow = new JPanel();
 		pnlHeaderWindow.setBackground(Color.WHITE);
 		FlowLayout fl_pnlHeaderWindow = (FlowLayout) pnlHeaderWindow.getLayout();
 		fl_pnlHeaderWindow.setVgap(50);
-		frame.getContentPane().add(pnlHeaderWindow, BorderLayout.NORTH);
+		frmNewSort.getContentPane().add(pnlHeaderWindow, BorderLayout.NORTH);
 
 		JLabel lblNewSort = new JLabel("New Sort Details");
 		lblNewSort.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
@@ -165,7 +142,7 @@ public class NewSort {
 
 		JPanel pnLeft = new JPanel();
 		pnLeft.setPreferredSize(new Dimension(600, 10));
-		frame.getContentPane().add(pnLeft, BorderLayout.WEST);
+		frmNewSort.getContentPane().add(pnLeft, BorderLayout.WEST);
 		pnLeft.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlLblChooseGrower = new JPanel();
@@ -306,7 +283,7 @@ public class NewSort {
 		lblChooseWhatGrower.setPreferredSize(new Dimension(200, 25));
 		pnlGrowerDetails.add(lblChooseWhatGrower, "1, 4, 32, 1, center, default");
 
-		cmbGrowers = new JComboBox();
+		cmbGrowers = new JComboBox<String>();
 		pnlGrowerDetails.add(cmbGrowers, "4, 8, 27, 1, fill, default");
 		cmbGrowers.addActionListener(new ActionListener() {
 
@@ -330,7 +307,7 @@ public class NewSort {
 		lblChoosePlot.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlGrowerDetails.add(lblChoosePlot, "2, 13, 31, 3");
 
-		cmbChoosePlot = new JComboBox();
+		cmbChoosePlot = new JComboBox<String>();
 		pnlGrowerDetails.add(cmbChoosePlot, "4, 18, 27, 1, fill, default");
 
 		JLabel lblEnterComments = new JLabel("Comments");
@@ -416,7 +393,7 @@ public class NewSort {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MainMenuWindow();
-				frame.dispose();
+				frmNewSort.dispose();
 			}
 		});
 
@@ -434,7 +411,7 @@ public class NewSort {
 
 
 		JPanel pnlRight = new JPanel();
-		frame.getContentPane().add(pnlRight, BorderLayout.CENTER);
+		frmNewSort.getContentPane().add(pnlRight, BorderLayout.CENTER);
 		pnlRight.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlLblSortInput = new JPanel();
@@ -1423,10 +1400,10 @@ public class NewSort {
 		JPanel pnlbottomEmpty6 = new JPanel();
 		pnlSortData.add(pnlbottomEmpty6);
 
-		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		frmNewSort.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-				if (JOptionPane.showConfirmDialog(frame, "Are you sure to close this window?", "Really Closing?", JOptionPane.YES_NO_OPTION,
+				if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window?", "Really Closing?", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
 					if (sort!= null){
 						SendServer send = new SendServer();

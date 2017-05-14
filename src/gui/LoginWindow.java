@@ -55,6 +55,7 @@ public class LoginWindow {
 	public LoginWindow() {
 		initialize();	
 		getDataFromDB();
+		frmLogin.setVisible(true);
 	}
 
 	private void initialize()
