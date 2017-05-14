@@ -42,7 +42,7 @@ public class SendServer {
 		JsonParser parser = new JsonParser();
 		JsonObject json = (JsonObject)parser.parse(data);
 		json.addProperty("action", "insert");
-		json.addProperty("collection", "userSortInfo");
+		json.addProperty("collection", "growers");
 		json.addProperty("machine_id", "Software");
 		String newData = json.toString();
 
