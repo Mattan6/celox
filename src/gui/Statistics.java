@@ -113,7 +113,7 @@ public class Statistics {
 
 	public Statistics(Sorts sort) {
 		initialize();
-		getDataFromDB();
+		getDataFromDB(sort);
 		updateFields(sort);
 		frmStatistics.setVisible(true);
 	}
@@ -305,7 +305,7 @@ public class Statistics {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				//set date to check 
 				Calendar sd = Calendar.getInstance();
 				sd.set(2017, Calendar.APRIL, 30, 21, 00);
@@ -313,13 +313,13 @@ public class Statistics {
 				Calendar ed = Calendar.getInstance();
 				ed.set(2017, Calendar.APRIL, 30, 22, 59);
 				Date end = ed.getTime();
-				
-				
+
+
 				Sorts tempSort;
 				MachineOutput mac = null;
 				CulcResults culc = null;
-				
-				
+
+
 				if (getCurrentSort().getCarrots().size()==0){
 					//culc = new CulcResults(new MachineOutput(getCurrentSort().getStartData(), getCurrentSort().getEndDate()), getCurrentSort());
 					mac = new MachineOutput(start, end);
@@ -328,21 +328,16 @@ public class Statistics {
 					culc.fillDate();
 					tempSort = buildSort();
 					tempSort = culc.reSort(tempSort);
-					
+
 				}
 				else{
 					tempSort = buildSort();
 					tempSort.setClassesOutcome(new int[7]);
 					tempSort.setClassOutcomeWeight(new float[7]);
 					culc = new CulcResults(tempSort);
-					//System.out.println("before resort" + Arrays.toString(tempSort.getClassesOutcome()));
-					//System.out.println("before resort" + Arrays.toString(tempSort.getClassOutcomeWeight()));
 					tempSort = culc.reSort(tempSort);
 				}
-				
-				
-				//System.out.println(Arrays.toString(tempSort.getClassesOutcome()));
-				//System.out.println(Arrays.toString(tempSort.getClassOutcomeWeight()));
+
 				JOptionPane.showMessageDialog(null, buildResult(tempSort), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 
 			}
@@ -356,13 +351,13 @@ public class Statistics {
 		btnForecast.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnForecast.setPreferredSize(new Dimension(65, 25));
 		pnlExportDetails.add(btnForecast, "14, 24, 9, 3, fill, fill");
-		
+
 		btnForecast.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
+
+
 			}
 		});
 
@@ -402,10 +397,10 @@ public class Statistics {
 							try {
 								ex.exportData();
 							} catch (FileNotFoundException e1) {
-								// TODO Auto-generated catch block
+								System.out.println("something went wrong with excel Export! ");
 								e1.printStackTrace();
 							} catch (IOException e1) {
-								// TODO Auto-generated catch block
+								System.out.println("something went wrong with excel Export! ");
 								e1.printStackTrace();
 							}
 						}
@@ -1484,13 +1479,18 @@ public class Statistics {
 					for (int i=0;i<sorts.size();++i){
 						if (sort.equals(sorts.get(i).getSortDetails())){
 							//output = new MachineOutput(sorts.get(i).getStartData(),sorts.get(i).getEndDate());
-							output = new MachineOutput(start, end);
-							output.fillDetailsDB();
-							res = new CulcResults(output, sorts.get(i));
-							res.fillDate();
-							System.out.println("statistics -- the Division is: " + Arrays.toString( sorts.get(i).getClassesOutcome()));
-							System.out.println("statistics -- the Division weight (kg) is: " + Arrays.toString( sorts.get(i).getClassOutcomeWeight()));
-							JOptionPane.showMessageDialog(null, buildResult(getCurrentSort()), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							if (sorts.get(i).getTotalProd()==0){
+								output = new MachineOutput(start, end);
+								output.fillDetailsDB();
+								res = new CulcResults(output, sorts.get(i));
+								res.fillDate();
+								System.out.println("statistics -- the Division is: " + Arrays.toString( sorts.get(i).getClassesOutcome()));
+								System.out.println("statistics -- the Division weight (kg) is: " + Arrays.toString( sorts.get(i).getClassOutcomeWeight()));
+								JOptionPane.showMessageDialog(null, buildResult(getCurrentSort()), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							}
+							else{
+								JOptionPane.showMessageDialog(null, buildResult(getCurrentSort()), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							}
 						}
 					}
 				}
@@ -1548,6 +1548,24 @@ public class Statistics {
 
 	}
 
+	private void getDataFromDB(Sorts sort) {
+		SendServer get = new SendServer();
+		if (sorts.size()!=0)
+			sorts.clear();
+		sorts = get.getSorts();
+		cmbLastExportRes.removeAllItems();
+
+		for (int i=0;i<sorts.size();++i){
+			cmbLastExportRes.addItem(sorts.get(i).getSortDetails());
+		}
+		
+		for (int i=0;i<sorts.size();++i){
+			if (sorts.get(i).getSortDetails().equals(sort.getSortDetails()))
+				cmbLastExportRes.setSelectedItem(sort.getSortDetails());
+		}
+
+	}
+	
 	private void updateFields(Sorts sort){
 		for (ClassDetails cd: sort.getUserClassDetails()){
 			switch(cd.getWhatClass()){

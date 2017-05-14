@@ -52,22 +52,6 @@ public class GlobalSearchWindow {
 	private JScrollPane scpResult;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GlobalSearchWindow window = new GlobalSearchWindow();
-					window.frmSearch.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public GlobalSearchWindow() {
@@ -322,6 +306,7 @@ public class GlobalSearchWindow {
 				}
 				if (data!=null){
 					tblResults = new JTable(data,columns){
+						// make table uneditable ! 
 						private static final long serialVersionUID = 1L;
 
 						public boolean isCellEditable(int row, int column) {                

@@ -386,6 +386,8 @@ public class NewSort {
 		});
 
 		btnBack = new JButton("Back");
+		btnBack.setForeground(Color.RED);
+		btnBack.setFont(new Font("Arial", Font.BOLD, 13));
 		btnBack.setPreferredSize(new Dimension(100, 50));
 		pnlGrowerDetails.add(btnBack, "26, 38");
 		btnBack.addActionListener(new ActionListener() {

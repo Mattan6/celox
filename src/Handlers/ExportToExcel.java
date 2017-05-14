@@ -1,5 +1,6 @@
 package Handlers;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class ExportToExcel {
 	private Sorts value;
 	private String tabClassesOutcome = "exported-" + (new Date()).toString().replace(":", "-");
 	private Workbook wb;
+	private File desktopDir = new File(System.getProperty("user.home"), "Desktop");
 
 
 	public ExportToExcel(Sorts toOutput , String fileName){
@@ -36,7 +38,7 @@ public class ExportToExcel {
 	{
 		//Create new workbook and tab
 		wb = new HSSFWorkbook();
-		FileOutputStream fileOut = new FileOutputStream(fileName);
+		FileOutputStream fileOut = new FileOutputStream(new File(desktopDir, fileName));
 		Sheet growerPlotSheet = wb.createSheet(tabGrowerDet); // grower + plot details + start date + end date + comments
 		fillGrowerSheet(growerPlotSheet);
 		Sheet sortDetSheet = wb.createSheet(tabSortDet); // user sort details 
@@ -45,27 +47,6 @@ public class ExportToExcel {
 		fillCarrotsSheet(carrotsSheet);
 		Sheet classSheet = wb.createSheet(tabClassesOutcome); 
 		fillClassesSheet(classSheet);
-
-
-		/*
-		//Create 2D Cell Array
-		Row[] row = new Row[data.length];
-		Cell[][] cell = new Cell[row.length][];
-
-
-		//Define and Assign Cell Data from Given
-		for(int i = 0; i < row.length; i ++)
-		{
-			row[i] = sortDetSheet.createRow(i);
-			cell[i] = new Cell[data[i].length];
-
-			for(int j = 0; j < cell[i].length; j ++)
-			{
-				cell[i][j] = row[i].createCell(j);
-				cell[i][j].setCellValue(data[i][j]);
-			}
-
-		}*/
 
 		//Export Data
 		wb.write(fileOut);
@@ -199,14 +180,14 @@ public class ExportToExcel {
 		cell[i][0] = row[i].createCell(0);
 		cell[i][0].setCellValue("Date - Start sort");
 		cell[i][1] = row[i].createCell(1);
-		cell[i++][1].setCellValue(value.getStartData());
+		cell[i++][1].setCellValue(value.getStartData().toString());
 
 		row[i] = sheet.createRow(i);
 		cell[i] = new Cell[2];
 		cell[i][0] = row[i].createCell(0);
 		cell[i][0].setCellValue("Date - End sort");
 		cell[i][1] = row[i].createCell(1);
-		cell[i++][1].setCellValue(value.getEndDate());
+		cell[i++][1].setCellValue(value.getEndDate().toString());
 
 		row[i] = sheet.createRow(i);
 		cell[i] = new Cell[2];

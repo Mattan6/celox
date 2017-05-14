@@ -731,6 +731,16 @@ public class NewCustomer {
 		JButton btnBack = new JButton("Back");
 		btnBack.setForeground(Color.BLACK);
 		pnlLeftBody.add(btnBack, "6, 42");
+		
+		btnBack.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MainMenuWindow();
+				frmNewDetails.dispose();
+				
+			}
+		});
 
 }
 

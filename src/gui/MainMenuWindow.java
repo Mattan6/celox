@@ -7,6 +7,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -21,7 +24,7 @@ import Handlers.SendServer;
 public class MainMenuWindow {
 
 	private JFrame frmMainMenu;
-	private JTable LastSortTable;
+	private JTable lastSortTable;
 	private List<Sorts> sorts = new ArrayList<>();
 
 	/**
@@ -79,12 +82,45 @@ public class MainMenuWindow {
 		}
 
 
-		LastSortTable = new JTable(data,columns);
+		lastSortTable = new JTable(data,columns){
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {                
+				return false;               
+			};
+		};
 
 
-		JScrollPane scpSortTable = new JScrollPane(LastSortTable);
-		LastSortTable.setFillsViewportHeight(true);
+		JScrollPane scpSortTable = new JScrollPane();
+		scpSortTable.setViewportView(lastSortTable);
+		lastSortTable.setFillsViewportHeight(true);
+		
+		lastSortTable.addMouseListener(new MouseAdapter() {
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) //Double Click
+				{
+					JTable target = (JTable)e.getSource();
+					int row = target.getSelectedRow();
 
+					for (Sorts srt : sorts)
+					{
+						if (srt.getStartData().toString().equals(target.getValueAt(row, 2))
+								&& srt.getEndDate().toString().equals(target.getValueAt(row, 3)))
+						{
+							new Statistics(srt); 
+							frmMainMenu.dispose();
+						}
+					}
+				}
+			}
+		});
+
+
+		
+		
+		
 		pnlMainMenuFooter.add(scpSortTable, BorderLayout.CENTER);
 
 		JPanel pnlMainMenuLastSorts = new JPanel();
