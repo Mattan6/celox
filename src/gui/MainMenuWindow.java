@@ -9,9 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -138,6 +141,14 @@ public class MainMenuWindow {
 
 		frmMainMenu = new JFrame();
 		frmMainMenu.getContentPane().setPreferredSize(new Dimension(10, 0));
+		
+		try {
+			frmMainMenu.setIconImage(ImageIO.read(new File("img/logo.png")));
+		}
+		catch (IOException exc) {
+		    exc.printStackTrace();
+		}
+
 
 		JPanel pnlMainMenuHeader = new JPanel();
 		pnlMainMenuHeader.setBackground(new Color(192, 192, 192));
@@ -319,9 +330,9 @@ public class MainMenuWindow {
 
 		SendServer get = new SendServer();
 		sorts = get.getSorts();
-		for (int i=0;i<sorts.size();++i){
-			System.out.println(sorts.get(i).toString());
-		}
+		//for (int i=0;i<sorts.size();++i){
+		//	System.out.println(sorts.get(i).toString());
+	//	}
 
 	}
 

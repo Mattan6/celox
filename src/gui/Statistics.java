@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -133,7 +134,7 @@ public class Statistics {
 		buildMenu();
 		frmStatistics.setVisible(true);
 	}
-	
+
 	private void buildMenu(){
 
 		JMenuBar menuBar = new JMenuBar();
@@ -155,18 +156,6 @@ public class Statistics {
 		});
 		mnFile.add(mntmMenu);
 
-		JMenuItem mntmSearch = new JMenuItem("Search");
-		mntmSearch.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new GlobalSearchWindow();
-				frmStatistics.dispose();
-				
-			}
-		});
-		mnFile.add(mntmSearch);
-
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 
@@ -187,24 +176,24 @@ public class Statistics {
 
 		JMenuItem mntmNewSort = new JMenuItem("Sort");
 		mntmNewSort.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new NewSort();
 				frmStatistics.dispose();
-				
+
 			}
 		});
 		mnNew.add(mntmNewSort);
 
 		JMenuItem mntmUpdatenewCustomer = new JMenuItem("Grower/Plot");
 		mntmUpdatenewCustomer.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new NewCustomer();
 				frmStatistics.dispose();
-				
+
 			}
 		});
 		mnNew.add(mntmUpdatenewCustomer);
@@ -212,11 +201,23 @@ public class Statistics {
 		JMenu mnEdit = new JMenu("Action");
 		menuBar.add(mnEdit);
 
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnEdit.add(mntmSearch);
+		mntmSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GlobalSearchWindow();
+				frmStatistics.dispose();
+
+			}
+		});
+
 		JMenuItem mntmStatistics = new JMenuItem("Statistics");
 		mnEdit.add(mntmStatistics);
 
 	}
-	
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -227,6 +228,14 @@ public class Statistics {
 		frmStatistics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmStatistics.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmStatistics.getContentPane().setLayout(new BorderLayout(0, 0));
+
+
+		try {
+			frmStatistics.setIconImage(ImageIO.read(new File("img/logo.png")));
+		}
+		catch (IOException exc) {
+			exc.printStackTrace();
+		}
 
 		JPanel pnlHeaderWindow = new JPanel();
 		pnlHeaderWindow.setBackground(new Color(192, 192, 192));
@@ -518,10 +527,12 @@ public class Statistics {
 							try {
 								ex.exportData();
 							} catch (FileNotFoundException e1) {
-								System.out.println("something went wrong with excel Export! ");
+								//System.out.println("something went wrong with excel Export! ");
+								JOptionPane.showMessageDialog(frmStatistics, "something went wrong with excel Export!");
 								e1.printStackTrace();
 							} catch (IOException e1) {
-								System.out.println("something went wrong with excel Export! ");
+								JOptionPane.showMessageDialog(frmStatistics, "something went wrong with excel Export!");
+								//System.out.println("something went wrong with excel Export! ");
 								e1.printStackTrace();
 							}
 						}
@@ -1643,8 +1654,8 @@ public class Statistics {
 								output.fillDetailsDB();
 								res = new CulcResults(output, sorts.get(i));
 								res.fillDate();
-								System.out.println("statistics -- the Division is: " + Arrays.toString( sorts.get(i).getClassesOutcome()));
-								System.out.println("statistics -- the Division weight (kg) is: " + Arrays.toString( sorts.get(i).getClassOutcomeWeight()));
+								//System.out.println("statistics -- the Division is: " + Arrays.toString( sorts.get(i).getClassesOutcome()));
+								//System.out.println("statistics -- the Division weight (kg) is: " + Arrays.toString( sorts.get(i).getClassOutcomeWeight()));
 								JOptionPane.showMessageDialog(null, buildResult(getCurrentSort()), "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 							}
 							else{
@@ -1695,7 +1706,7 @@ public class Statistics {
 		JPanel pnlbottomEmpty4 = new JPanel();
 		pnlbottomEmpty4.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlbottomEmpty4);
-		
+
 	}
 
 	private void getDataFromDB() {
@@ -1744,7 +1755,7 @@ public class Statistics {
 				spnS_ShapeA.setValue(cd.getsShape());
 				spnC_ShapeA.setValue(cd.getcShape());
 				classASens = cd.getSensitivity();
-				System.out.println(cd.toString());
+				//System.out.println(cd.toString());
 				break;
 			case "B":
 				if (sensB!=null)

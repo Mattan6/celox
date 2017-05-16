@@ -10,6 +10,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -29,7 +31,8 @@ public class SendServer {
 		try{
 			socket = new Socket(serverIP, serverPort);
 		}catch(IOException e){
-			System.out.println("couldent open connection");
+			JOptionPane.showMessageDialog(null, "couldent open connection", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent open connection");
 			e.printStackTrace();
 		}
 	}
@@ -52,14 +55,15 @@ public class SendServer {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 
 			String ack = in.readUTF();
-			if (ack.equals("A"))
-				System.out.println("recived ack in insert method");
+			//if (ack.equals("A"))
+				//System.out.println("recived ack in insert method");
 
 			in.close();
 			out.close();
 			return true;
 		}catch(IOException e){
-			System.out.println("couldent write to socket -- insert" + e.getStackTrace() );
+			//System.out.println("couldent write to socket -- insert" + e.getStackTrace() );
+			JOptionPane.showMessageDialog(null, "couldent write to socket -- insert", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 			e.printStackTrace();
 		}
 
@@ -77,7 +81,7 @@ public class SendServer {
 		json.addProperty("machine_id", "Software");
 		String newData = json.toString();
 
-		System.out.println(newData);
+		//System.out.println(newData);
 
 		try{
 			out = new DataOutputStream(socket.getOutputStream());
@@ -85,14 +89,15 @@ public class SendServer {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 
 			String ack = in.readUTF();
-			if (ack.equals("A"))
-				System.out.println("recived ack in insert method");
+			//if (ack.equals("A"))
+				//System.out.println("recived ack in insert method");
 
 			in.close();
 			out.close();
 			return true;
 		}catch(IOException e){
-			System.out.println("couldent write to socket -- sort" + e.getStackTrace());
+			JOptionPane.showMessageDialog(null, "couldent write to socket -- sort", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent write to socket -- sort" + e.getStackTrace());
 			e.printStackTrace();
 		}
 
@@ -120,10 +125,12 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket -- getGrowers" + e.getStackTrace());
+			JOptionPane.showMessageDialog(null, "couldent write to socket -- getGrowers", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent write to socket -- getGrowers" + e.getStackTrace());
 			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
-			System.out.println("reciving from server come up with a problem! ");
+			JOptionPane.showMessageDialog(null, "reciving from server come up with a problem!", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
 		}
 		return toReturn;
@@ -142,7 +149,7 @@ public class SendServer {
 		json.addProperty("what", "grower");
 		String query = json.toString();
 
-		System.out.println(query);
+		//System.out.println(query);
 		try{
 
 			out = new DataOutputStream(socket.getOutputStream());
@@ -150,14 +157,15 @@ public class SendServer {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 
 			String ack = in.readUTF();
-			if (ack.equals("A"))
-				System.out.println("recived ack in update grower method ");
+			//if (ack.equals("A"))
+				//System.out.println("recived ack in update grower method ");
 
 			in.close();
 			out.close();
 
 		}catch(IOException e){
-			System.out.println("couldnt write to socket -- updateGrower");
+			JOptionPane.showMessageDialog(null, "couldnt write to socket -- updateGrower", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldnt write to socket -- updateGrower");
 			e.printStackTrace();
 		}
 	}
@@ -167,7 +175,7 @@ public class SendServer {
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'update' , 'collection' : 'growers' , 'what' : 'plotUpdate', 'origin' : '"+originName+"' , 'gID' :" +"'" + gID +"'" + 
 				", 'pName' : " +"'"+ p.getpName()+"'" + ", 'pSize' : " +"'" + p.getpSize()+"'" + ", 'pSpec' : " +"'"+ p.getpSpec() +"'" 
 				+ "}";
-		System.out.println(query);
+		//System.out.println(query);
 		try{
 
 			out = new DataOutputStream(socket.getOutputStream());
@@ -175,14 +183,15 @@ public class SendServer {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 
 			String ack = in.readUTF();
-			if (ack.equals("A"))
-				System.out.println("recived ack in update plot method ");
+		//	if (ack.equals("A"))
+				//System.out.println("recived ack in update plot method ");
 
 			in.close();
 			out.close();
 
 		}catch(IOException e){
-			System.out.println("couldnt write to socket -- updatePlot");
+			JOptionPane.showMessageDialog(null, "couldnt write to socket -- updatePlot", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldnt write to socket -- updatePlot");
 			e.printStackTrace();
 		}
 	}
@@ -191,7 +200,7 @@ public class SendServer {
 
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'update' , 'collection' : 'growers' , 'what' : 'AddPlot' , 'gID' :" +"'"+ gID +"'," + 
 				"'pName':'" + p.getpName() + "', 'pSize':'" + p.getpSize() + "', 'pSpec':'" + p.getpSpec() + "'"+"}";
-		System.out.println(query);
+		//System.out.println(query);
 		try{
 
 			out = new DataOutputStream(socket.getOutputStream());
@@ -199,14 +208,15 @@ public class SendServer {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
 
 			String ack = in.readUTF();
-			if (ack.equals("A"))
-				System.out.println("recived ack in add plot to grower method ");
+			//if (ack.equals("A"))
+			//	System.out.println("recived ack in add plot to grower method ");
 
 			in.close();
 			out.close();
 
 		}catch(IOException e){
-			System.out.println("couldnt write to socket -- addPlotToGrower");
+			JOptionPane.showMessageDialog(null, "couldnt write to socket -- addPlotToGrower", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldnt write to socket -- addPlotToGrower");
 			e.printStackTrace();
 			return false;
 		}
@@ -233,10 +243,12 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket  --- getUsers" + e.getStackTrace());
+			JOptionPane.showMessageDialog(null, "couldent write to socket  --- getUsers", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent write to socket  --- getUsers" + e.getStackTrace());
 			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
-			System.out.println("reciving from server come up with a problem! ");
+			JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
 		}
 		return toReturn;
@@ -262,10 +274,12 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+			JOptionPane.showMessageDialog(null, "couldent write to socket --- getSorts ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
 			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
-			System.out.println("reciving from server come up with a problem! ");
+			JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
 		}
 		return toReturn;
@@ -288,18 +302,20 @@ public class SendServer {
 				for (String j: sorts){
 					toReturn.add( gson.fromJson(j, Sorts.class));
 				}
-				for (Sorts srt : toReturn)
-				{
-					System.out.println(srt.toString());
-				}
+				//for (Sorts srt : toReturn)
+				//{
+				//	System.out.println(srt.toString());
+				//}
 				out.close();
 				in.close();
 				return toReturn;
 			}catch(IOException e){
-				System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+				JOptionPane.showMessageDialog(null, "couldent write to socket --- getSorts ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+				//System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
 				e.printStackTrace();
 			}catch (ClassNotFoundException e) {
-				System.out.println("reciving from server come up with a problem! ");
+				JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+				//System.out.println("reciving from server come up with a problem! ");
 				e.printStackTrace();
 			}
 			break;
@@ -314,18 +330,20 @@ public class SendServer {
 				for (String j: sorts){
 					toReturn.add( gson.fromJson(j, Sorts.class));
 				}
-				for (Sorts srt : toReturn)
-				{
-					System.out.println(srt.toString());
-				}
+				//for (Sorts srt : toReturn)
+				//{
+				//	System.out.println(srt.toString());
+				//}
 				out.close();
 				in.close();
 				return toReturn;
 			}catch(IOException e){
-				System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+				JOptionPane.showMessageDialog(null, "couldent write to socket --- getSorts ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+				//System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
 				e.printStackTrace();
 			}catch (ClassNotFoundException e) {
-				System.out.println("reciving from server come up with a problem! ");
+				JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+				//System.out.println("reciving from server come up with a problem! ");
 				e.printStackTrace();
 			}
 			break;
@@ -340,18 +358,20 @@ public class SendServer {
 					for (String j: sorts){
 						toReturn.add( gson.fromJson(j, Sorts.class));
 					}
-					for (Sorts srt : toReturn)
-					{
-						System.out.println(srt.toString());
-					}
+					//for (Sorts srt : toReturn)
+					//{
+					//	System.out.println(srt.toString());
+					//}
 					out.close();
 					in.close();
 					return toReturn;
 				}catch(IOException e){
-					System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
+					JOptionPane.showMessageDialog(null, "couldent write to socket --- getSorts ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+					//System.out.println("couldent write to socket --- getSorts"+ e.getStackTrace());
 					e.printStackTrace();
 				}catch (ClassNotFoundException e) {
-					System.out.println("reciving from server come up with a problem! ");
+					JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+					//System.out.println("reciving from server come up with a problem! ");
 					e.printStackTrace();
 				}
 				break;
@@ -368,7 +388,7 @@ public class SendServer {
 		Gson gson = new Gson();
 		String query = "{ 'machine_id' : 'Software' , 'action' : 'query', 'what':'packet' , 'collection' : 'sortsTry', 'startTime': ' "
 				+ startDate + "', 'endTime' : '" + endDate +"'"+"}";
-		System.out.println(query);
+		//System.out.println(query);
 		try{
 
 			out = new DataOutputStream(socket.getOutputStream());
@@ -382,10 +402,12 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket -- getPackets");
+			JOptionPane.showMessageDialog(null, "couldent write to socket -- getPackets ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent write to socket -- getPackets");
 			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
-			System.out.println("reciving from server come up with a problem! ");
+			JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
 		}
 		return toReturn;
@@ -412,10 +434,12 @@ public class SendServer {
 			in.close();
 			return toReturn;
 		}catch(IOException e){
-			System.out.println("couldent write to socket -- getProg ");
+			JOptionPane.showMessageDialog(null, "couldent write to socket -- getProg ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("couldent write to socket -- getProg ");
 			e.printStackTrace();
 		}catch (ClassNotFoundException e) {
-			System.out.println("reciving from server come up with a problem! ");
+			JOptionPane.showMessageDialog(null, "reciving from server come up with a problem! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+			//System.out.println("reciving from server come up with a problem! ");
 			e.printStackTrace();
 		}
 		return toReturn;

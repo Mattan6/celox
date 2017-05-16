@@ -3,7 +3,6 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -12,35 +11,38 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
+
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
 import Classes.Growers;
 import Classes.Plots;
 import Classes.Sorts;
 import Handlers.SendServer;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JRadioButtonMenuItem;
 
 public class GlobalSearchWindow {
 
@@ -97,9 +99,6 @@ public class GlobalSearchWindow {
 		});
 		mnFile.add(mntmMenu);
 
-		JMenuItem mntmSearch = new JMenuItem("Search");
-		mnFile.add(mntmSearch);
-
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 
@@ -120,24 +119,24 @@ public class GlobalSearchWindow {
 
 		JMenuItem mntmNewSort = new JMenuItem("Sort");
 		mntmNewSort.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new NewSort();
 				frmSearch.dispose();
-				
+
 			}
 		});
 		mnNew.add(mntmNewSort);
 
 		JMenuItem mntmUpdatenewCustomer = new JMenuItem("Grower/Plot");
 		mntmUpdatenewCustomer.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new NewCustomer();
 				frmSearch.dispose();
-				
+
 			}
 		});
 		mnNew.add(mntmUpdatenewCustomer);
@@ -147,24 +146,33 @@ public class GlobalSearchWindow {
 
 		JMenuItem mntmStatistics = new JMenuItem("Statistics");
 		mntmStatistics.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Statistics();
 				frmSearch.dispose();
-				
+
 			}
 		});
+		
+				JMenuItem mntmSearch = new JMenuItem("Search");
+				mnEdit.add(mntmSearch);
 		mnEdit.add(mntmStatistics);
 
 	}
-	
-	
+
+
 	private void initialize() {
 		frmSearch = new JFrame();
 		frmSearch.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmSearch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSearch.getContentPane().setLayout(new BorderLayout(0, 0));
+		try {
+			frmSearch.setIconImage(ImageIO.read(new File("img/logo.png")));
+		}
+		catch (IOException exc) {
+			exc.printStackTrace();
+		}
 
 		JPanel pnlSearchWindowHeader = new JPanel();
 		pnlSearchWindowHeader.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -381,20 +389,21 @@ public class GlobalSearchWindow {
 				else
 				{
 					if (!checkDate(txtStartDate.getText())){
-						System.out.println("Start Date wasn't enterd right!");
+						JOptionPane.showMessageDialog(null, "Start Date wasn't enterd right! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 					}
 					else if (!checkDate(txtEndDate.getText())){
-						System.out.println("End Date wasn't enterd right!");
+						JOptionPane.showMessageDialog(null, "End Date wasn't enterd right! ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						//System.out.println("End Date wasn't enterd right!");
 					}
 					else{
 						String start = handleDate(txtStartDate.getText());
 						String end  = handleDate(txtEndDate.getText());
 						sorts = get.getSearchSorts(start,end, "Date");
 						data = new Object[sorts.size()][7];
-						for (Sorts srt : sorts)
+						/*for (Sorts srt : sorts)
 						{
 							System.out.println(srt.toString());
-						}
+						}*/
 
 						//System.out.println("start from plot search");
 						int j=0;
@@ -594,8 +603,15 @@ public class GlobalSearchWindow {
 		toReturn+=year + " ";
 
 
-		System.out.println(toReturn);
+		//System.out.println(toReturn);
 		return toReturn;
+	}
+
+	private void PopUpInfo(boolean bool, String info){
+		if (bool == true)
+			JOptionPane.showMessageDialog(null, info + " Successfully", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+		else
+			JOptionPane.showMessageDialog(null, "Failed: " + info, "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
 	}
 
 }

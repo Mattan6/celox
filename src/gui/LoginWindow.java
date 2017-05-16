@@ -7,9 +7,12 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,8 +21,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import Classes.Users;
 import Handlers.SendServer;
@@ -68,8 +69,17 @@ public class LoginWindow {
 		frmLogin.setBounds(100, 100, 354, 300);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
+		frmLogin.setResizable(false);
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frmLogin.setLocation(dim.width/2-frmLogin.getSize().width/2, dim.height/2-frmLogin.getSize().height/2);
+
+		try {
+			frmLogin.setIconImage(ImageIO.read(new File("img/logo.png")));
+		}
+		catch (IOException exc) {
+			exc.printStackTrace();
+		}
+
 
 		JPanel pnlHeader = new JPanel();
 		pnlHeader.setBackground(new Color(192, 192, 192));

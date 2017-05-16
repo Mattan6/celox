@@ -13,9 +13,13 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -164,35 +168,6 @@ public class NewSort {
 		});
 		mnFile.add(mntmMenu);
 
-		JMenuItem mntmSearch = new JMenuItem("Search");
-		mntmSearch.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (sort!= null){
-					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
-							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-						SendServer send = new SendServer();
-						sort.setEndDate(new Date());
-						if (send.insert(sort)){
-							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
-							new GlobalSearchWindow();
-							frmNewSort.dispose();
-						}
-						else{
-							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
-						}
-					}
-				}
-				else{
-					new GlobalSearchWindow();
-					frmNewSort.dispose();	
-				}
-				
-			}
-		});
-		mnFile.add(mntmSearch);
-
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 
@@ -287,6 +262,35 @@ public class NewSort {
 
 			}
 		});
+
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnEdit.add(mntmSearch);
+		mntmSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sort!= null){
+					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+						SendServer send = new SendServer();
+						sort.setEndDate(new Date());
+						if (send.insert(sort)){
+							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							new GlobalSearchWindow();
+							frmNewSort.dispose();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				else{
+					new GlobalSearchWindow();
+					frmNewSort.dispose();	
+				}
+
+			}
+		});
 		mnEdit.add(mntmStatistics);
 
 	}
@@ -302,6 +306,13 @@ public class NewSort {
 		frmNewSort.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		frmNewSort.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmNewSort.getContentPane().setLayout(new BorderLayout(0, 0));
+
+		try {
+			frmNewSort.setIconImage(ImageIO.read(new File("img/logo.png")));
+		}
+		catch (IOException exc) {
+			exc.printStackTrace();
+		}
 
 		JPanel pnlHeaderWindow = new JPanel();
 		pnlHeaderWindow.setBackground(new Color(192, 192, 192));

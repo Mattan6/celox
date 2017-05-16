@@ -8,9 +8,13 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -72,7 +76,7 @@ public class NewCustomer {
 		getDataFromDB();
 		frmNewDetails.setVisible(true);
 	}
-	
+
 	private void buildMenu(){
 
 		JMenuBar menuBar = new JMenuBar();
@@ -94,18 +98,6 @@ public class NewCustomer {
 		});
 		mnFile.add(mntmMenu);
 
-		JMenuItem mntmSearch = new JMenuItem("Search");
-		mntmSearch.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new GlobalSearchWindow();
-				frmNewDetails.dispose();
-				
-			}
-		});
-		mnFile.add(mntmSearch);
-
 		JSeparator separator = new JSeparator();
 		mnFile.add(separator);
 
@@ -126,12 +118,12 @@ public class NewCustomer {
 
 		JMenuItem mntmNewSort = new JMenuItem("Sort");
 		mntmNewSort.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new NewSort();
 				frmNewDetails.dispose();
-				
+
 			}
 		});
 		mnNew.add(mntmNewSort);
@@ -144,20 +136,32 @@ public class NewCustomer {
 
 		JMenuItem mntmStatistics = new JMenuItem("Statistics");
 		mntmStatistics.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new Statistics();
 				frmNewDetails.dispose();
-				
+
+			}
+		});
+
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnEdit.add(mntmSearch);
+		mntmSearch.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GlobalSearchWindow();
+				frmNewDetails.dispose();
+
 			}
 		});
 		mnEdit.add(mntmStatistics);
 
 	}
-	
-	
-	
+
+
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -167,6 +171,13 @@ public class NewCustomer {
 		frmNewDetails.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmNewDetails.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmNewDetails.getContentPane().setLayout(new BorderLayout(0, 0));
+
+		try {
+			frmNewDetails.setIconImage(ImageIO.read(new File("img/logo.png")));
+		}
+		catch (IOException exc) {
+			exc.printStackTrace();
+		}
 
 		JPanel pnlTop = new JPanel();
 		pnlTop.setBackground(new Color(192, 192, 192));
@@ -303,7 +314,7 @@ public class NewCustomer {
 					String grower = (String)cmbChooseGrower1.getSelectedItem();
 					String growerId = grower.substring(grower.lastIndexOf("ID: ")+4, 13);
 					growID = growerId;
-					System.out.println(growID);
+					//System.out.println(growID);
 				}
 
 			}
@@ -410,7 +421,7 @@ public class NewCustomer {
 						if (growerId.equals(g.getgID()))
 						{
 							choosenGrower = g;
-							System.out.println(g.toString());
+							//System.out.println(g.toString());
 							AddPlotsField();
 							break;
 						}
@@ -514,8 +525,8 @@ public class NewCustomer {
 				}
 				else
 					PopUpInfo(false, "Cannot Empty Fields");			
-		}
-	});		
+			}
+		});		
 
 		JPanel pnlLeft = new JPanel();
 		pnlLeft.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -776,7 +787,8 @@ public class NewCustomer {
 						counter++;
 				}
 				if (counter == btnGroup.getButtonCount()){
-					System.out.println("No Button Has Been Chekced");
+					JOptionPane.showMessageDialog(null, "No Button Has Been Chekced", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+					//System.out.println("No Button Has Been Chekced");
 				}
 				else if (grower!=null){
 					updateFields(grower);
@@ -891,100 +903,100 @@ public class NewCustomer {
 		btnBack.setOpaque(true);
 		pnlLeftBody.add(btnBack, "6, 42");
 
-		
+
 		btnBack.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MainMenuWindow();
 				frmNewDetails.dispose();
-				
+
 			}
 		});
 
-}
+	}
 
-private Growers searchBy(String catagory, String whatToSearch){
-	switch(catagory){
-	case "ID": 
-		for ( int i=0;i<growers.size();++i){
-			if (growers.get(i).getgID().equals(whatToSearch)){
-				return growers.get(i);
+	private Growers searchBy(String catagory, String whatToSearch){
+		switch(catagory){
+		case "ID": 
+			for ( int i=0;i<growers.size();++i){
+				if (growers.get(i).getgID().equals(whatToSearch)){
+					return growers.get(i);
+				}
 			}
-		}
-		break;
-	case "Phone Number":
-		for ( int i=0;i<growers.size();++i){
-			if (growers.get(i).getgPhone().equals(whatToSearch)){
-				return growers.get(i);
+			break;
+		case "Phone Number":
+			for ( int i=0;i<growers.size();++i){
+				if (growers.get(i).getgPhone().equals(whatToSearch)){
+					return growers.get(i);
+				}
 			}
-		}
-		break;
-	case "Name":
-		for ( int i=0;i<growers.size();++i){
-			if (growers.get(i).getgName().equals(whatToSearch)){
-				return growers.get(i);
+			break;
+		case "Name":
+			for ( int i=0;i<growers.size();++i){
+				if (growers.get(i).getgName().equals(whatToSearch)){
+					return growers.get(i);
+				}
 			}
+			break;
+		default: return null;
 		}
-		break;
-	default: return null;
+		return null;
+
 	}
-	return null;
 
-}
-
-private void updateFields(Growers grower){
-	if (grower!=null){
-		txtIdGrowerChosen.setText(grower.getgID());
-		txtGrowerNameChosen.setText(grower.getgName());
-		txtGrowerAddressChosen.setText(grower.getgAddress());
-		txtGrowerPhoneChosen.setText(grower.getgPhone());
+	private void updateFields(Growers grower){
+		if (grower!=null){
+			txtIdGrowerChosen.setText(grower.getgID());
+			txtGrowerNameChosen.setText(grower.getgName());
+			txtGrowerAddressChosen.setText(grower.getgAddress());
+			txtGrowerPhoneChosen.setText(grower.getgPhone());
+		}
 	}
-}
 
-private void updatePlotFields(Plots p){
-	if (p != null){
-		txtPlotNameChosen.setText(p.getpName());
-		txtPlotSizeChosen.setText(p.getpSize());
-		txtPlotSpeciesChosen.setText(p.getpSpec());
+	private void updatePlotFields(Plots p){
+		if (p != null){
+			txtPlotNameChosen.setText(p.getpName());
+			txtPlotSizeChosen.setText(p.getpSize());
+			txtPlotSpeciesChosen.setText(p.getpSpec());
+		}
 	}
-}
 
 
-private void getDataFromDB(){
+	private void getDataFromDB(){
 
-	SendServer get = new SendServer();
-	if (growers.size()!=0)
-		growers.clear();
-	growers = get.getGrowers();
-	cmbChooseGrower.removeAllItems();
-	cmbChooseGrower1.removeAllItems();
-	cmbChooseGrower2.removeAllItems();
+		SendServer get = new SendServer();
+		if (growers.size()!=0)
+			growers.clear();
+		growers = get.getGrowers();
+		cmbChooseGrower.removeAllItems();
+		cmbChooseGrower1.removeAllItems();
+		cmbChooseGrower2.removeAllItems();
 
-	for (int i=0;i<growers.size();++i){
-		cmbChooseGrower.addItem(growers.get(i).toString());
-		cmbChooseGrower1.addItem(growers.get(i).toString());
-		cmbChooseGrower2.addItem(growers.get(i).toString());
+		for (int i=0;i<growers.size();++i){
+			cmbChooseGrower.addItem(growers.get(i).toString());
+			cmbChooseGrower1.addItem(growers.get(i).toString());
+			cmbChooseGrower2.addItem(growers.get(i).toString());
+		}
+		//updateFields(growers.get(0));
 	}
-	//updateFields(growers.get(0));
-}
 
-private void AddPlotsField()
-{
-	cmbChoosePlot.removeAllItems();
-	for (Plots p:choosenGrower.getPlots())
+	private void AddPlotsField()
 	{
-		cmbChoosePlot.addItem(p.toString());
+		cmbChoosePlot.removeAllItems();
+		for (Plots p:choosenGrower.getPlots())
+		{
+			cmbChoosePlot.addItem(p.toString());
+		}
 	}
-}
 
-private void PopUpInfo(boolean bool, String info)
-{
-	if (bool == true)
-		JOptionPane.showMessageDialog(null, info + " Successfully", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
-	else
-		JOptionPane.showMessageDialog(null, "Failed: " + info, "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
-}
+	private void PopUpInfo(boolean bool, String info)
+	{
+		if (bool == true)
+			JOptionPane.showMessageDialog(null, info + " Successfully", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+		else
+			JOptionPane.showMessageDialog(null, "Failed: " + info, "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+	}
 
 }
 
