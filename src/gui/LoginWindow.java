@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import Classes.Users;
 import Handlers.SendServer;
@@ -38,8 +40,10 @@ public class LoginWindow {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+
 			public void run() {
 				try {
+
 					LoginWindow window = new LoginWindow();
 					window.frmLogin.setVisible(true);
 				} catch (Exception e) {
@@ -60,7 +64,7 @@ public class LoginWindow {
 	private void initialize()
 	{
 		frmLogin = new JFrame();
-		frmLogin.getContentPane().setBackground(Color.WHITE);
+		frmLogin.getContentPane().setBackground(new Color(192, 192, 192));
 		frmLogin.setBounds(100, 100, 354, 300);
 		frmLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmLogin.getContentPane().setLayout(null);
@@ -68,43 +72,49 @@ public class LoginWindow {
 		frmLogin.setLocation(dim.width/2-frmLogin.getSize().width/2, dim.height/2-frmLogin.getSize().height/2);
 
 		JPanel pnlHeader = new JPanel();
-		pnlHeader.setBackground(Color.WHITE);
+		pnlHeader.setBackground(new Color(192, 192, 192));
 		pnlHeader.setBounds(10, 11, 318, 140);
 		frmLogin.getContentPane().add(pnlHeader);
 		pnlHeader.setLayout(null);
 
 		lblImgLogo = new JLabel("");
-		Image image = new ImageIcon(this.getClass().getResource("/GoCarrotsLogo.png")).getImage();
+		lblImgLogo.setBackground(new Color(192, 192, 192));
+		Image image = new ImageIcon(this.getClass().getResource("/logo.png")).getImage();
 		lblImgLogo.setIcon(new ImageIcon(image));
-		lblImgLogo.setBounds(50,0, 254, 140);
+		lblImgLogo.setBounds(85,0, 254, 140);
 		pnlHeader.add(lblImgLogo);
 
 		JPanel pnlContent = new JPanel();
-		pnlContent.setBackground(Color.WHITE);
+		pnlContent.setBackground(new Color(192, 192, 192));
 		pnlContent.setBounds(10, 162, 318, 88);
 		frmLogin.getContentPane().add(pnlContent);
 		pnlContent.setLayout(null);
 
 		txtUserName = new JTextField();
+		txtUserName.setBackground(new Color(169, 169, 169));
 		txtUserName.setFont(new Font("Arial", Font.PLAIN, 12));
 		txtUserName.setBounds(75, 23, 105, 20);
 		pnlContent.add(txtUserName);
 		txtUserName.setColumns(10);
 
 		JLabel lblUserName = new JLabel("Username");
-		lblUserName.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblUserName.setForeground(new Color(0, 0, 0));
+		lblUserName.setFont(new Font("Arial", Font.BOLD, 13));
 		lblUserName.setBounds(0, 25, 65, 17);
 		pnlContent.add(lblUserName);
 
 		lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Arial", Font.PLAIN, 12));
+		lblPassword.setForeground(new Color(0, 0, 0));
+		lblPassword.setFont(new Font("Arial", Font.BOLD, 13));
 		lblPassword.setBounds(0, 53, 65, 17);
 		pnlContent.add(lblPassword);
 
 		JButton btnLogin = new JButton("Login");
-		btnLogin.setFont(new Font("Arial", Font.PLAIN, 12));
-		btnLogin.setBackground(Color.LIGHT_GRAY);
+		btnLogin.setFont(new Font("Arial", Font.BOLD, 12));
+		btnLogin.setBackground(new Color(230, 230, 250));
 		btnLogin.setBounds(211, 51, 95, 20);
+		btnLogin.setContentAreaFilled(false);
+		btnLogin.setOpaque(true);
 		pnlContent.add(btnLogin);
 		btnLogin.addActionListener(new ActionListener() {
 
@@ -135,14 +145,17 @@ public class LoginWindow {
 
 
 		txtpasswordField = new JPasswordField();
+		txtpasswordField.setBackground(new Color(169, 169, 169));
 		txtpasswordField.setFont(new Font("Arial", Font.PLAIN, 12));
 		txtpasswordField.setBounds(75, 51, 105, 20);
 		pnlContent.add(txtpasswordField);
 
 		btnClear = new JButton("Clear");
-		btnClear.setBackground(Color.LIGHT_GRAY);
+		btnClear.setBackground(new Color(230, 230, 250));
 		btnClear.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnClear.setBounds(211, 23, 95, 20);
+		btnClear.setContentAreaFilled(false);
+		btnClear.setOpaque(true);
 		pnlContent.add(btnClear);
 		btnClear.addActionListener(new ActionListener() {
 

@@ -50,6 +50,7 @@ public class GlobalSearchWindow {
 	private String[] columns = {"Grower Name","Plot Name","Sort Start Date","Sort End Date","Size Of Plot", "Species","Comments"};
 	private Object[][] data;
 	private JScrollPane scpResult;
+	private JTable table;
 
 	/**
 	 * Create the application.
@@ -73,7 +74,7 @@ public class GlobalSearchWindow {
 
 		JPanel pnlSearchWindowHeader = new JPanel();
 		pnlSearchWindowHeader.setBorder(new LineBorder(new Color(0, 0, 0)));
-		pnlSearchWindowHeader.setBackground(Color.WHITE);
+		pnlSearchWindowHeader.setBackground(new Color(192, 192, 192));
 		FlowLayout fl_pnlSearchWindowHeader = (FlowLayout) pnlSearchWindowHeader.getLayout();
 		fl_pnlSearchWindowHeader.setVgap(50);
 		frmSearch.getContentPane().add(pnlSearchWindowHeader, BorderLayout.NORTH);
@@ -96,6 +97,7 @@ public class GlobalSearchWindow {
 						RowSpec.decode("500px"),}));
 
 		JPanel pnlSearch = new JPanel();
+		pnlSearch.setBackground(new Color(128, 128, 128));
 		pnlSearchDetails.add(pnlSearch, "1, 1, fill, fill");
 		pnlSearch.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -139,6 +141,7 @@ public class GlobalSearchWindow {
 		pnlSearch.add(lblSearchBy, "6, 4, right, default");
 
 		JComboBox cmbSearchBy = new JComboBox();
+		cmbSearchBy.setBackground(new Color(169, 169, 169));
 		cmbSearchBy.setFont(new Font("Arial", Font.PLAIN, 15));
 		cmbSearchBy.setModel(new DefaultComboBoxModel(new String[] {"Plot", "Date"}));
 		pnlSearch.add(cmbSearchBy, "8, 4, fill, default");
@@ -184,6 +187,7 @@ public class GlobalSearchWindow {
 		pnlSearch.add(lblGrowerId, "12, 6, right, default");
 
 		txtGrowerId = new JTextField();
+		txtGrowerId.setBackground(new Color(169, 169, 169));
 		txtGrowerId.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnlSearch.add(txtGrowerId, "14, 6, fill, default");
 		txtGrowerId.setColumns(10);
@@ -197,6 +201,7 @@ public class GlobalSearchWindow {
 		pnlSearch.add(lblStartDate, "18, 4, right, default");
 
 		txtStartDate = new JTextField();
+		txtStartDate.setBackground(new Color(169, 169, 169));
 		txtStartDate.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnlSearch.add(txtStartDate, "20, 4, fill, default");
 		txtStartDate.setColumns(10);
@@ -208,11 +213,13 @@ public class GlobalSearchWindow {
 		pnlSearch.add(lblEndDate, "18, 6, right, default");
 
 		txtEndDate = new JTextField();
+		txtEndDate.setBackground(new Color(169, 169, 169));
 		txtEndDate.setFont(new Font("Arial", Font.PLAIN, 13));
 		pnlSearch.add(txtEndDate, "20, 6, fill, default");
 		txtEndDate.setColumns(10);
 
 		cmbPlotName = new JComboBox<String>();
+		cmbPlotName.setBackground(new Color(169, 169, 169));
 		pnlSearch.add(cmbPlotName, "14, 8, fill, default");
 
 		lblDateFormat = new JLabel("Format ---- dd/MM/yyyy  ");
@@ -224,7 +231,11 @@ public class GlobalSearchWindow {
 
 
 		JButton btnBack = new JButton("Back");
+		btnBack.setBackground(new Color(230, 230, 250));
+		btnBack.setForeground(new Color(255, 0, 0));
 		btnBack.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnBack.setContentAreaFilled(false);
+		btnBack.setOpaque(true);
 		pnlSearch.add(btnBack, "12, 12");
 		btnBack.addActionListener(new ActionListener() {
 			
@@ -237,7 +248,10 @@ public class GlobalSearchWindow {
 		});
 
 		JButton btnSearch = new JButton("Search");
+		btnSearch.setBackground(new Color(230, 230, 250));
 		btnSearch.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnSearch.setContentAreaFilled(false);
+		btnSearch.setOpaque(true);
 		pnlSearch.add(btnSearch, "14, 12");
 
 
@@ -305,7 +319,7 @@ public class GlobalSearchWindow {
 					}
 				}
 				if (data!=null){
-					tblResults = new JTable(data,columns){
+					table = new JTable(data,columns){
 						// make table uneditable ! 
 						private static final long serialVersionUID = 1L;
 
@@ -313,10 +327,11 @@ public class GlobalSearchWindow {
 							return false;               
 						};
 					};
-					scpResult.setViewportView(tblResults);
-					tblResults.setFillsViewportHeight(true);
+					scpResult.setViewportView(table);
+					table.setFillsViewportHeight(true);
+					table.setBackground(new Color(192, 192, 192));
 
-					tblResults.addMouseListener(new MouseAdapter() {
+					table.addMouseListener(new MouseAdapter() {
 						public void mouseClicked(MouseEvent e) {
 							if (e.getClickCount() == 2) //Double Click
 							{
@@ -347,7 +362,7 @@ public class GlobalSearchWindow {
 		pnlSearchResults.setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlResultHeader = new JPanel();
-		pnlResultHeader.setBackground(Color.WHITE);
+		pnlResultHeader.setBackground(new Color(192, 192, 192));
 		FlowLayout fl_pnlResultHeader = (FlowLayout) pnlResultHeader.getLayout();
 		fl_pnlResultHeader.setAlignment(FlowLayout.LEFT);
 		pnlSearchResults.add(pnlResultHeader, BorderLayout.NORTH);
@@ -357,7 +372,15 @@ public class GlobalSearchWindow {
 		pnlResultHeader.add(lblResults);
 
 		scpResult = new JScrollPane();
-		pnlSearchResults.add(scpResult, BorderLayout.CENTER);	
+		scpResult.setBackground(new Color(255, 255, 153));
+		pnlSearchResults.add(scpResult, BorderLayout.CENTER);
+		
+		table = new JTable();
+		table.setSelectionBackground(new Color(128, 128, 128));
+		table.setFillsViewportHeight(true);
+		table.setBackground(new Color(192, 192, 192));
+		scpResult.setViewportView(table);
+		
 
 	}
 
@@ -404,6 +427,7 @@ public class GlobalSearchWindow {
 
 		DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(new String[]{});
 		cmbGrowerName = new JComboBox<String>(model);
+		cmbGrowerName.setBackground(new Color(169, 169, 169));
 		cmbGrowerName.removeAllItems();
 		for (int i=0; i < growers.size(); i++)
 		{	

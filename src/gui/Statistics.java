@@ -15,12 +15,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -30,16 +32,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.RootPaneContainer;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
-import Classes.*;
+
+import Classes.ClassDetails;
+import Classes.CulcResults;
+import Classes.MachineOutput;
+import Classes.Sorts;
 import Handlers.ExportToExcel;
 import Handlers.SendServer;
 import Validation.ValidationFunctions;
+import javax.swing.border.LineBorder;
 
 public class Statistics {
 
@@ -111,6 +120,7 @@ public class Statistics {
 		frmStatistics.setVisible(true);
 	}
 
+
 	public Statistics(Sorts sort) {
 		initialize();
 		getDataFromDB(sort);
@@ -121,7 +131,7 @@ public class Statistics {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize() { 
 		frmStatistics = new JFrame();
 		frmStatistics.setBounds(100, 100, 1617, 876);
 		frmStatistics.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,21 +139,28 @@ public class Statistics {
 		frmStatistics.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlHeaderWindow = new JPanel();
-		pnlHeaderWindow.setBackground(Color.WHITE);
+		pnlHeaderWindow.setBackground(new Color(192, 192, 192));
 		FlowLayout fl_pnlHeaderWindow = (FlowLayout) pnlHeaderWindow.getLayout();
 		fl_pnlHeaderWindow.setVgap(50);
 		frmStatistics.getContentPane().add(pnlHeaderWindow, BorderLayout.NORTH);
+
+
 
 		JLabel lblStatistics = new JLabel("Statistics");
 		lblStatistics.setFont(new Font("Arial", Font.BOLD | Font.ITALIC, 47));
 		pnlHeaderWindow.add(lblStatistics);
 
+
+
+
 		JPanel pnLeft = new JPanel();
+		pnLeft.setBackground(new Color(192, 192, 192));
 		pnLeft.setPreferredSize(new Dimension(600, 10));
 		frmStatistics.getContentPane().add(pnLeft, BorderLayout.WEST);
-		pnLeft.setLayout(new BorderLayout(0, 0));
+		pnLeft.setLayout(new BorderLayout(0, 20));
 
 		JPanel pnlExport = new JPanel();
+		pnlExport.setBackground(new Color(128, 128, 128));
 		FlowLayout fl_pnlExport = (FlowLayout) pnlExport.getLayout();
 		fl_pnlExport.setVgap(20);
 		pnLeft.add(pnlExport, BorderLayout.NORTH);
@@ -157,6 +174,7 @@ public class Statistics {
 
 
 		JPanel pnlExportDetails = new JPanel();
+		pnlExportDetails.setBackground(new Color(192, 192, 192));
 		pnLeft.add(pnlExportDetails, BorderLayout.CENTER);
 		pnlExportDetails.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -278,8 +296,11 @@ public class Statistics {
 		});
 
 		JButton btnFindSort = new JButton("Find Sort");
+		btnFindSort.setBackground(new Color(230, 230, 250));
 		btnFindSort.setFont(new Font("Arial", Font.PLAIN, 12));
 		pnlExportDetails.add(btnFindSort, "14, 12, 1, 3");
+		btnFindSort.setContentAreaFilled(false);
+		btnFindSort.setOpaque(true);
 
 		btnFindSort.addActionListener(new ActionListener() {
 
@@ -297,8 +318,12 @@ public class Statistics {
 		pnlExportDetails.add(lblSearchSort, "2, 14, fill, fill");
 
 		JButton btnResort = new JButton("Resort");
+		btnResort.setBackground(new Color(230, 230, 250));
 		btnResort.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnResort.setContentAreaFilled(false);
+		btnResort.setOpaque(true);
 		pnlExportDetails.add(btnResort, "14, 18, 1, 3");
+
 
 		//------------------------------------------------------------------------------------------------------------------------------------------//
 		btnResort.addActionListener(new ActionListener() {
@@ -348,8 +373,11 @@ public class Statistics {
 		pnlExportDetails.add(lblResortByNew, "2, 20");
 
 		JButton btnForecast = new JButton("Forecasting Data");
+		btnForecast.setBackground(new Color(230, 230, 250));
 		btnForecast.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnForecast.setPreferredSize(new Dimension(65, 25));
+		btnForecast.setContentAreaFilled(false);
+		btnForecast.setOpaque(true);
 		pnlExportDetails.add(btnForecast, "14, 24, 9, 3, fill, fill");
 
 		btnForecast.addActionListener(new ActionListener() {
@@ -366,8 +394,11 @@ public class Statistics {
 		pnlExportDetails.add(lblOptimizeSort, "2, 26, right, default");
 
 		JButton btnExport = new JButton("Export");
+		btnExport.setBackground(new Color(230, 230, 250));
 		btnExport.setFont(new Font("Arial", Font.PLAIN, 12));
 		btnExport.setPreferredSize(new Dimension(65, 25));
+		btnExport.setContentAreaFilled(false);
+		btnExport.setOpaque(true);
 		pnlExportDetails.add(btnExport, "14, 30, 1, 3");
 
 		btnExport.addActionListener(new ActionListener() {
@@ -418,7 +449,11 @@ public class Statistics {
 		pnlExportDetails.add(lblExportToExcel, "2, 32, right, default");
 
 		JButton btnBack = new JButton("Back");
-		btnBack.setFont(new Font("Arial", Font.PLAIN, 12));
+		btnBack.setForeground(new Color(255, 0, 0));
+		btnBack.setBackground(new Color(230, 230, 250));
+		btnBack.setFont(new Font("Arial", Font.BOLD, 12));
+		btnBack.setContentAreaFilled(false);
+		btnBack.setOpaque(true);
 		pnlExportDetails.add(btnBack, "2, 36");
 
 		btnBack.addActionListener(new ActionListener() {
@@ -432,10 +467,12 @@ public class Statistics {
 
 
 		JPanel pnlRight = new JPanel();
+		pnlRight.setBackground(new Color(192, 192, 192));
 		frmStatistics.getContentPane().add(pnlRight, BorderLayout.CENTER);
-		pnlRight.setLayout(new BorderLayout(0, 0));
+		pnlRight.setLayout(new BorderLayout(0, 20));
 
 		JPanel pnlDataAnalysis = new JPanel();
+		pnlDataAnalysis.setBackground(new Color(128, 128, 128));
 		FlowLayout fl_pnlDataAnalysis = (FlowLayout) pnlDataAnalysis.getLayout();
 		fl_pnlDataAnalysis.setVgap(20);
 		pnlRight.add(pnlDataAnalysis, BorderLayout.NORTH);
@@ -445,24 +482,29 @@ public class Statistics {
 		pnlDataAnalysis.add(lblDataAnalysis);
 
 		JPanel pnlExportAnalysis = new JPanel();
+		pnlExportAnalysis.setBackground(new Color(192, 192, 192));
 		pnlRight.add(pnlExportAnalysis, BorderLayout.CENTER);
 
 
 		////////////////////////////////////////////////////////////////
-		pnlExportAnalysis.setLayout(new GridLayout(7, 7, 3, 4));
+		pnlExportAnalysis.setLayout(new GridLayout(7, 7, 4, 0));
 
 		/////////////// class types /////////////////////////////
 
 		JLabel lblInput = new JLabel("Input");
-		lblInput.setForeground(new Color(165, 42, 42));
+		lblInput.setForeground(new Color(0, 0, 0));
 		lblInput.setFont(new Font("Arial", Font.BOLD, 18));
 		lblInput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInput.setBackground(new Color(0, 51, 102));
 		pnlExportAnalysis.add(lblInput);
 
 		JButton btnClassA = new JButton("Class A");
+		btnClassA.setBorderPainted(false);
+		btnClassA.setBackground(new Color(230, 230, 250));
 		btnClassA.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlExportAnalysis.add(btnClassA);
+		btnClassA.setContentAreaFilled(false);
+		btnClassA.setOpaque(true);
 
 		btnClassA.addActionListener(new ActionListener() {
 
@@ -478,8 +520,12 @@ public class Statistics {
 		});
 
 		JButton btnClassB = new JButton("Class B");
+		btnClassB.setBorderPainted(false);
+		btnClassB.setBackground(new Color(230, 230, 250));
 		btnClassB.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlExportAnalysis.add(btnClassB);
+		btnClassB.setContentAreaFilled(false);
+		btnClassB.setOpaque(true);
 
 		btnClassB.addActionListener(new ActionListener() {
 
@@ -495,8 +541,12 @@ public class Statistics {
 		});
 
 		JButton btnClassC = new JButton("Class C");
+		btnClassC.setBorderPainted(false);
+		btnClassC.setBackground(new Color(230, 230, 250));
 		btnClassC.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlExportAnalysis.add(btnClassC);
+		btnClassC.setContentAreaFilled(false);
+		btnClassC.setOpaque(true);
 
 		btnClassC.addActionListener(new ActionListener() {
 
@@ -512,8 +562,12 @@ public class Statistics {
 		});
 
 		JButton btnClassD = new JButton("Class D");
+		btnClassD.setBorderPainted(false);
+		btnClassD.setBackground(new Color(224, 255, 255));
 		btnClassD.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlExportAnalysis.add(btnClassD);
+		btnClassD.setContentAreaFilled(false);
+		btnClassD.setOpaque(true);
 
 		btnClassD.addActionListener(new ActionListener() {
 
@@ -529,8 +583,12 @@ public class Statistics {
 		});
 
 		JButton btnClassE = new JButton("Class E");
+		btnClassE.setBorderPainted(false);
+		btnClassE.setBackground(new Color(224, 255, 255));
 		btnClassE.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlExportAnalysis.add(btnClassE);
+		btnClassE.setContentAreaFilled(false);
+		btnClassE.setOpaque(true);
 
 		btnClassE.addActionListener(new ActionListener() {
 
@@ -546,8 +604,12 @@ public class Statistics {
 		});
 
 		JButton btnClassF = new JButton("Class F");
+		btnClassF.setBorderPainted(false);
+		btnClassF.setBackground(new Color(221, 160, 221));
 		btnClassF.setFont(new Font("Arial", Font.BOLD, 15));
 		pnlExportAnalysis.add(btnClassF);
+		btnClassF.setContentAreaFilled(false);
+		btnClassF.setOpaque(true);
 
 		btnClassF.addActionListener(new ActionListener() {
 
@@ -1443,22 +1505,29 @@ public class Statistics {
 		pnlC_ShapeF.add(spnC_ShapeF);
 
 		JPanel pnlbottomEmpty1 = new JPanel();
+		pnlbottomEmpty1.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlbottomEmpty1);
 
 		JPanel pnlbottomEmpty2 = new JPanel();
+		pnlbottomEmpty2.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlbottomEmpty2);
 		pnlbottomEmpty2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel pnlbottomEmpty3 = new JPanel();
+		pnlbottomEmpty3.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlbottomEmpty3);
 		pnlbottomEmpty3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel pnlBottomSort = new JPanel();
+		pnlBottomSort.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlBottomSort);
-		pnlBottomSort.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlBottomSort.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 15));
 
 		JButton btnSortDetails = new JButton("Sort Details");
+		btnSortDetails.setBackground(new Color(230, 230, 250));
 		btnSortDetails.setFont(new Font("Arial", Font.PLAIN, 11));
+		btnSortDetails.setContentAreaFilled(false);
+		btnSortDetails.setOpaque(true);
 		pnlBottomSort.add(btnSortDetails);
 		btnSortDetails.setPreferredSize(new Dimension(100, 50));
 
@@ -1500,14 +1569,17 @@ public class Statistics {
 
 
 		JPanel pnlBottomReset = new JPanel();
+		pnlBottomReset.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlBottomReset);
-		pnlBottomReset.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		pnlBottomReset.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 15));
 
 		JButton btnDefaultData = new JButton("Default Data ");
+		btnDefaultData.setBackground(new Color(230, 230, 250));
 		pnlBottomReset.add(btnDefaultData);
 		btnDefaultData.setFont(new Font("Arial", Font.PLAIN, 11));
 		btnDefaultData.setPreferredSize(new Dimension(100, 50));
-
+		btnDefaultData.setContentAreaFilled(false);
+		btnDefaultData.setOpaque(true);
 		btnDefaultData.addActionListener(new ActionListener() {
 
 			@Override
@@ -1526,10 +1598,12 @@ public class Statistics {
 
 
 		JPanel pnlBottomDefault = new JPanel();
+		pnlBottomDefault.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlBottomDefault);
 		pnlBottomDefault.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 
 		JPanel pnlbottomEmpty4 = new JPanel();
+		pnlbottomEmpty4.setBackground(new Color(192, 192, 192));
 		pnlExportAnalysis.add(pnlbottomEmpty4);
 
 
@@ -1558,14 +1632,14 @@ public class Statistics {
 		for (int i=0;i<sorts.size();++i){
 			cmbLastExportRes.addItem(sorts.get(i).getSortDetails());
 		}
-		
+
 		for (int i=0;i<sorts.size();++i){
 			if (sorts.get(i).getSortDetails().equals(sort.getSortDetails()))
 				cmbLastExportRes.setSelectedItem(sort.getSortDetails());
 		}
 
 	}
-	
+
 	private void updateFields(Sorts sort){
 		for (ClassDetails cd: sort.getUserClassDetails()){
 			switch(cd.getWhatClass()){

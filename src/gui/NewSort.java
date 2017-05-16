@@ -36,9 +36,10 @@ import Classes.Growers;
 import Classes.Plots;
 import Classes.Sorts;
 import Handlers.SendServer;
+import javax.swing.border.LineBorder;
 
 public class NewSort {
-	
+
 	private JFrame frmNewSort;
 	private List<Growers> growers = new ArrayList<>();
 	private JComboBox<String> cmbGrowers;
@@ -109,7 +110,7 @@ public class NewSort {
 	private JButton btnClassD;
 	private JButton btnClassE;
 	private JButton btnClassF;
-	
+
 
 	/**
 	 * Create the application.
@@ -131,7 +132,7 @@ public class NewSort {
 		frmNewSort.getContentPane().setLayout(new BorderLayout(0, 0));
 
 		JPanel pnlHeaderWindow = new JPanel();
-		pnlHeaderWindow.setBackground(Color.WHITE);
+		pnlHeaderWindow.setBackground(new Color(192, 192, 192));
 		FlowLayout fl_pnlHeaderWindow = (FlowLayout) pnlHeaderWindow.getLayout();
 		fl_pnlHeaderWindow.setVgap(50);
 		frmNewSort.getContentPane().add(pnlHeaderWindow, BorderLayout.NORTH);
@@ -141,11 +142,13 @@ public class NewSort {
 		pnlHeaderWindow.add(lblNewSort);
 
 		JPanel pnLeft = new JPanel();
+		pnLeft.setBackground(new Color(192, 192, 192));
 		pnLeft.setPreferredSize(new Dimension(600, 10));
 		frmNewSort.getContentPane().add(pnLeft, BorderLayout.WEST);
-		pnLeft.setLayout(new BorderLayout(0, 0));
+		pnLeft.setLayout(new BorderLayout(0, 20));
 
 		JPanel pnlLblChooseGrower = new JPanel();
+		pnlLblChooseGrower.setBackground(new Color(128, 128, 128));
 		FlowLayout fl_pnlLblChooseGrower = (FlowLayout) pnlLblChooseGrower.getLayout();
 		fl_pnlLblChooseGrower.setVgap(20);
 		pnLeft.add(pnlLblChooseGrower, BorderLayout.NORTH);
@@ -159,6 +162,7 @@ public class NewSort {
 
 
 		JPanel pnlGrowerDetails = new JPanel();
+		pnlGrowerDetails.setBackground(new Color(192, 192, 192));
 		pnLeft.add(pnlGrowerDetails, BorderLayout.CENTER);
 		pnlGrowerDetails.setLayout(new FormLayout(new ColumnSpec[] {
 				FormSpecs.RELATED_GAP_COLSPEC,
@@ -320,9 +324,46 @@ public class NewSort {
 		txtCommets.setBackground(UIManager.getColor("TextField.light"));
 		pnlGrowerDetails.add(txtCommets, "4, 28, 27, 7, fill, fill");
 
+		btnBack = new JButton("Back");
+		btnBack.setBackground(new Color(230, 230, 250));
+		btnBack.setForeground(Color.RED);
+		btnBack.setFont(new Font("Arial", Font.BOLD, 13));
+		btnBack.setPreferredSize(new Dimension(100, 50));
+		btnBack.setContentAreaFilled(false);
+		btnBack.setOpaque(true);
+		pnlGrowerDetails.add(btnBack, "18, 40");
+
+
+
+
+		btnStartSort = new JButton("Start Sort");
+		btnStartSort.setBackground(new Color(230, 230, 250));
+		btnStartSort.setPreferredSize(new Dimension(100, 50));
+		btnStartSort.setContentAreaFilled(false);
+		btnStartSort.setOpaque(true);
+		pnlGrowerDetails.add(btnStartSort, "22, 40");
+
 		btnEndSort = new JButton("End Sort");
+		btnEndSort.setBackground(new Color(230, 230, 250));
 		btnEndSort.setPreferredSize(new Dimension(100, 50));
-		pnlGrowerDetails.add(btnEndSort, "18, 38");
+		btnEndSort.setContentAreaFilled(false);
+		btnEndSort.setOpaque(true);
+		pnlGrowerDetails.add(btnEndSort, "26, 40");
+
+		btnResert = new JButton("Reset");
+		btnResert.setBackground(new Color(230, 230, 250));
+		pnlGrowerDetails.add(btnResert, "30, 40");
+		btnResert.setPreferredSize(new Dimension(100, 50));
+		btnResert.setContentAreaFilled(false);
+		btnResert.setOpaque(true);
+		btnResert.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				resetAllFields();
+			}
+
+		});
 
 		btnEndSort.addActionListener(new ActionListener() {
 
@@ -348,13 +389,6 @@ public class NewSort {
 			}
 		});
 
-
-
-
-		btnStartSort = new JButton("Start Sort");
-		btnStartSort.setPreferredSize(new Dimension(100, 50));
-		pnlGrowerDetails.add(btnStartSort, "22, 38");
-
 		btnStartSort.addActionListener(new ActionListener() {
 
 			@Override
@@ -378,18 +412,12 @@ public class NewSort {
 					buildSort();
 					setFieldsEnable(false);
 
-					}
+				}
 
 
 			}
 
 		});
-
-		btnBack = new JButton("Back");
-		btnBack.setForeground(Color.RED);
-		btnBack.setFont(new Font("Arial", Font.BOLD, 13));
-		btnBack.setPreferredSize(new Dimension(100, 50));
-		pnlGrowerDetails.add(btnBack, "26, 38");
 		btnBack.addActionListener(new ActionListener() {
 
 			@Override
@@ -399,24 +427,14 @@ public class NewSort {
 			}
 		});
 
-		btnResert = new JButton("Reset");
-		pnlGrowerDetails.add(btnResert, "30, 38");
-		btnResert.setPreferredSize(new Dimension(100, 50));
-		btnResert.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				resetAllFields();
-			}
-
-		});
-
 
 		JPanel pnlRight = new JPanel();
+		pnlRight.setBackground(new Color(192, 192, 192));
 		frmNewSort.getContentPane().add(pnlRight, BorderLayout.CENTER);
-		pnlRight.setLayout(new BorderLayout(0, 0));
+		pnlRight.setLayout(new BorderLayout(0, 20));
 
 		JPanel pnlLblSortInput = new JPanel();
+		pnlLblSortInput.setBackground(new Color(128, 128, 128));
 		FlowLayout fl_pnlLblSortInput = (FlowLayout) pnlLblSortInput.getLayout();
 		fl_pnlLblSortInput.setVgap(20);
 		pnlRight.add(pnlLblSortInput, BorderLayout.NORTH);
@@ -426,114 +444,139 @@ public class NewSort {
 		pnlLblSortInput.add(lblSortDetails);
 
 		JPanel pnlSortData = new JPanel();
+		pnlSortData.setBackground(new Color(192, 192, 192));
 		pnlRight.add(pnlSortData, BorderLayout.CENTER);
 
 
 		////////////////////////////////////////////////////////////////
-		pnlSortData.setLayout(new GridLayout(7, 7, 3, 3));
+		pnlSortData.setLayout(new GridLayout(6, 7, 3, 0));
 
 		/////////////// class types /////////////////////////////
 
 		JLabel lblInput = new JLabel("Input");
-		lblInput.setForeground(new Color(165, 42, 42));
+		lblInput.setForeground(new Color(0, 0, 0));
 		lblInput.setFont(new Font("Arial", Font.BOLD, 18));
 		lblInput.setHorizontalAlignment(SwingConstants.CENTER);
 		lblInput.setBackground(new Color(0, 51, 102));
 		pnlSortData.add(lblInput);
-		
+
 		btnClassA = new JButton("Class A");
+		btnClassA.setBackground(new Color(230, 230, 250));
+		btnClassA.setBorderPainted(false);
 		btnClassA.setFont(new Font("Arial", Font.BOLD, 15));
+		btnClassA.setContentAreaFilled(false);
+		btnClassA.setOpaque(true);
 		pnlSortData.add(btnClassA);
-		
+
 		btnClassA.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sensA==null)
 					sensA = new SensitivityDetails();
 				else
 					sensA.setVisible(true);
-				
+
 			}
 		});
-		
+
 		btnClassB = new JButton("Class B");
+		btnClassB.setBackground(new Color(230, 230, 250));
+		btnClassB.setBorderPainted(false);
 		btnClassB.setFont(new Font("Arial", Font.BOLD, 15));
+		btnClassB.setContentAreaFilled(false);
+		btnClassB.setOpaque(true);
 		pnlSortData.add(btnClassB);
-		
+
 		btnClassB.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sensB == null)
 					sensB = new SensitivityDetails();
 				else
 					sensB.setVisible(true);
-				
+
 			}
 		});
-		
+
 		btnClassC = new JButton("Class C");
+		btnClassC.setBackground(new Color(230, 230, 250));
+		btnClassC.setBorderPainted(false);
 		btnClassC.setFont(new Font("Arial", Font.BOLD, 15));
+		btnClassC.setContentAreaFilled(false);
+		btnClassC.setOpaque(true);
 		pnlSortData.add(btnClassC);
-		
+
 		btnClassC.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sensC == null)
 					sensC = new SensitivityDetails();
 				else
 					sensC.setVisible(true);
-				
+
 			}
 		});
-		
+
 		btnClassD = new JButton("Class D");
+		btnClassD.setBackground(new Color(224, 255, 255));
+		btnClassD.setBorderPainted(false);
 		btnClassD.setFont(new Font("Arial", Font.BOLD, 15));
+		btnClassD.setContentAreaFilled(false);
+		btnClassD.setOpaque(true);
 		pnlSortData.add(btnClassD);
-		
+
 		btnClassD.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sensD == null)
 					sensD = new SensitivityDetails();
 				else
 					sensD.setVisible(true);
-				
+
 			}
 		});
-		
+
 		btnClassE = new JButton("Class E");
+		btnClassE.setBackground(new Color(224, 255, 255));
+		btnClassE.setBorderPainted(false);
 		btnClassE.setFont(new Font("Arial", Font.BOLD, 15));
+		btnClassE.setContentAreaFilled(false);
+		btnClassE.setOpaque(true);
 		pnlSortData.add(btnClassE);
-		
+
 		btnClassE.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sensE == null)
 					sensE = new SensitivityDetails();
 				else
 					sensE.setVisible(true);
-				
+
 			}
 		});
-		
+
 		btnClassF = new JButton("Class F");
+		btnClassF.setBackground(new Color(221, 160, 221));
+		btnClassF.setBorderPainted(false);
 		btnClassF.setFont(new Font("Arial", Font.BOLD, 15));
+		btnClassF.setContentAreaFilled(false);
+		btnClassF.setOpaque(true);
 		pnlSortData.add(btnClassF);
-		
+
 		btnClassF.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (sensF == null)
 					sensF = new SensitivityDetails();
 				else
 					sensF.setVisible(true);
-				
+
 			}
 		});
 
@@ -1376,32 +1419,6 @@ public class NewSort {
 		spnC_ShapeF.setModel(new SpinnerNumberModel(-1, -1, 100, 1));
 		pnlC_ShapeF.add(spnC_ShapeF);
 
-		JPanel pnlbottomEmpty1 = new JPanel();
-		pnlSortData.add(pnlbottomEmpty1);
-
-		JPanel pnlbottomEmpty2 = new JPanel();
-		pnlSortData.add(pnlbottomEmpty2);
-		pnlbottomEmpty2.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JPanel pnlbottomEmpty3 = new JPanel();
-		pnlSortData.add(pnlbottomEmpty3);
-		pnlbottomEmpty3.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JPanel pnlBottomReset = new JPanel();
-		pnlSortData.add(pnlBottomReset);
-		pnlBottomReset.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JPanel pnlBottomEmpty4 = new JPanel();
-		pnlSortData.add(pnlBottomEmpty4);
-		pnlBottomEmpty4.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JPanel pnlBottomEmpty5 = new JPanel();
-		pnlSortData.add(pnlBottomEmpty5);
-		pnlBottomEmpty5.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-
-		JPanel pnlbottomEmpty6 = new JPanel();
-		pnlSortData.add(pnlbottomEmpty6);
-
 		frmNewSort.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -1422,7 +1439,7 @@ public class NewSort {
 				}
 			}
 		});
-	
+
 
 	}
 
@@ -1703,7 +1720,7 @@ public class NewSort {
 		btnClassD.setEnabled(enable);
 		btnClassE.setEnabled(enable);
 		btnClassF.setEnabled(enable);
-		
+
 
 	}
 
