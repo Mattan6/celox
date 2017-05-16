@@ -30,6 +30,10 @@ import com.jgoodies.forms.layout.RowSpec;
 import Classes.*;
 import Handlers.*;
 import Validation.ValidationFunctions;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 public class NewCustomer {
 
@@ -64,9 +68,96 @@ public class NewCustomer {
 	 */
 	public NewCustomer() {
 		initialize();
+		buildMenu();
 		getDataFromDB();
 		frmNewDetails.setVisible(true);
 	}
+	
+	private void buildMenu(){
+
+		JMenuBar menuBar = new JMenuBar();
+		frmNewDetails.setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		mnFile.setFont(new Font("Segoe UI Light", Font.BOLD, 13));
+		menuBar.add(mnFile);
+
+		JMenuItem mntmMenu = new JMenuItem("Main Menu");
+		mntmMenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MainMenuWindow();
+				frmNewDetails.dispose();
+
+			}
+		});
+		mnFile.add(mntmMenu);
+
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mntmSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GlobalSearchWindow();
+				frmNewDetails.dispose();
+				
+			}
+		});
+		mnFile.add(mntmSearch);
+
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
+
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(frmNewDetails, "Are you sure to close this window?", "Really Closing?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+					System.exit(0);
+			}
+		});
+		mnFile.add(mntmExit);
+
+		JMenu mnNew = new JMenu("New");
+		menuBar.add(mnNew);
+
+		JMenuItem mntmNewSort = new JMenuItem("Sort");
+		mntmNewSort.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewSort();
+				frmNewDetails.dispose();
+				
+			}
+		});
+		mnNew.add(mntmNewSort);
+
+		JMenuItem mntmUpdatenewCustomer = new JMenuItem("Grower/Plot");
+		mnNew.add(mntmUpdatenewCustomer);
+
+		JMenu mnEdit = new JMenu("Action");
+		menuBar.add(mnEdit);
+
+		JMenuItem mntmStatistics = new JMenuItem("Statistics");
+		mntmStatistics.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Statistics();
+				frmNewDetails.dispose();
+				
+			}
+		});
+		mnEdit.add(mntmStatistics);
+
+	}
+	
+	
+	
 
 	/**
 	 * Initialize the contents of the frame.
@@ -799,6 +890,7 @@ public class NewCustomer {
 		btnBack.setContentAreaFilled(false);
 		btnBack.setOpaque(true);
 		pnlLeftBody.add(btnBack, "6, 42");
+
 		
 		btnBack.addActionListener(new ActionListener() {
 			

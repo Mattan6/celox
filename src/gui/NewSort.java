@@ -37,6 +37,10 @@ import Classes.Plots;
 import Classes.Sorts;
 import Handlers.SendServer;
 import javax.swing.border.LineBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 public class NewSort {
 
@@ -117,9 +121,177 @@ public class NewSort {
 	 */
 	public NewSort() {
 		initialize();
+		buildMenu();
 		getDataFromDB();
 		frmNewSort.setVisible(true);
+
 	}
+
+	private void buildMenu(){
+
+		JMenuBar menuBar = new JMenuBar();
+		frmNewSort.setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		mnFile.setFont(new Font("Segoe UI Light", Font.BOLD, 13));
+		menuBar.add(mnFile);
+
+		JMenuItem mntmMenu = new JMenuItem("Main Menu");
+		mntmMenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sort!= null){
+					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+						SendServer send = new SendServer();
+						sort.setEndDate(new Date());
+						if (send.insert(sort)){
+							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							new MainMenuWindow();
+							frmNewSort.dispose();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				else{
+					new MainMenuWindow();
+					frmNewSort.dispose();	
+				}
+			}
+		});
+		mnFile.add(mntmMenu);
+
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mntmSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sort!= null){
+					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+						SendServer send = new SendServer();
+						sort.setEndDate(new Date());
+						if (send.insert(sort)){
+							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							new GlobalSearchWindow();
+							frmNewSort.dispose();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				else{
+					new GlobalSearchWindow();
+					frmNewSort.dispose();	
+				}
+				
+			}
+		});
+		mnFile.add(mntmSearch);
+
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
+
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sort!= null){
+					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+						SendServer send = new SendServer();
+						sort.setEndDate(new Date());
+						if (send.insert(sort)){
+							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							System.exit(0);
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				else{
+					System.exit(0);	
+				}
+			}
+		});
+		mnFile.add(mntmExit);
+
+		JMenu mnNew = new JMenu("New");
+		menuBar.add(mnNew);
+
+		JMenuItem mntmNewSort = new JMenuItem("Sort");
+		mnNew.add(mntmNewSort);
+
+		JMenuItem mntmUpdatenewCustomer = new JMenuItem("Grower/Plot");
+		mntmUpdatenewCustomer.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sort!= null){
+					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+						SendServer send = new SendServer();
+						sort.setEndDate(new Date());
+						if (send.insert(sort)){
+							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							new NewCustomer();
+							frmNewSort.dispose();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				else{
+					new NewCustomer();
+					frmNewSort.dispose();	
+				}
+
+			}
+		});
+		mnNew.add(mntmUpdatenewCustomer);
+
+		JMenu mnEdit = new JMenu("Action");
+		menuBar.add(mnEdit);
+
+		JMenuItem mntmStatistics = new JMenuItem("Statistics");
+		mntmStatistics.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (sort!= null){
+					if (JOptionPane.showConfirmDialog(frmNewSort, "Are you sure to close this window? ", "Really Closing?", JOptionPane.YES_NO_OPTION,
+							JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
+						SendServer send = new SendServer();
+						sort.setEndDate(new Date());
+						if (send.insert(sort)){
+							JOptionPane.showMessageDialog(null, "**Sort Saved!** ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+							new Statistics();
+							frmNewSort.dispose();
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "**Sort Hasent Finished Yet!**\nPlease End Sort ", "InfoBox: " , JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+				}
+				else{
+					new Statistics();
+					frmNewSort.dispose();	
+				}
+
+			}
+		});
+		mnEdit.add(mntmStatistics);
+
+	}
+
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -1418,6 +1590,7 @@ public class NewSort {
 		spnC_ShapeF.setPreferredSize(new Dimension(80, 35));
 		spnC_ShapeF.setModel(new SpinnerNumberModel(-1, -1, 100, 1));
 		pnlC_ShapeF.add(spnC_ShapeF);
+
 
 		frmNewSort.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override

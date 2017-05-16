@@ -23,6 +23,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import Classes.Sorts;
 import Handlers.SendServer;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
 
 public class MainMenuWindow {
 
@@ -37,9 +42,95 @@ public class MainMenuWindow {
 
 		getDataFromDB();
 		initialize();
+		buildMenu();
 		frmMainMenu.setVisible(true);
 	}
 
+	
+	private void buildMenu(){
+
+		JMenuBar menuBar = new JMenuBar();
+		frmMainMenu.setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		mnFile.setFont(new Font("Segoe UI Light", Font.BOLD, 13));
+		menuBar.add(mnFile);
+
+		JMenuItem mntmMenu = new JMenuItem("Main Menu");
+		mnFile.add(mntmMenu);
+
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mntmSearch.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new GlobalSearchWindow();
+				frmMainMenu.dispose();
+				
+			}
+		});
+		mnFile.add(mntmSearch);
+
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
+
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(frmMainMenu, "Are you sure to close this window?", "Really Closing?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+					System.exit(0);
+			}
+		});
+		mnFile.add(mntmExit);
+
+		JMenu mnNew = new JMenu("New");
+		menuBar.add(mnNew);
+
+		JMenuItem mntmNewSort = new JMenuItem("Sort");
+		mntmNewSort.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewSort();
+				frmMainMenu.dispose();
+				
+			}
+		});
+		mnNew.add(mntmNewSort);
+
+		JMenuItem mntmUpdatenewCustomer = new JMenuItem("Grower/Plot");
+		mntmUpdatenewCustomer.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewCustomer();
+				frmMainMenu.dispose();
+				
+			}
+		});
+		mnNew.add(mntmUpdatenewCustomer);
+
+		JMenu mnEdit = new JMenu("Action");
+		menuBar.add(mnEdit);
+
+		JMenuItem mntmStatistics = new JMenuItem("Statistics");
+		mntmStatistics.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Statistics();
+				frmMainMenu.dispose();
+				
+			}
+		});
+		mnEdit.add(mntmStatistics);
+
+	}
+	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -221,6 +312,7 @@ public class MainMenuWindow {
 
 		frmMainMenu.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frmMainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
 	}
 
 	private void getDataFromDB(){

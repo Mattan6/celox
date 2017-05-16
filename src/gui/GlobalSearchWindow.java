@@ -13,6 +13,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -33,6 +34,13 @@ import Classes.Growers;
 import Classes.Plots;
 import Classes.Sorts;
 import Handlers.SendServer;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JSeparator;
+import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JRadioButtonMenuItem;
 
 public class GlobalSearchWindow {
 
@@ -59,6 +67,7 @@ public class GlobalSearchWindow {
 		getDataFromDB();
 
 		initialize();
+		buildMenu();
 		txtGrowerId.setEnabled(false);
 		setEnabled("Plot");
 		frmSearch.setVisible(true);
@@ -66,6 +75,91 @@ public class GlobalSearchWindow {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+
+	private void buildMenu(){
+
+		JMenuBar menuBar = new JMenuBar();
+		frmSearch.setJMenuBar(menuBar);
+
+		JMenu mnFile = new JMenu("File");
+		mnFile.setFont(new Font("Segoe UI Light", Font.BOLD, 13));
+		menuBar.add(mnFile);
+
+		JMenuItem mntmMenu = new JMenuItem("Main Menu");
+		mntmMenu.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new MainMenuWindow();
+				frmSearch.dispose();
+
+			}
+		});
+		mnFile.add(mntmMenu);
+
+		JMenuItem mntmSearch = new JMenuItem("Search");
+		mnFile.add(mntmSearch);
+
+		JSeparator separator = new JSeparator();
+		mnFile.add(separator);
+
+		JMenuItem mntmExit = new JMenuItem("Exit");
+		mntmExit.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (JOptionPane.showConfirmDialog(frmSearch, "Are you sure to close this window?", "Really Closing?", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)
+					System.exit(0);
+			}
+		});
+		mnFile.add(mntmExit);
+
+		JMenu mnNew = new JMenu("New");
+		menuBar.add(mnNew);
+
+		JMenuItem mntmNewSort = new JMenuItem("Sort");
+		mntmNewSort.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewSort();
+				frmSearch.dispose();
+				
+			}
+		});
+		mnNew.add(mntmNewSort);
+
+		JMenuItem mntmUpdatenewCustomer = new JMenuItem("Grower/Plot");
+		mntmUpdatenewCustomer.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new NewCustomer();
+				frmSearch.dispose();
+				
+			}
+		});
+		mnNew.add(mntmUpdatenewCustomer);
+
+		JMenu mnEdit = new JMenu("Action");
+		menuBar.add(mnEdit);
+
+		JMenuItem mntmStatistics = new JMenuItem("Statistics");
+		mntmStatistics.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Statistics();
+				frmSearch.dispose();
+				
+			}
+		});
+		mnEdit.add(mntmStatistics);
+
+	}
+	
+	
 	private void initialize() {
 		frmSearch = new JFrame();
 		frmSearch.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -238,12 +332,12 @@ public class GlobalSearchWindow {
 		btnBack.setOpaque(true);
 		pnlSearch.add(btnBack, "12, 12");
 		btnBack.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new MainMenuWindow();
 				frmSearch.dispose();
-				
+
 			}
 		});
 
@@ -374,13 +468,13 @@ public class GlobalSearchWindow {
 		scpResult = new JScrollPane();
 		scpResult.setBackground(new Color(255, 255, 153));
 		pnlSearchResults.add(scpResult, BorderLayout.CENTER);
-		
+
 		table = new JTable();
 		table.setSelectionBackground(new Color(128, 128, 128));
 		table.setFillsViewportHeight(true);
 		table.setBackground(new Color(192, 192, 192));
 		scpResult.setViewportView(table);
-		
+
 
 	}
 
@@ -451,50 +545,50 @@ public class GlobalSearchWindow {
 		String year = text.substring(6,text.trim().length());
 		String toReturn="";
 		switch(mon){
-			case "01": toReturn+= "Jan ";
-				break;
-			case "02": toReturn+= "Feb ";
-				break;
-			case "03": toReturn+= "Mar ";
-				break;
-			case "04": toReturn+= "Apr ";
-				break;
-			case "05": toReturn+= "May ";
-				break;
-			case "06": toReturn+= "Jun ";
-				break;
-			case "07": toReturn+= "Jul ";
-				break;
-			case "08": toReturn+= "Aug ";
-				break;
-			case "09": toReturn+= "Sep ";
-				break;
-			case "10": toReturn+= "Oct ";
-				break;
-			case "11": toReturn+= "Nov ";
-				break;
-			case "12": toReturn+= "Dec ";
-				break;	
+		case "01": toReturn+= "Jan ";
+		break;
+		case "02": toReturn+= "Feb ";
+		break;
+		case "03": toReturn+= "Mar ";
+		break;
+		case "04": toReturn+= "Apr ";
+		break;
+		case "05": toReturn+= "May ";
+		break;
+		case "06": toReturn+= "Jun ";
+		break;
+		case "07": toReturn+= "Jul ";
+		break;
+		case "08": toReturn+= "Aug ";
+		break;
+		case "09": toReturn+= "Sep ";
+		break;
+		case "10": toReturn+= "Oct ";
+		break;
+		case "11": toReturn+= "Nov ";
+		break;
+		case "12": toReturn+= "Dec ";
+		break;	
 		}
 		switch(day){
-			case "01": day = "1";
-				break;
-			case "02": day = "2";
-				break;
-			case "03": day = "3";
-				break;
-			case "04": day = "4";
-				break;
-			case "05": day = "5";
-				break;
-			case "06": day = "6";
-				break;
-			case "07": day = "7";
-				break;
-			case "08": day = "8";
-				break;
-			case "09": day = "9";
-				break;		
+		case "01": day = "1";
+		break;
+		case "02": day = "2";
+		break;
+		case "03": day = "3";
+		break;
+		case "04": day = "4";
+		break;
+		case "05": day = "5";
+		break;
+		case "06": day = "6";
+		break;
+		case "07": day = "7";
+		break;
+		case "08": day = "8";
+		break;
+		case "09": day = "9";
+		break;		
 		}
 		toReturn+=day + ", ";
 		toReturn+=year + " ";
